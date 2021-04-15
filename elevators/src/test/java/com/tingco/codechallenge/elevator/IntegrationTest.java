@@ -22,5 +22,4 @@ public class IntegrationTest {
     public void simulateAnElevatorShaft() {
 
     }
-
 }
