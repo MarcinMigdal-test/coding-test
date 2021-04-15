@@ -20,10 +20,5 @@ public class IntegrationTest {
 
     @Test
     public void simulateAnElevatorShaft() {
-
-
-
-
-
     }
 }
