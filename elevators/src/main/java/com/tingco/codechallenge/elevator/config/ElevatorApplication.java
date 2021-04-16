@@ -19,14 +19,8 @@ import com.google.common.eventbus.EventBus;
  * Preconfigured Spring Application boot class.
  *
  */
-@Configuration
 @ComponentScan(basePackages = { "com.tingco.codechallenge.elevator" })
-@EnableAutoConfiguration
-@PropertySources({ @PropertySource("classpath:application.properties") })
 public class ElevatorApplication {
-
-    @Value("${com.tingco.elevator.numberofelevators}")
-    private int numberOfElevators;
 
     /**
      * Start method that will be invoked when starting the Spring context.
@@ -38,24 +32,6 @@ public class ElevatorApplication {
         SpringApplication.run(ElevatorApplication.class, args);
     }
 
-    /**
-     * Create a default thread pool for your convenience.
-     *
-     * @return Executor thread pool
-     */
-    @Bean(destroyMethod = "shutdown")
-    public Executor taskExecutor() {
-        return Executors.newScheduledThreadPool(numberOfElevators);
-    }
 
-    /**
-     * Create an event bus for your convenience.
-     *
-     * @return EventBus for async task execution
-     */
-    @Bean
-    public EventBus eventBus() {
-        return new AsyncEventBus(Executors.newCachedThreadPool());
-    }
 
 }
