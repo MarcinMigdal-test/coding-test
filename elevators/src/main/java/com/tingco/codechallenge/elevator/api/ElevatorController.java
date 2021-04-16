@@ -1,5 +1,7 @@
 package com.tingco.codechallenge.elevator.api;
 
+import com.tingco.codechallenge.elevator.impl.ElevatorCallRequest;
+import com.tingco.codechallenge.elevator.impl.exception.ElevatorCallRequestException;
 import java.util.List;
 
 
@@ -35,5 +37,9 @@ public interface ElevatorController {
      *            the elevator that shall be released.
      */
     void releaseElevator(Elevator elevator);
+
+    void validate(ElevatorCallRequest elevatorCallRequest) throws ElevatorCallRequestException;
+    void execute(ElevatorCallRequest elevatorCallRequest);
+
 
 }

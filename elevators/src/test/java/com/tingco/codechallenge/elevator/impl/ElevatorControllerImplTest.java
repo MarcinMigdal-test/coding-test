@@ -13,7 +13,7 @@ public class ElevatorControllerImplTest {
 
     @BeforeEach
     public void setUp(){
-        elevatorController  = new ElevatorControllerImpl(Collections.emptyList());
+        elevatorController  = new ElevatorControllerImpl(Collections.emptyList(),5);
     }
 
     @Test

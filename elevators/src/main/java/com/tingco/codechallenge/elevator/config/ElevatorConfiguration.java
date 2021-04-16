@@ -19,7 +19,17 @@ public class ElevatorConfiguration {
 
 
   @Value("${com.tingco.elevator.numberofelevators}")
-  private int numberOfElevators;
+  private int elevatorsNumber;
+
+  public int getElevatorsNumber(){
+    return elevatorsNumber;
+  }
+
+  @Value("${com.tingco.elevator.numberoffloors}")
+  private int floorsNumber;
+  public int getFloorsNumber(){
+    return floorsNumber;
+  }
 
   /**
    * Create a default thread pool for your convenience.
@@ -28,7 +38,7 @@ public class ElevatorConfiguration {
    */
   @Bean(destroyMethod = "shutdown")
   public Executor taskExecutor() {
-    return Executors.newScheduledThreadPool(numberOfElevators);
+    return Executors.newScheduledThreadPool(elevatorsNumber);
   }
 
   /**

@@ -1,6 +1,6 @@
 package com.tingco.codechallenge.elevator.resources;
 
-import com.tingco.codechallenge.elevator.config.ElevatorApplication;
+import com.tingco.codechallenge.elevator.ElevatorApplication;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

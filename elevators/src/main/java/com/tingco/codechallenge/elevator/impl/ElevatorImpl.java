@@ -32,7 +32,6 @@ public class ElevatorImpl implements Elevator{
 
     @Override
     public void moveElevator(int toFloor) {
-
     }
 
     @Override
