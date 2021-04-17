@@ -11,9 +11,9 @@ public final class ElevatorFactory {
     private ElevatorFactory(){
     }
 
-    public static List<Elevator> getElevators(int number){
+    public static List<Elevator> getElevators(int elevatorsNumber){
         List<Elevator> elevatorList = new ArrayList<>();
-        IntStream.of(number).forEach(value -> elevatorList.add(new ElevatorImpl(value)));
+        IntStream.of(elevatorsNumber).forEach(value -> elevatorList.add(new ElevatorImpl(value)));
         return elevatorList;
     }
 }

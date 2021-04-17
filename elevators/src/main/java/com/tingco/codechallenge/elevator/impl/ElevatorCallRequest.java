@@ -20,4 +20,6 @@ public class ElevatorCallRequest {
     return targetFloor;
   }
 
+  public UserDirectionRequest getUserDirectionRequest() {return userDirectionRequest;}
+
 }

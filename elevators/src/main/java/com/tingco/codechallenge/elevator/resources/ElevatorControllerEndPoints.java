@@ -68,8 +68,8 @@ public final class ElevatorControllerEndPoints {
     ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(currentFloor,
         userDirectionRequest, targetFloor);
     try {
-      elevatorController.validate(elevatorCallRequest);
-      elevatorController.execute(elevatorCallRequest);
+      elevatorController.validateElevatorCallRequest(elevatorCallRequest);
+      elevatorController.executeElevatorCallRequest(elevatorCallRequest);
     } catch (ElevatorCallRequestException e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(elevatorCallRequest);
     }

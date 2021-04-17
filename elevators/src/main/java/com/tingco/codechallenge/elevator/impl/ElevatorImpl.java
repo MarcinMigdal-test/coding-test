@@ -1,13 +1,20 @@
 package com.tingco.codechallenge.elevator.impl;
 
 import com.tingco.codechallenge.elevator.api.Elevator;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ElevatorImpl implements Elevator{
+
+    private final int movementTime = 1000;
+    private final int stopAtFloorTime = 2000;
+    private final int doNothingTime = 500;
 
     private final int elevatorId;
     private Direction direction = Direction.NONE;
     private int currentFloor;
     private int destinationFloor;
+    private Set<Integer> floorsToVisit = new HashSet<>();
 
     public ElevatorImpl(int elevatorId){
         this.elevatorId = elevatorId;
@@ -32,6 +39,7 @@ public class ElevatorImpl implements Elevator{
 
     @Override
     public void moveElevator(int toFloor) {
+        floorsToVisit.add(toFloor);
     }
 
     @Override
@@ -43,4 +51,8 @@ public class ElevatorImpl implements Elevator{
     public int currentFloor() {
         return currentFloor;
     }
+
+
+
+
 }
