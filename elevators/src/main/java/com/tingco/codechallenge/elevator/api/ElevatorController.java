@@ -3,6 +3,7 @@ package com.tingco.codechallenge.elevator.api;
 import com.tingco.codechallenge.elevator.impl.ElevatorCallRequest;
 import com.tingco.codechallenge.elevator.impl.exception.ElevatorCallRequestException;
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -18,6 +19,7 @@ public interface ElevatorController {
    * @param toFloor addressed floor as integer.
    * @return The Elevator that is going to the floor, if there is one to move.
    */
+  @Deprecated
   Elevator requestElevator(int toFloor);
 
   /**
@@ -35,8 +37,14 @@ public interface ElevatorController {
   void releaseElevator(Elevator elevator);
 
   //Added by Marcin Migdal
+  Optional<Elevator> requestElevator(ElevatorCallRequest elevatorCallRequest);
+
   void validateElevatorCallRequest(ElevatorCallRequest elevatorCallRequest)
       throws ElevatorCallRequestException;
 
   void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest);
+
+
+
+
 }

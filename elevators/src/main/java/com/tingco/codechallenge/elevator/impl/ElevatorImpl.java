@@ -10,7 +10,7 @@ import java.util.concurrent.ConcurrentSkipListSet;
 
 public class ElevatorImpl implements Elevator{
 
-    private final int MOVEMENT_TIME = 1;
+    private final int MOVEMENT_TIME = 2000;
     private final int stopAtFloorTime = 2000;
     private final int NOP_TIME = 500;
     private final Logger LOG = LoggerFactory
@@ -58,15 +58,27 @@ public class ElevatorImpl implements Elevator{
 
 
     public void run() {
+        LOG.info(String.format("Running elevator %d invoked", elevatorId));
+
         while(shouldExecuteMovement()){
-                executeMovement();
+
         }
-        executeCycleNop();
+
     }
 
     private boolean shouldExecuteMovement(){
         return !floorsToVisitRequests.isEmpty();
     }
+
+    private void calculateDirection(){
+        int topFloorNumber = floorsToVisitRequests.first();
+        int bottomFloorNumber = floorsToVisitRequests.last();
+
+        //()
+
+
+    }
+
 
     private void executeMovement(){
 
@@ -75,8 +87,7 @@ public class ElevatorImpl implements Elevator{
             moveElevator(floorsToVisitRequests.first());
         }
         else{
-            int topFloorNumber = floorsToVisitRequests.first();
-            int bottomFloorNumber = floorsToVisitRequests.last();
+
 
             //two different floors - > determine distance to the nearest one
             //lowestFloorToVisit , highestFlootToVisit
