@@ -7,6 +7,7 @@ import com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl;
 import com.tingco.codechallenge.elevator.impl.ElevatorFactory;
 import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
 import com.tingco.codechallenge.elevator.impl.exception.ElevatorCallRequestException;
+import javax.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import javax.validation.constraints.Min;
+
 /**
  * Rest Resource.
  *
@@ -53,7 +54,7 @@ public final class ElevatorControllerEndPoints {
   @GetMapping("/status")
   public ResponseEntity getStatus() {
     return ResponseEntity.status(HttpStatus.OK).body(String
-        .format("Number of initialized elevators equals %d and floors equals %d" ,
+        .format("Number of initialized elevators equals %d and floors equals %d",
             elevatorConfiguration.getElevatorsNumber(), elevatorConfiguration.getFloorsNumber()));
   }
 
@@ -64,15 +65,15 @@ public final class ElevatorControllerEndPoints {
       @PathVariable("userDirectionRequest") UserDirectionRequest userDirectionRequest,
       @PathVariable("targetFloor") @Min(0) int targetFloor) {
 
-    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(currentFloor,userDirectionRequest,targetFloor);
+    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(currentFloor,
+        userDirectionRequest, targetFloor);
     try {
       elevatorController.validate(elevatorCallRequest);
+      elevatorController.execute(elevatorCallRequest);
     } catch (ElevatorCallRequestException e) {
-      return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(elevatorCallRequest);
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(elevatorCallRequest);
     }
 
     return ResponseEntity.status(HttpStatus.OK).body("Request accepted. Wait for execution");
   }
-
-
 }

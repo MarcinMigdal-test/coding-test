@@ -36,7 +36,7 @@ public class ElevatorImpl implements Elevator{
 
     @Override
     public boolean isBusy() {
-        return false;
+        return !direction.equals(Direction.NONE) && currentFloor!=destinationFloor;
     }
 
     @Override

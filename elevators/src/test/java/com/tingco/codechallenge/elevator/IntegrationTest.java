@@ -15,6 +15,7 @@ import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ public class IntegrationTest {
     public void simulateAnElevatorShaft() {
     }
 
+    @Disabled
     @Test
     public void helathCheck() throws IOException, InterruptedException {
         HttpClient client = HttpClient.newBuilder()
