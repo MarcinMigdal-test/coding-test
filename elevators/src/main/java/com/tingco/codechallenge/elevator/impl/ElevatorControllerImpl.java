@@ -65,6 +65,6 @@ public class ElevatorControllerImpl implements ElevatorController {
   @Override
   public void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest) {
     Elevator elevator = requestElevator(elevatorCallRequest.getCurrentFloor());
-    elevator.moveElevator(elevatorCallRequest.getTargetFloor());
+    elevator.requestElevatorMovement(elevatorCallRequest.getTargetFloor());
   }
 }

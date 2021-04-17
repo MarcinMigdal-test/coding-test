@@ -40,7 +40,10 @@ public interface Elevator {
    *
    * @param toFloor int where to go.
    */
+  @Deprecated
   void moveElevator(int toFloor);
+
+  void moveElevatorToFloor(int toFloor);
 
   /**
    * Check if the elevator is occupied at the moment.
@@ -55,5 +58,10 @@ public interface Elevator {
    * @return int actual floor at the moment.
    */
   int currentFloor();
+
+  //added by mmigdal
+  void requestElevatorMovement(int toFloor);
+
+  void run();
 
 }

@@ -38,7 +38,7 @@ public class ElevatorConfiguration {
    */
   @Bean(destroyMethod = "shutdown")
   public Executor taskExecutor() {
-    return Executors.newScheduledThreadPool(elevatorsNumber);
+    return Executors.newFixedThreadPool(elevatorsNumber);
   }
 
   /**
