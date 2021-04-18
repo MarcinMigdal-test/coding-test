@@ -48,11 +48,22 @@ public class ElevatorImplTest {
         assertEquals(FloorsElevatorsConfig.FLOOR_3, testedObject.currentFloor());
 
         testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_9);
+        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_5);
         testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_2);
+        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_1);
         testedObject.run();
         assertEquals(FloorsElevatorsConfig.FLOOR_9, testedObject.currentFloor());
         assertEquals(0, testedObject.floorsCheck().size());
+
+        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_7);
+        testedObject.run();
+        assertEquals(FloorsElevatorsConfig.FLOOR_7, testedObject.currentFloor());
+
+        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_8);
+        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_4);
+        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_2);
+        testedObject.run();
+        assertEquals(FloorsElevatorsConfig.FLOOR_2, testedObject.currentFloor());
+        assertEquals(0, testedObject.floorsCheck().size());
     }
-
-
 }

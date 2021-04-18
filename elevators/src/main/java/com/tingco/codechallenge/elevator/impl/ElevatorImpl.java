@@ -19,7 +19,7 @@ public class ElevatorImpl implements Elevator {
     private Direction direction = Direction.NONE;
     private int currentFloor;
     private int destinationFloor;
-    private final NavigableSet<Integer> floorsToVisitRequests = new ConcurrentSkipListSet<Integer>();
+    private final NavigableSet<Integer> floorsToVisitRequests = new ConcurrentSkipListSet<>();
 
     public ElevatorImpl(int elevatorId) {
         this.elevatorId = elevatorId;
@@ -78,25 +78,28 @@ public class ElevatorImpl implements Elevator {
                 //zmien pietro
                 executeCycleMove();
                 if (isDestinationFloorAchieved()) {
+                    floorsToVisitRequests.remove(this.currentFloor);
                     direction = Direction.NONE;
-                    executeCycleStopNaPietrzePoDrodze();
+                    executeCycleStopNaPietrzePoDrodze(this.destinationFloor,"Destination floor");
                 }
                 if (floorsToVisitRequests.contains(this.currentFloor)) {
                     floorsToVisitRequests.remove(this.currentFloor);
-                    executeCycleStopNaPietrzePoDrodze();
+                    //if direction
+                    executeCycleStopNaPietrzePoDrodze(this.currentFloor,"Interim floor");
                 }
             } else {
                 LOG.info(String.format("Elevator %d has no direction set",elevatorId));
                 int topFloorNumber = floorsToVisitRequests.last();
                 if (floorsToVisitRequests.size() == 1) {
-                    LOG.info(String.format("Elevator %d one only destination floor selected",elevatorId,destinationFloor));
+                    LOG.info(String.format("Elevator %d has only one destination floor selected %d",elevatorId,destinationFloor));
                     destinationFloor = topFloorNumber;
                 }
                 else{
                     LOG.info(String.format("Elevator %d one has many floors to visit. It's current position is: %s ",elevatorId,currentFloor));
                     int bottomFloorNumber = floorsToVisitRequests.first();
-                    LOG.info(String.format("Elevator %d is calulaing ",elevatorId));
+                    LOG.info(String.format("Elevator %d is calculating route ",elevatorId));
                     destinationFloor = findNearestTargetFloor(topFloorNumber, bottomFloorNumber);
+                    LOG.info(String.format("Elevator %d has chosen destination floor %d",elevatorId,destinationFloor));
                 }
                 LOG.info(String.format("Elevator %d is calculating direction...",elevatorId));
                 if (currentFloor < destinationFloor) {
@@ -106,8 +109,6 @@ public class ElevatorImpl implements Elevator {
                 }
                 LOG.info(String.format("Elevator %d has chosen direction %s",elevatorId, direction));
             }
-            //if (direction.equals(Direction.NONE)) {
-            //}
         }
     }
 
@@ -124,9 +125,9 @@ public class ElevatorImpl implements Elevator {
     }
 
     private int findNearestTargetFloor(int topFloorNumber, int bottomFloorNumber) {
-        int result1 = Math.abs(Math.subtractExact(currentFloor, topFloorNumber));
-        int result2 = Math.abs(Math.subtractExact(currentFloor, bottomFloorNumber));
-        return 0;
+        int topFloorDistance = Math.abs(Math.subtractExact(currentFloor, topFloorNumber));
+        int bottomFloorDistance = Math.abs(Math.subtractExact(currentFloor, bottomFloorNumber));
+        return topFloorDistance<bottomFloorDistance?topFloorNumber:bottomFloorNumber;
     }
 
     private void executeCycleMove() {
@@ -149,15 +150,15 @@ public class ElevatorImpl implements Elevator {
                 destinationFloor));
     }
 
-    private void executeCycleStopNaPietrzePoDrodze() {
+    private void executeCycleStopNaPietrzePoDrodze(int floor, String floorDescription) {
         try {
             Thread.sleep(STOP_AT_FLOOR_TIME);
-            LOG.warn(String.format("Elevator %d has cycle STOP at floor %d", this.elevatorId,
-                this.currentFloor));
+            LOG.warn(String.format("Elevator %d has cycle STOP at floor %d which is %s", this.elevatorId,
+                floor,floorDescription));
         } catch (InterruptedException e) {
             LOG.warn(String
                 .format("Elevator %d cannot execute STOP at floor %d due to %s", this.elevatorId,
-                    this.currentFloor, e.getMessage()));
+                    floor, e.getMessage()));
         }
     }
 
