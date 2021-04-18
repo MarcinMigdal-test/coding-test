@@ -1,11 +1,20 @@
 package com.tingco.codechallenge.elevator.api;
 
+import java.util.NavigableSet;
+
 /**
  * Interface for an elevator object.
  *
  * @author Sven Wesley
  */
 public interface Elevator {
+
+    /**
+     * Enumeration for describing elevator's direction.
+     */
+    enum Direction {
+        UP, DOWN, NONE
+    }
 
     /**
      * Tells which direction is the elevator going in.
@@ -51,15 +60,7 @@ public interface Elevator {
     int currentFloor();
 
     //added by mmigdal
-    void run();
-
+    NavigableSet<Integer> floorsCheck();
     void requestElevatorMovement(int toFloor);
-
-    /**
-     * Enumeration for describing elevator's direction.
-     */
-    enum Direction {
-        UP, DOWN, NONE
-    }
-
+    void run();
 }
