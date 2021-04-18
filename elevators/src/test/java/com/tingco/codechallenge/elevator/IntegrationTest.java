@@ -16,6 +16,7 @@ import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
 import java.time.Duration;
 import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,7 @@ public class IntegrationTest {
     public void simulateAnElevatorShaft() {
     }
 
+    @DisplayName("Created by Marcin and disabled for further development")
     @Disabled
     @Test
     public void helathCheck() throws IOException, InterruptedException {
