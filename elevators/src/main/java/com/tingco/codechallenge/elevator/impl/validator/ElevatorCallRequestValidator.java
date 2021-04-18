@@ -19,11 +19,9 @@ public class ElevatorCallRequestValidator {
   public void validateElevatorCallRequest(ElevatorCallRequest elevatorCallRequest)
       throws ElevatorCallRequestException {
     int currentFloor = elevatorCallRequest.getCurrentFloor();
-    int targetFloor = elevatorCallRequest.getTargetFloor();
-    if (currentFloor < 0 || targetFloor< 0 || currentFloor > floorsNumber || targetFloor > floorsNumber) {
+    if (currentFloor < 0 || currentFloor > floorsNumber) {
       String message = String
-          .format("Improper values for current floor %d and target floor %d ", currentFloor,
-              targetFloor);
+          .format("Improper values for current floor %d and target floor %d ", currentFloor);
       LOG.warn(message);
       throw new ElevatorCallRequestException(message);
     }

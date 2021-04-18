@@ -22,6 +22,9 @@ public class ElevatorControllerImplTest {
 
   @Test
   public void requestElevator() {
+    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(4,UserDirectionRequest.DOWN);
+
+    elevatorController.executeElevatorCallRequest(elevatorCallRequest);
 
   }
 

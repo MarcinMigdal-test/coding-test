@@ -69,7 +69,7 @@ public final class ElevatorControllerEndPoints {
       @PathVariable("targetFloor") @Min(0) int targetFloor) {
 
     ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(currentFloor,
-        userDirectionRequest, targetFloor);
+        userDirectionRequest);
     try {
       elevatorCallRequestValidator.validateElevatorCallRequest(elevatorCallRequest);
       elevatorController.executeElevatorCallRequest(elevatorCallRequest);

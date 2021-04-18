@@ -10,6 +10,10 @@ import org.junit.jupiter.api.Test;
 public class ElevatorCallRequestValidatorTest {
 
   private final static int FLOORS_NUMBER = 4;
+  private final static int FLOOR_NUMBER_MINUS_1 = -1;
+  private final static int FLOOR_NUMBER_1 = 1;
+  private final static int FLOOR_NUMBER_10 = 10;
+
   private ElevatorCallRequestValidator testedObject;
 
   @BeforeEach
@@ -19,23 +23,21 @@ public class ElevatorCallRequestValidatorTest {
 
   @Test
   void validateElevatorCallRequest_proper() throws ElevatorCallRequestException {
-    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(0, UserDirectionRequest.UP,
-        4);
+    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(FLOOR_NUMBER_1, UserDirectionRequest.UP
+        );
     testedObject.validateElevatorCallRequest(elevatorCallRequest);
   }
 
   @Test
-  void validateElevatorCallRequest_improper_currentFloor0_UP_targetFloor10() {
-    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(0, UserDirectionRequest.UP,
-        10);
+  void validateElevatorCallRequest_improper_currentFloor_minus_1_UP() {
+    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(FLOOR_NUMBER_MINUS_1, UserDirectionRequest.UP);
     Assertions.assertThrows(ElevatorCallRequestException.class,
         () -> testedObject.validateElevatorCallRequest(elevatorCallRequest));
   }
 
   @Test
-  void validateElevatorCallRequest_improper_currentFloorNegative_UP_targetFloor3() {
-    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(-1, UserDirectionRequest.UP,
-        3);
+  void validateElevatorCallRequest_improper_currentFloor10_targetFloor3() {
+    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(-1, UserDirectionRequest.UP );
     Assertions.assertThrows(ElevatorCallRequestException.class,
         () -> testedObject.validateElevatorCallRequest(elevatorCallRequest));
   }

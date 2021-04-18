@@ -79,12 +79,6 @@ public class ElevatorControllerImpl implements ElevatorController {
 
   // my logic
 
-  @Override
-  public void validateElevatorCallRequest(ElevatorCallRequest elevatorCallRequest)
-      throws ElevatorCallRequestException {
-    elevatorCallRequestValidator.validateElevatorCallRequest(elevatorCallRequest);
-  }
-
   /*
   @Override
   public void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest) {
@@ -116,8 +110,4 @@ public class ElevatorControllerImpl implements ElevatorController {
     }
 
   }
-
-
-
-
 }

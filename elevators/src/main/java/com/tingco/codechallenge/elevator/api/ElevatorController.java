@@ -37,8 +37,6 @@ public interface ElevatorController {
   void releaseElevator(Elevator elevator);
 
   //================================================================================================
-  void validateElevatorCallRequest(ElevatorCallRequest elevatorCallRequest)
-      throws ElevatorCallRequestException;
 
   //Added by Marcin Migdal
   void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest);
