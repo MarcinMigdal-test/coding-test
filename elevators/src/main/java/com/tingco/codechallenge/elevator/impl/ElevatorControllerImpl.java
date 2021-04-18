@@ -33,40 +33,8 @@ public class ElevatorControllerImpl implements ElevatorController {
   @Override
   public Elevator requestElevator(int toFloor) {
 
-
-    /*
-    Predicate<Elevator> predicateGoind = (elevator) -> elevator.currentFloor() > toFloor && elevator
-        .getDirection().equals(
-            Direction.DOWN);
-    Predicate<Elevator> twinitializeElevatorso = (elevator) -> elevator.currentFloor() < toFloor && elevator
-        .getDirection().equals(
-            Direction.UP);
-    Optional<Elevator> candidate = elevatorList.stream().filter(predicateGoind).filter(two).findAny();
-    if (candidate.isEmpty()) {
-      Optional<Elevator> anyFree = elevatorList.stream()
-          .filter(elevator -> elevator.getDirection().equals(Direction.NONE)).findAny();
-      return anyFree.orElse(null);
-
-    } else {
-      return candidate.get();
-    }
-
-
-     */
-
-    /*
-    LOG.info(String.format("Number of elevators available %d", elevatorList.size()));
-    for (Elevator exxx : elevatorList)
-    {
-      LOG.info(String.format("ElevatorId %d busy %s", exxx.getId(), exxx.isBusy()));
-    }
-
-
-    return elevatorList.stream().filter(elevator -> !elevator.isBusy()).findAny().get();
-    */
-    return elevatorList.get(1);
+    return elevatorList.get(0);
   }
-
 
   @Override
   public List<Elevator> getElevators() {
@@ -76,24 +44,6 @@ public class ElevatorControllerImpl implements ElevatorController {
   @Override
   public void releaseElevator(Elevator elevator) {
   }
-
-  // my logic
-
-  /*
-  @Override
-  public void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest) {
-    Optional<Elevator> optionalElevator = requestElevator(elevatorCallRequest);
-    if(optionalElevator.isPresent()){
-      executor.execute(()->{
-        Elevator elevator = optionalElevator.get();
-        elevator.requestElevatorMovement(elevatorCallRequest.getTargetFloor());
-        elevator.run();
-      });
-    }
-
-  }
-  */
-
 
   @Override
   public void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest){
@@ -108,6 +58,5 @@ public class ElevatorControllerImpl implements ElevatorController {
       Elevator busyElevator = elevatorList.get(1);
       busyElevator.requestElevatorMovement(elevatorCallRequestFloor);
     }
-
   }
 }

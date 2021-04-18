@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 public class ElevatorImplTest {
 
-
     private Elevator elevator = new ElevatorImpl(1);
 
     @Test
@@ -25,8 +24,13 @@ public class ElevatorImplTest {
         elevator.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_3);
         elevator.run();
         assertEquals(FloorsElevatorsConfig.FLOOR_3,elevator.currentFloor());
+
+        elevator.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_9);
+        elevator.run();
+        assertEquals(FloorsElevatorsConfig.FLOOR_9,elevator.currentFloor());
+
+        elevator.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_0);
+        elevator.run();
+        assertEquals(FloorsElevatorsConfig.FLOOR_0,elevator.currentFloor());
     }
-
-
-
 }
