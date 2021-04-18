@@ -4,16 +4,8 @@ package com.tingco.codechallenge.elevator.api;
  * Interface for an elevator object.
  *
  * @author Sven Wesley
- *
  */
-interface Elevator {
-
-    /**
-     * Enumeration for describing elevator's direction.
-     */
-    enum Direction {
-        UP, DOWN, NONE
-    }
+public interface Elevator {
 
     /**
      * Tells which direction is the elevator going in.
@@ -39,9 +31,9 @@ interface Elevator {
     /**
      * Command to move the elevator to the given floor.
      *
-     * @param toFloor
-     *            int where to go.
+     * @param toFloor int where to go.
      */
+    @Deprecated
     void moveElevator(int toFloor);
 
     /**
@@ -57,5 +49,17 @@ interface Elevator {
      * @return int actual floor at the moment.
      */
     int currentFloor();
+
+    //added by mmigdal
+    void run();
+
+    void requestElevatorMovement(int toFloor);
+
+    /**
+     * Enumeration for describing elevator's direction.
+     */
+    enum Direction {
+        UP, DOWN, NONE
+    }
 
 }

@@ -1,41 +1,35 @@
 package com.tingco.codechallenge.elevator.config;
 
+
+import com.google.common.eventbus.AsyncEventBus;
+import com.google.common.eventbus.EventBus;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
-import com.google.common.eventbus.AsyncEventBus;
-import com.google.common.eventbus.EventBus;
-
-/**
- * Preconfigured Spring Application boot class.
- *
- */
 @Configuration
-@ComponentScan(basePackages = { "com.tingco.codechallenge.elevator" })
 @EnableAutoConfiguration
-@PropertySources({ @PropertySource("classpath:application.properties") })
-public class ElevatorApplication {
+@PropertySources({@PropertySource("classpath:application.properties")})
+public class ElevatorConfiguration {
+
 
     @Value("${com.tingco.elevator.numberofelevators}")
-    private int numberOfElevators;
+    private int elevatorsNumber;
 
-    /**
-     * Start method that will be invoked when starting the Spring context.
-     *
-     * @param args
-     *            Not in use
-     */
-    public static void main(final String[] args) {
-        SpringApplication.run(ElevatorApplication.class, args);
+    public int getElevatorsNumber() {
+        return elevatorsNumber;
+    }
+
+    @Value("${com.tingco.elevator.numberoffloors}")
+    private int floorsNumber;
+
+    public int getFloorsNumber() {
+        return floorsNumber;
     }
 
     /**
@@ -45,7 +39,7 @@ public class ElevatorApplication {
      */
     @Bean(destroyMethod = "shutdown")
     public Executor taskExecutor() {
-        return Executors.newScheduledThreadPool(numberOfElevators);
+        return Executors.newFixedThreadPool(elevatorsNumber);
     }
 
     /**

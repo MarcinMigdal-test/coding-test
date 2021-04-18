@@ -60,6 +60,13 @@
             <version>${guava.version}</version>
         </dependency>
 
+        <!-- provides validation at REST controller for Min(1) -->
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>2.0.1.Final</version>
+        </dependency>
+
         <!-- testing -->
         <dependency>
             <artifactId>junit-jupiter-engine</artifactId>
@@ -67,6 +74,15 @@
             <scope>test</scope>
             <version>${junit.jupiter.version}</version>
         </dependency>
+
+        <dependency>
+            <!-- this is needed or IntelliJ gives junit.jar or junit-platform-launcher:1.7.x not found errors -->
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>1.7.1</version>
+            <scope>test</scope>
+        </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -85,6 +101,14 @@
             <version>${awaitility.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>6.0.10.Final</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 </project>

@@ -1,5 +1,6 @@
 package com.tingco.codechallenge.elevator.api;
 
+import com.tingco.codechallenge.elevator.impl.ElevatorCallRequest;
 import java.util.List;
 
 
@@ -7,17 +8,16 @@ import java.util.List;
  * Interface for the Elevator Controller.
  *
  * @author Sven Wesley
- *
  */
-interface ElevatorController {
+public interface ElevatorController {
 
     /**
      * Request an elevator to the specified floor.
      *
-     * @param toFloor
-     *            addressed floor as integer.
+     * @param toFloor addressed floor as integer.
      * @return The Elevator that is going to the floor, if there is one to move.
      */
+    @Deprecated
     Elevator requestElevator(int toFloor);
 
     /**
@@ -28,12 +28,16 @@ interface ElevatorController {
     List<Elevator> getElevators();
 
     /**
-     * Telling the controller that the given elevator is free for new
-     * operations.
+     * Telling the controller that the given elevator is free for new operations.
      *
-     * @param elevator
-     *            the elevator that shall be released.
+     * @param elevator the elevator that shall be released.
      */
     void releaseElevator(Elevator elevator);
+
+    //================================================================================================
+
+    //Added by Marcin Migdal
+    void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest);
+
 
 }
