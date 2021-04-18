@@ -7,7 +7,7 @@ public final class FloorsElevatorsConfig {
 
   public final static int ELEVATORS_AMOUNT_1 = 1;
   public final static int ELEVATORS_AMOUNT_2 = 2;
-  public final static int FLOORS_AMOUNT = 6;
+  public final static int FLOORS_AMOUNT_EQUAL_6 = 6;
   public final static int FLOOR_MINUS_1 = -1;
   public final static int FLOOR_0 = 0;
   public final static int FLOOR_1 = 1;

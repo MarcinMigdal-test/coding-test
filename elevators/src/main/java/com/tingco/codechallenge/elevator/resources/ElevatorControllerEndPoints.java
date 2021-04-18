@@ -2,12 +2,12 @@ package com.tingco.codechallenge.elevator.resources;
 
 import com.tingco.codechallenge.elevator.api.ElevatorController;
 import com.tingco.codechallenge.elevator.config.ElevatorConfiguration;
-import com.tingco.codechallenge.elevator.impl.ElevatorCallRequest;
 import com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl;
 import com.tingco.codechallenge.elevator.impl.ElevatorFactory;
 import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
-import com.tingco.codechallenge.elevator.impl.exception.ElevatorCallRequestException;
-import com.tingco.codechallenge.elevator.impl.validator.ElevatorCallRequestValidator;
+import com.tingco.codechallenge.elevator.impl.exception.ElevatorRequestException;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequest;
+import com.tingco.codechallenge.elevator.impl.validator.ElevatorRequestValidator;
 import javax.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -30,52 +30,64 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/rest/v1")
 public final class ElevatorControllerEndPoints {
 
-  private ElevatorConfiguration elevatorConfiguration;
-  private ElevatorController elevatorController;
-  private ElevatorCallRequestValidator elevatorCallRequestValidator;
+    private ElevatorConfiguration elevatorConfiguration;
+    private ElevatorController elevatorController;
+    private ElevatorRequestValidator elevatorRequestValidator;
 
-  @Autowired
-  public ElevatorControllerEndPoints(ElevatorConfiguration elevatorConfiguration) {
-    this.elevatorConfiguration = elevatorConfiguration;
-    elevatorCallRequestValidator = new ElevatorCallRequestValidator(elevatorConfiguration.getFloorsNumber());
-    elevatorController = new ElevatorControllerImpl(
-        ElevatorFactory.getElevators(elevatorConfiguration.getElevatorsNumber()),
-        elevatorConfiguration.getFloorsNumber());
-  }
-
-  /**
-   * Ping service to test if we are alive.
-   *
-   * @return String pong
-   */
-  @Deprecated(forRemoval = true, since = "Now")
-  @RequestMapping(value = "/ping", method = RequestMethod.GET)
-  public String ping() {
-    return "pong";
-  }
-
-  @GetMapping("/status")
-  public ResponseEntity getStatus() {
-    return ResponseEntity.status(HttpStatus.OK).body(String
-        .format("Number of initialized elevators equals %d and floors equals %d",
-            elevatorConfiguration.getElevatorsNumber(), elevatorConfiguration.getFloorsNumber()));
-  }
-
-
-  @PostMapping("/{floor}/{userDirectionRequest}")
-  public ResponseEntity callElevatorToFloor(
-      @PathVariable("floor") @Min(0) int floor,
-      @PathVariable("userDirectionRequest") UserDirectionRequest userDirectionRequest) {
-
-    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(floor,
-        userDirectionRequest);
-    try {
-      elevatorCallRequestValidator.validateElevatorCallRequest(elevatorCallRequest);
-      elevatorController.executeElevatorCallRequest(elevatorCallRequest);
-    } catch (ElevatorCallRequestException e) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(elevatorCallRequest);
+    @Autowired
+    public ElevatorControllerEndPoints(ElevatorConfiguration elevatorConfiguration) {
+        this.elevatorConfiguration = elevatorConfiguration;
+        elevatorRequestValidator = new ElevatorRequestValidator(
+            elevatorConfiguration.getFloorsNumber());
+        elevatorController = new ElevatorControllerImpl(
+            ElevatorFactory.getElevators(elevatorConfiguration.getElevatorsNumber()),
+            elevatorConfiguration.getFloorsNumber());
     }
 
-    return ResponseEntity.status(HttpStatus.OK).body("Request accepted. Wait for execution");
-  }
+    /**
+     * Ping service to test if we are alive.
+     *
+     * @return String pong
+     */
+    @Deprecated(forRemoval = true, since = "Now")
+    @RequestMapping(value = "/ping", method = RequestMethod.GET)
+    public String ping() {
+        return "pong";
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity getStatus() {
+        return ResponseEntity.status(HttpStatus.OK).body(String
+            .format("Number of initialized elevators equals %d and floors equals %d",
+                elevatorConfiguration.getElevatorsNumber(),
+                elevatorConfiguration.getFloorsNumber()));
+    }
+
+
+    @PostMapping("/call/{floor}/{userDirectionRequest}")
+    public ResponseEntity callElevatorToFloor(
+        @PathVariable("floor") @Min(0) int floor,
+        @PathVariable("userDirectionRequest") UserDirectionRequest userDirectionRequest) {
+
+        ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(floor,
+            userDirectionRequest);
+        try {
+            elevatorRequestValidator.validateElevatorCallRequest(elevatorCallRequest);
+            elevatorController.executeElevatorCallRequest(elevatorCallRequest);
+        } catch (ElevatorRequestException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(elevatorCallRequest);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body("Request accepted. Wait for execution");
+    }
+
+    @PostMapping("/move/{currentFloor}/{targetFloor}")
+    public ResponseEntity requestElevatorToFloor(
+        @PathVariable("currentFloor") @Min(0) int currentFloor,
+        @PathVariable("targetFloor") @Min(0) int targetFloor
+    ) {
+        return ResponseEntity.status(HttpStatus.OK).body("Request accepted. Wait for execution");
+    }
+
+
 }

@@ -1,17 +1,14 @@
-package com.tingco.codechallenge.elevator.impl;
+package com.tingco.codechallenge.elevator.impl.request;
 
-public class ElevatorCallRequest {
+import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
 
-    private final int currentFloor;
+public class ElevatorCallRequest extends AbstractRequest {
+
     private final UserDirectionRequest userDirectionRequest;
 
     public ElevatorCallRequest(int currentFloor, UserDirectionRequest userDirectionRequest) {
-        this.currentFloor = currentFloor;
+        super(currentFloor);
         this.userDirectionRequest = userDirectionRequest;
-    }
-
-    public int getCurrentFloor() {
-        return currentFloor;
     }
 
     public UserDirectionRequest getUserDirectionRequest() {

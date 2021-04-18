@@ -2,7 +2,8 @@ package com.tingco.codechallenge.elevator.impl;
 
 import com.tingco.codechallenge.elevator.api.Elevator;
 import com.tingco.codechallenge.elevator.api.ElevatorController;
-import com.tingco.codechallenge.elevator.impl.validator.ElevatorCallRequestValidator;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequest;
+import com.tingco.codechallenge.elevator.impl.validator.ElevatorRequestValidator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executor;
@@ -16,13 +17,13 @@ public class ElevatorControllerImpl implements ElevatorController {
         .getLogger(ElevatorControllerImpl.class.getCanonicalName());
     private final int floorsNumber;
     private final Executor executor;
-    private final ElevatorCallRequestValidator elevatorCallRequestValidator;
+    private final ElevatorRequestValidator elevatorRequestValidator;
     private final List<Elevator> elevatorList;
 
     public ElevatorControllerImpl(List<Elevator> elevatorList, int floorsNumber) {
         this.elevatorList = elevatorList;
         this.floorsNumber = floorsNumber;
-        elevatorCallRequestValidator = new ElevatorCallRequestValidator(floorsNumber);
+        elevatorRequestValidator = new ElevatorRequestValidator(floorsNumber);
         executor = Executors.newFixedThreadPool(elevatorList.size());
     }
 

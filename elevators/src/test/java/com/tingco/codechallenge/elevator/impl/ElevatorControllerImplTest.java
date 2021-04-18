@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.jayway.awaitility.Awaitility;
 import com.tingco.codechallenge.elevator.api.ElevatorController;
 import com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequest;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,7 +18,7 @@ public class ElevatorControllerImplTest {
   @BeforeEach
   public void setUp() {
     elevatorController = new ElevatorControllerImpl(ElevatorFactory.getElevators(FloorsElevatorsConfig.ELEVATORS_AMOUNT_2),
-        FloorsElevatorsConfig.FLOORS_AMOUNT);
+        FloorsElevatorsConfig.FLOORS_AMOUNT_EQUAL_6);
   }
 
   @Test

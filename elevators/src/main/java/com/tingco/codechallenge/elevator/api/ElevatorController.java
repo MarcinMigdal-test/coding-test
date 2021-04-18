@@ -1,6 +1,6 @@
 package com.tingco.codechallenge.elevator.api;
 
-import com.tingco.codechallenge.elevator.impl.ElevatorCallRequest;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequest;
 import java.util.List;
 
 
