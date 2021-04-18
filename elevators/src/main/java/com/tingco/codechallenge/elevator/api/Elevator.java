@@ -43,8 +43,6 @@ public interface Elevator {
   @Deprecated
   void moveElevator(int toFloor);
 
-  void moveElevatorToFloor(int toFloor);
-
   /**
    * Check if the elevator is occupied at the moment.
    *
@@ -60,8 +58,7 @@ public interface Elevator {
   int currentFloor();
 
   //added by mmigdal
-  void requestElevatorMovement(int toFloor);
-
   void run();
+  void requestElevatorMovement(int toFloor);
 
 }

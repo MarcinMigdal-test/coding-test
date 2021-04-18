@@ -7,6 +7,7 @@ import com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl;
 import com.tingco.codechallenge.elevator.impl.ElevatorFactory;
 import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
 import com.tingco.codechallenge.elevator.impl.exception.ElevatorCallRequestException;
+import com.tingco.codechallenge.elevator.impl.validator.ElevatorCallRequestValidator;
 import javax.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.ComponentScan;
@@ -31,10 +32,12 @@ public final class ElevatorControllerEndPoints {
 
   private ElevatorConfiguration elevatorConfiguration;
   private ElevatorController elevatorController;
+  private ElevatorCallRequestValidator elevatorCallRequestValidator;
 
   @Autowired
   public ElevatorControllerEndPoints(ElevatorConfiguration elevatorConfiguration) {
     this.elevatorConfiguration = elevatorConfiguration;
+    elevatorCallRequestValidator = new ElevatorCallRequestValidator(elevatorConfiguration.getFloorsNumber());
     elevatorController = new ElevatorControllerImpl(
         ElevatorFactory.getElevators(elevatorConfiguration.getElevatorsNumber()),
         elevatorConfiguration.getFloorsNumber());
@@ -68,7 +71,7 @@ public final class ElevatorControllerEndPoints {
     ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(currentFloor,
         userDirectionRequest, targetFloor);
     try {
-      elevatorController.validateElevatorCallRequest(elevatorCallRequest);
+      elevatorCallRequestValidator.validateElevatorCallRequest(elevatorCallRequest);
       elevatorController.executeElevatorCallRequest(elevatorCallRequest);
     } catch (ElevatorCallRequestException e) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(elevatorCallRequest);

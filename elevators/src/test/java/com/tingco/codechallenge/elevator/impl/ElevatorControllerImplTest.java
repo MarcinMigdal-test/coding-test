@@ -37,36 +37,8 @@ public class ElevatorControllerImplTest {
   }
 
   @Test
-  void validateElevatorCallRequest_proper() throws ElevatorCallRequestException {
-    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(0, UserDirectionRequest.UP,
-        4);
-    elevatorController.validateElevatorCallRequest(elevatorCallRequest);
-
-  }
-
-  @Test
-  void validateElevatorCallRequest_improper_currentFloor0_UP_targetFloor10()  {
-    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(0, UserDirectionRequest.UP,
-        10);
-    Assertions.assertThrows(ElevatorCallRequestException.class, () -> {
-      elevatorController.validateElevatorCallRequest(elevatorCallRequest);
-    });
-  }
-
-    @Test
-    void validateElevatorCallRequest_improper_currentFloorNegative_UP_targetFloor3()  {
-        ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(-1, UserDirectionRequest.UP,
-            3);
-        Assertions.assertThrows(ElevatorCallRequestException.class, () -> {
-            elevatorController.validateElevatorCallRequest(elevatorCallRequest);
-        });
-    }
-
-
-  @Test
   void executeElevatorCallRequest() {
 
   }
-
 
 }

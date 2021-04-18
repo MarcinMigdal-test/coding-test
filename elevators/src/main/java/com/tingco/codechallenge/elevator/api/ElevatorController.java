@@ -36,13 +36,14 @@ public interface ElevatorController {
    */
   void releaseElevator(Elevator elevator);
 
-  //Added by Marcin Migdal
-  Optional<Elevator> requestElevator(ElevatorCallRequest elevatorCallRequest);
-
+  //================================================================================================
   void validateElevatorCallRequest(ElevatorCallRequest elevatorCallRequest)
       throws ElevatorCallRequestException;
 
+  //Added by Marcin Migdal
   void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest);
+
+
 
 
 

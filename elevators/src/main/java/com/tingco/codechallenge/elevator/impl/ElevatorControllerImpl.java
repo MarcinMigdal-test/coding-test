@@ -3,6 +3,7 @@ package com.tingco.codechallenge.elevator.impl;
 import com.tingco.codechallenge.elevator.api.Elevator;
 import com.tingco.codechallenge.elevator.api.ElevatorController;
 import com.tingco.codechallenge.elevator.impl.exception.ElevatorCallRequestException;
+import com.tingco.codechallenge.elevator.impl.validator.ElevatorCallRequestValidator;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executor;
@@ -31,11 +32,13 @@ public class ElevatorControllerImpl implements ElevatorController {
   @Deprecated(forRemoval = true)
   @Override
   public Elevator requestElevator(int toFloor) {
+
+
     /*
     Predicate<Elevator> predicateGoind = (elevator) -> elevator.currentFloor() > toFloor && elevator
         .getDirection().equals(
             Direction.DOWN);
-    Predicate<Elevator> two = (elevator) -> elevator.currentFloor() < toFloor && elevator
+    Predicate<Elevator> twinitializeElevatorso = (elevator) -> elevator.currentFloor() < toFloor && elevator
         .getDirection().equals(
             Direction.UP);
     Optional<Elevator> candidate = elevatorList.stream().filter(predicateGoind).filter(two).findAny();
@@ -51,6 +54,7 @@ public class ElevatorControllerImpl implements ElevatorController {
 
      */
 
+    /*
     LOG.info(String.format("Number of elevators available %d", elevatorList.size()));
     for (Elevator exxx : elevatorList)
     {
@@ -59,7 +63,10 @@ public class ElevatorControllerImpl implements ElevatorController {
 
 
     return elevatorList.stream().filter(elevator -> !elevator.isBusy()).findAny().get();
+    */
+    return elevatorList.get(1);
   }
+
 
   @Override
   public List<Elevator> getElevators() {
@@ -70,12 +77,15 @@ public class ElevatorControllerImpl implements ElevatorController {
   public void releaseElevator(Elevator elevator) {
   }
 
+  // my logic
+
   @Override
   public void validateElevatorCallRequest(ElevatorCallRequest elevatorCallRequest)
       throws ElevatorCallRequestException {
     elevatorCallRequestValidator.validateElevatorCallRequest(elevatorCallRequest);
   }
 
+  /*
   @Override
   public void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest) {
     Optional<Elevator> optionalElevator = requestElevator(elevatorCallRequest);
@@ -88,9 +98,26 @@ public class ElevatorControllerImpl implements ElevatorController {
     }
 
   }
+  */
+
 
   @Override
-  public Optional<Elevator> requestElevator(ElevatorCallRequest elevatorCallRequest){
-    return elevatorList.stream().filter(elevator -> !elevator.isBusy()).findFirst();
+  public void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest){
+    int elevatorCallRequestFloor = elevatorCallRequest.getCurrentFloor();
+    final Elevator candidateFree;
+    Optional<Elevator> freeElevator = elevatorList.stream().filter(elevator -> !elevator.isBusy()).findAny();
+    if( freeElevator.isPresent()){
+      candidateFree = freeElevator.get();
+      candidateFree.requestElevatorMovement(elevatorCallRequestFloor);
+      executor.execute(()->{candidateFree.run();});
+    }else{
+      Elevator busyElevator = elevatorList.get(1);
+      busyElevator.requestElevatorMovement(elevatorCallRequestFloor);
+    }
+
   }
+
+
+
+
 }

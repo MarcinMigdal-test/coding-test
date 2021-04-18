@@ -58,13 +58,18 @@ public class ElevatorImpl implements Elevator{
 
 
     public void run() {
-        LOG.info(String.format("Running elevator %d invoked", elevatorId));
-
-        while(shouldExecuteMovement()){
-
-        }
+            if(shouldExecuteMovement()){
+                LOG.info(String.format("Running elevator %d invoked", elevatorId));
+            }else{
+                executeCycleNop();
+            }
 
     }
+
+
+
+
+
 
     private boolean shouldExecuteMovement(){
         return !floorsToVisitRequests.isEmpty();
@@ -100,10 +105,6 @@ public class ElevatorImpl implements Elevator{
         calculateDirectionAndChangeFloor(toFloor);
     }
 
-    @Override
-    public void moveElevatorToFloor(int toFloor) {
-
-    }
 
     private void calculateDirectionAndChangeFloor( int floorToVisit){
         direction = currentFloor<floorToVisit?Direction.UP:Direction.DOWN;
@@ -126,19 +127,22 @@ public class ElevatorImpl implements Elevator{
         return 0;
     }
 
-    private void executeCycleNop(){
-        direction = Direction.NONE;
-        try {
-            Thread.sleep(NOP_TIME);
-        } catch (InterruptedException e) {
-            LOG.warn(String.format("Elevator %d cannot wait for requests",this.elevatorId));
-        }
-    }
+
 
     private void executeCycleMove(int toFloor){
         try {
             Thread.sleep(MOVEMENT_TIME);
 
+        } catch (InterruptedException e) {
+            LOG.warn(String.format("Elevator %d cannot wait for requests",this.elevatorId));
+        }
+    }
+
+    private void executeCycleNop(){
+        direction = Direction.NONE;
+        try {
+            Thread.sleep(NOP_TIME);
+            LOG.warn(String.format("Elevator %d has cycle NOP",this.elevatorId));
         } catch (InterruptedException e) {
             LOG.warn(String.format("Elevator %d cannot wait for requests",this.elevatorId));
         }
