@@ -9,9 +9,9 @@ import org.slf4j.LoggerFactory;
 
 public class ElevatorImpl implements Elevator {
 
-    private final int MOVEMENT_TIME = 2;
-    private final int STOP_AT_FLOOR_TIME = 3;
-    private final int NOP_TIME = 5;
+    private final int MOVEMENT_TIME = 100;
+    private final int STOP_AT_FLOOR_TIME = 300;
+    private final int NOP_TIME = 100;
     private final Logger LOG = LoggerFactory
         .getLogger(ElevatorImpl.class.getCanonicalName());
 
@@ -48,11 +48,6 @@ public class ElevatorImpl implements Elevator {
     }
 
     @Override
-    public void requestElevatorMovement(int toFloor) {
-        floorsToVisitRequests.add(toFloor);
-    }
-
-    @Override
     public boolean isBusy() {
         return !direction.equals(Direction.NONE);
     }
@@ -62,39 +57,57 @@ public class ElevatorImpl implements Elevator {
         return currentFloor;
     }
 
+
+
+    //=====================================================================
+    @Override
+    public NavigableSet<Integer> floorsCheck() {
+        return floorsToVisitRequests;
+    }
+
+    @Override
+    public void requestElevatorMovement(int toFloor) {
+        floorsToVisitRequests.add(toFloor);
+    }
+
+    @Override
     public void run() {
         while (shouldExecuteMovement()) {
-
+            LOG.info(String.format("Elevator %d is moving", elevatorId));
             if (isDirectionChosen()) {
                 //zmien pietro
                 executeCycleMove();
-
                 if (isDestinationFloorAchieved()) {
                     direction = Direction.NONE;
                     executeCycleStopNaPietrzePoDrodze();
                 }
-
                 if (floorsToVisitRequests.contains(this.currentFloor)) {
                     floorsToVisitRequests.remove(this.currentFloor);
                     executeCycleStopNaPietrzePoDrodze();
                 }
-
             } else {
+                LOG.info(String.format("Elevator %d has no direction set",elevatorId));
                 int topFloorNumber = floorsToVisitRequests.last();
-                int bottomFloorNumber = floorsToVisitRequests.first();
                 if (floorsToVisitRequests.size() == 1) {
+                    LOG.info(String.format("Elevator %d one only destination floor selected",elevatorId,destinationFloor));
                     destinationFloor = topFloorNumber;
-                    if (currentFloor < destinationFloor) {
-                        direction = Direction.UP;
-                    } else if (currentFloor > destinationFloor) {
-                        direction = Direction.DOWN;
-                    }
                 }
+                else{
+                    LOG.info(String.format("Elevator %d one has many floors to visit. It's current position is: %s ",elevatorId,currentFloor));
+                    int bottomFloorNumber = floorsToVisitRequests.first();
+                    LOG.info(String.format("Elevator %d is calulaing ",elevatorId));
+                    destinationFloor = findNearestTargetFloor(topFloorNumber, bottomFloorNumber);
+                }
+                LOG.info(String.format("Elevator %d is calculating direction...",elevatorId));
+                if (currentFloor < destinationFloor) {
+                    direction = Direction.UP;
+                } else if (currentFloor > destinationFloor) {
+                    direction = Direction.DOWN;
+                }
+                LOG.info(String.format("Elevator %d has chosen direction %s",elevatorId, direction));
             }
-
-            LOG.info(String.format("Running elevator %d invoked", elevatorId));
-            if (direction.equals(Direction.NONE)) {
-            }
+            //if (direction.equals(Direction.NONE)) {
+            //}
         }
     }
 
@@ -118,7 +131,7 @@ public class ElevatorImpl implements Elevator {
 
     private void executeCycleMove() {
         LOG.info(String
-            .format("Elevator id %d moves from %d towards floor %d", elevatorId, currentFloor,
+            .format("Elevator id %d moves from floor %d towards floor %d", elevatorId, currentFloor,
                 destinationFloor));
         switch (direction) {
             case UP -> currentFloor++;
@@ -132,7 +145,7 @@ public class ElevatorImpl implements Elevator {
             LOG.warn(String.format("Elevator %d cannot wait for requests", this.elevatorId));
         }
         LOG.info(String
-            .format("Elevator id %d moved from %d towards floor %d", elevatorId, currentFloor,
+            .format("Elevator id %d moved from floor %d towards floor %d", elevatorId, currentFloor,
                 destinationFloor));
     }
 
