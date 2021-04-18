@@ -25,7 +25,6 @@ public class ElevatorControllerImplTest {
     assertEquals(FloorsElevatorsConfig.ELEVATORS_AMOUNT_2, elevatorController.getElevators().size());
   }
 
-
   @Test
   public void releaseElevator() {
   }
