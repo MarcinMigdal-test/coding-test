@@ -3,6 +3,7 @@ package com.tingco.codechallenge.elevator.impl;
 import com.tingco.codechallenge.elevator.api.Elevator;
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig;
 import org.junit.jupiter.api.Test;
 
 public class ElevatorImplTest {

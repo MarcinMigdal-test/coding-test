@@ -19,7 +19,7 @@ public class ElevatorImpl implements Elevator {
     private Direction direction = Direction.NONE;
     private int currentFloor;
     private int destinationFloor;
-    private NavigableSet<Integer> floorsToVisitRequests = new ConcurrentSkipListSet<Integer>();
+    private final NavigableSet<Integer> floorsToVisitRequests = new ConcurrentSkipListSet<Integer>();
 
     public ElevatorImpl(int elevatorId) {
         this.elevatorId = elevatorId;
@@ -63,18 +63,18 @@ public class ElevatorImpl implements Elevator {
     }
 
     public void run() {
-        while(shouldExecuteMovement()) {
+        while (shouldExecuteMovement()) {
 
             if (isDirectionChosen()) {
                 //zmien pietro
                 executeCycleMove();
 
-                if(isDestinationFloorAchieved()){
+                if (isDestinationFloorAchieved()) {
                     direction = Direction.NONE;
                     executeCycleStopNaPietrzePoDrodze();
                 }
 
-                if( floorsToVisitRequests.contains(this.currentFloor) ){
+                if (floorsToVisitRequests.contains(this.currentFloor)) {
                     floorsToVisitRequests.remove(this.currentFloor);
                     executeCycleStopNaPietrzePoDrodze();
                 }
@@ -98,16 +98,15 @@ public class ElevatorImpl implements Elevator {
         }
     }
 
-
     private boolean shouldExecuteMovement() {
         return !floorsToVisitRequests.isEmpty();
     }
 
-    private boolean isDirectionChosen(){
+    private boolean isDirectionChosen() {
         return !direction.equals(Direction.NONE);
     }
 
-    private boolean isDestinationFloorAchieved(){
+    private boolean isDestinationFloorAchieved() {
         return destinationFloor == currentFloor;
     }
 
@@ -118,7 +117,9 @@ public class ElevatorImpl implements Elevator {
     }
 
     private void executeCycleMove() {
-        LOG.info(String.format("Elevator id %d moves from %d towards floor %d", elevatorId,currentFloor,destinationFloor));
+        LOG.info(String
+            .format("Elevator id %d moves from %d towards floor %d", elevatorId, currentFloor,
+                destinationFloor));
         switch (direction) {
             case UP -> currentFloor++;
             case DOWN -> currentFloor--;
@@ -130,17 +131,20 @@ public class ElevatorImpl implements Elevator {
         } catch (InterruptedException e) {
             LOG.warn(String.format("Elevator %d cannot wait for requests", this.elevatorId));
         }
-        LOG.info(String.format("Elevator id %d moved from %d towards floor %d", elevatorId,currentFloor,destinationFloor));
-
-
+        LOG.info(String
+            .format("Elevator id %d moved from %d towards floor %d", elevatorId, currentFloor,
+                destinationFloor));
     }
 
     private void executeCycleStopNaPietrzePoDrodze() {
         try {
             Thread.sleep(STOP_AT_FLOOR_TIME);
-            LOG.warn(String.format("Elevator %d has cycle STOP at floor %d", this.elevatorId,this.currentFloor));
+            LOG.warn(String.format("Elevator %d has cycle STOP at floor %d", this.elevatorId,
+                this.currentFloor));
         } catch (InterruptedException e) {
-            LOG.warn(String.format("Elevator %d cannot execute STOP at floor %d due to %s", this.elevatorId,this.currentFloor, e.getMessage()));
+            LOG.warn(String
+                .format("Elevator %d cannot execute STOP at floor %d due to %s", this.elevatorId,
+                    this.currentFloor, e.getMessage()));
         }
     }
 
@@ -150,8 +154,8 @@ public class ElevatorImpl implements Elevator {
             Thread.sleep(NOP_TIME);
             LOG.warn(String.format("Elevator %d has cycle NOP", this.elevatorId));
         } catch (InterruptedException e) {
-            LOG.warn(String.format("Elevator %d execute cycle NOP due to: %s", this.elevatorId, e.getMessage()));
+            LOG.warn(String.format("Elevator %d execute cycle NOP due to: %s", this.elevatorId,
+                e.getMessage()));
         }
     }
-
 }

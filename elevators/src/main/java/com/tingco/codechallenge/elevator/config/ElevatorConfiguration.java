@@ -14,41 +14,42 @@ import org.springframework.context.annotation.PropertySources;
 
 @Configuration
 @EnableAutoConfiguration
-@PropertySources({ @PropertySource("classpath:application.properties") })
+@PropertySources({@PropertySource("classpath:application.properties")})
 public class ElevatorConfiguration {
 
 
-  @Value("${com.tingco.elevator.numberofelevators}")
-  private int elevatorsNumber;
+    @Value("${com.tingco.elevator.numberofelevators}")
+    private int elevatorsNumber;
 
-  public int getElevatorsNumber(){
-    return elevatorsNumber;
-  }
+    public int getElevatorsNumber() {
+        return elevatorsNumber;
+    }
 
-  @Value("${com.tingco.elevator.numberoffloors}")
-  private int floorsNumber;
-  public int getFloorsNumber(){
-    return floorsNumber;
-  }
+    @Value("${com.tingco.elevator.numberoffloors}")
+    private int floorsNumber;
 
-  /**
-   * Create a default thread pool for your convenience.
-   *
-   * @return Executor thread pool
-   */
-  @Bean(destroyMethod = "shutdown")
-  public Executor taskExecutor() {
-    return Executors.newFixedThreadPool(elevatorsNumber);
-  }
+    public int getFloorsNumber() {
+        return floorsNumber;
+    }
 
-  /**
-   * Create an event bus for your convenience.
-   *
-   * @return EventBus for async task execution
-   */
-  @Bean
-  public EventBus eventBus() {
-    return new AsyncEventBus(Executors.newCachedThreadPool());
-  }
+    /**
+     * Create a default thread pool for your convenience.
+     *
+     * @return Executor thread pool
+     */
+    @Bean(destroyMethod = "shutdown")
+    public Executor taskExecutor() {
+        return Executors.newFixedThreadPool(elevatorsNumber);
+    }
+
+    /**
+     * Create an event bus for your convenience.
+     *
+     * @return EventBus for async task execution
+     */
+    @Bean
+    public EventBus eventBus() {
+        return new AsyncEventBus(Executors.newCachedThreadPool());
+    }
 
 }

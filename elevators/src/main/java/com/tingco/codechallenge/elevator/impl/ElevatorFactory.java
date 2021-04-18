@@ -7,15 +7,15 @@ import java.util.stream.IntStream;
 
 public final class ElevatorFactory {
 
-  private final static int ELEVATOR_FIRST_INDEX = 1;
+    private final static int ELEVATOR_FIRST_INDEX = 1;
 
-  private ElevatorFactory() {
-  }
+    private ElevatorFactory() {
+    }
 
-  public static List<Elevator> getElevators(int elevatorsNumber) {
-    List<Elevator> elevatorList = new ArrayList<>();
-    IntStream.rangeClosed(ELEVATOR_FIRST_INDEX, elevatorsNumber)
-        .forEach(value -> elevatorList.add(new ElevatorImpl(value)));
-    return elevatorList;
-  }
+    public static List<Elevator> getElevators(int elevatorsNumber) {
+        List<Elevator> elevatorList = new ArrayList<>();
+        IntStream.rangeClosed(ELEVATOR_FIRST_INDEX, elevatorsNumber)
+            .forEach(value -> elevatorList.add(new ElevatorImpl(value)));
+        return elevatorList;
+    }
 }

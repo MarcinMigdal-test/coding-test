@@ -1,11 +1,12 @@
-package com.tingco.codechallenge.elevator.impl;
+package com.tingco.codechallenge.elevator.config;
 
 public final class FloorsElevatorsConfig {
 
   private FloorsElevatorsConfig() {
   }
 
-  public final static int ELEVATORS_AMOUNT = 1;
+  public final static int ELEVATORS_AMOUNT_1 = 1;
+  public final static int ELEVATORS_AMOUNT_2 = 2;
   public final static int FLOORS_AMOUNT = 6;
   public final static int FLOOR_MINUS_1 = -1;
   public final static int FLOOR_0 = 0;

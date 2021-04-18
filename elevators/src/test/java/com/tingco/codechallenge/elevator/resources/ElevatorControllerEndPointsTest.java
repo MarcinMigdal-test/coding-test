@@ -1,7 +1,7 @@
 package com.tingco.codechallenge.elevator.resources;
 
 import com.tingco.codechallenge.elevator.ElevatorApplication;
-import com.tingco.codechallenge.elevator.impl.FloorsElevatorsConfig;
+import com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig;
 import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
