@@ -62,13 +62,12 @@ public final class ElevatorControllerEndPoints {
   }
 
 
-  @PostMapping("/{currentFloor}/{userDirectionRequest}/{targetFloor}")
-  public ResponseEntity liftFromFloorToFloor(
-      @PathVariable("currentFloor") @Min(0) int currentFloor,
-      @PathVariable("userDirectionRequest") UserDirectionRequest userDirectionRequest,
-      @PathVariable("targetFloor") @Min(0) int targetFloor) {
+  @PostMapping("/{floor}/{userDirectionRequest}")
+  public ResponseEntity callElevatorToFloor(
+      @PathVariable("floor") @Min(0) int floor,
+      @PathVariable("userDirectionRequest") UserDirectionRequest userDirectionRequest) {
 
-    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(currentFloor,
+    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(floor,
         userDirectionRequest);
     try {
       elevatorCallRequestValidator.validateElevatorCallRequest(elevatorCallRequest);

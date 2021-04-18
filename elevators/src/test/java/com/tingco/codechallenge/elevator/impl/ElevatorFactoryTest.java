@@ -9,8 +9,8 @@ public class ElevatorFactoryTest {
 
   @Test
   public void create(){
-    int elevatorsNumber = 4;
-    List<Elevator> elevatorList =  ElevatorFactory.getElevators(elevatorsNumber);
-    Assertions.assertEquals(elevatorsNumber,elevatorList.size());
+
+    List<Elevator> elevatorList =  ElevatorFactory.getElevators(FloorsElevatorsConfig.ELEVATORS_AMOUNT);
+    Assertions.assertEquals(FloorsElevatorsConfig.ELEVATORS_AMOUNT,elevatorList.size());
   }
 }

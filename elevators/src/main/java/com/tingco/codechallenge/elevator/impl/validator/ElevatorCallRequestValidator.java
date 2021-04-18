@@ -21,7 +21,7 @@ public class ElevatorCallRequestValidator {
     int currentFloor = elevatorCallRequest.getCurrentFloor();
     if (currentFloor < 0 || currentFloor > floorsNumber) {
       String message = String
-          .format("Improper values for current floor %d and target floor %d ", currentFloor);
+          .format("Improper values for current floor %d", currentFloor);
       LOG.warn(message);
       throw new ElevatorCallRequestException(message);
     }

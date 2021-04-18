@@ -1,6 +1,7 @@
 package com.tingco.codechallenge.elevator.resources;
 
 import com.tingco.codechallenge.elevator.ElevatorApplication;
+import com.tingco.codechallenge.elevator.impl.FloorsElevatorsConfig;
 import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,7 @@ import org.springframework.http.HttpStatus;
 @WebAppConfiguration
 public class ElevatorControllerEndPointsTest {
 
+
     @Autowired
     private ElevatorControllerEndPoints endPoints;
 
@@ -33,20 +35,20 @@ public class ElevatorControllerEndPointsTest {
     }
 
     @Test
-    public void giveliftFrom0to3(){
-        ResponseEntity response = endPoints.liftFromFloorToFloor(0, UserDirectionRequest.UP,3);
+    public void callElevatorToFloor_3(){
+        ResponseEntity response = endPoints.callElevatorToFloor(FloorsElevatorsConfig.FLOOR_3, UserDirectionRequest.UP);
         Assertions.assertEquals(HttpStatus.OK,response.getStatusCode());
     }
 
     @Test
-    public void giveliftFrom0to10(){
-        ResponseEntity response = endPoints.liftFromFloorToFloor(0, UserDirectionRequest.UP,10);
+    public void callElevatorToFloor_10whichNotExists(){
+        ResponseEntity response = endPoints.callElevatorToFloor(FloorsElevatorsConfig.FLOOR_10, UserDirectionRequest.UP);
         Assertions.assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
     }
 
     @Test
-    public void giveliftFromMinus1to2(){
-        ResponseEntity response = endPoints.liftFromFloorToFloor(-1, UserDirectionRequest.UP,10);
+    public void callElevatorToFloor_minus1whichNotExists(){
+        ResponseEntity response = endPoints.callElevatorToFloor(FloorsElevatorsConfig.FLOOR_MINUS_1, UserDirectionRequest.UP);
         Assertions.assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
     }
 }
