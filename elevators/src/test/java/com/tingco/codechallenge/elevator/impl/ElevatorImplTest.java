@@ -12,12 +12,12 @@ public class ElevatorImplTest {
     private Elevator testedObject;
 
     @BeforeEach
-    public void create(){
+    void create(){
         testedObject = new ElevatorImpl(1);
     }
 
     @Test
-    public void requestElevatorMovement_one_by_one(){
+    void requestElevatorMovement_one_by_one(){
         assertEquals(FloorsElevatorsConfig.FLOOR_0, testedObject.currentFloor());
         testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_5);
         testedObject.run();
@@ -37,7 +37,7 @@ public class ElevatorImplTest {
     }
 
     @Test
-    public void requestElevatorMovement_parallel_requests(){
+    void requestElevatorMovement_parallel_requests(){
         assertEquals(FloorsElevatorsConfig.FLOOR_0, testedObject.currentFloor());
         testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_5);
         testedObject.run();

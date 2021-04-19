@@ -1,6 +1,8 @@
 package com.tingco.codechallenge.elevator.api;
 
-import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequest;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestNoDirection;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDirection;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveBetweenFloorsRequest;
 import java.util.List;
 
 
@@ -37,7 +39,12 @@ public interface ElevatorController {
     //================================================================================================
 
     //Added by Marcin Migdal
-    void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest);
+    void executeElevatorCallRequestWithDirection(
+        ElevatorCallRequestWithDirection elevatorCallRequest);
 
+    void executeElevatorCallRequestWithNoDirection(
+        ElevatorCallRequestNoDirection elevatorCallRequest);
 
+    void executeElevatorCallRequestBetweenFloors(
+        ElevatorMoveBetweenFloorsRequest elevatorCallRequest);
 }

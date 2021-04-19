@@ -1,12 +1,15 @@
 package com.tingco.codechallenge.elevator.impl.validator;
 
 import com.tingco.codechallenge.elevator.impl.exception.ElevatorRequestException;
-import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequest;
-import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveFromFloorToFloorRequest;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestNoDirection;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDirection;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveBetweenFloorsRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ElevatorRequestValidator {
+
+    private final static String TARGET_FLOOR = "Target floor";
 
     final int floorsNumber;
     private final Logger LOG = LoggerFactory
@@ -16,19 +19,29 @@ public class ElevatorRequestValidator {
         this.floorsNumber = floorsNumber;
     }
 
-    public void validateElevatorCallRequest(ElevatorCallRequest elevatorCallRequest)
+    public void validateCallRequestNoDirection(
+        ElevatorCallRequestNoDirection elevatorCallRequestNoDirection)
         throws ElevatorRequestException {
-        int targetFloor = elevatorCallRequest.getTargetFloor();
-        validateFloor("Target floor", targetFloor);
+        int targetFloor = elevatorCallRequestNoDirection.getTargetFloor();
+        validateFloor(TARGET_FLOOR, targetFloor);
+    }
+
+    public void validateCallRequestWithDirection(
+        ElevatorCallRequestWithDirection elevatorCallRequestWithDirection)
+        throws ElevatorRequestException {
+        int targetFloor = elevatorCallRequestWithDirection.getTargetFloor();
+        validateFloor(TARGET_FLOOR, targetFloor);
     }
 
     public void validateMoveBetweenFloorsRequest(
-        ElevatorMoveFromFloorToFloorRequest elevatorMoveFromFloorToFloorRequest) throws ElevatorRequestException {
-        int currentFloor = elevatorMoveFromFloorToFloorRequest.getCurrentFloor();
-        int targetFloor = elevatorMoveFromFloorToFloorRequest.getTargetFloor();
+        ElevatorMoveBetweenFloorsRequest elevatorMoveBetweenFloorsRequest)
+        throws ElevatorRequestException {
+        int currentFloor = elevatorMoveBetweenFloorsRequest.getCurrentFloor();
+        int targetFloor = elevatorMoveBetweenFloorsRequest.getTargetFloor();
         validateFloor("Current floor", currentFloor);
-        validateFloor("Target floor", targetFloor);
+        validateFloor(TARGET_FLOOR, targetFloor);
     }
+
 
     private void validateFloor(String floorName, int value) throws ElevatorRequestException {
         if (value < 0 || value > floorsNumber) {

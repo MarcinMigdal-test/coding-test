@@ -6,7 +6,8 @@ import com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl;
 import com.tingco.codechallenge.elevator.impl.ElevatorFactory;
 import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
 import com.tingco.codechallenge.elevator.impl.exception.ElevatorRequestException;
-import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequest;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestNoDirection;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDirection;
 import com.tingco.codechallenge.elevator.impl.validator.ElevatorRequestValidator;
 import javax.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,11 @@ public final class ElevatorControllerEndPoints {
         return "pong";
     }
 
+
+    /**
+     * Endpoint returning application status - number of elevators and floors
+     *
+     * */
     @GetMapping("/status")
     public ResponseEntity getStatus() {
         return ResponseEntity.status(HttpStatus.OK).body(String
@@ -63,30 +69,54 @@ public final class ElevatorControllerEndPoints {
                 elevatorConfiguration.getFloorsNumber()));
     }
 
-
-    @PostMapping("/call/{floor}/{userDirectionRequest}")
-    public ResponseEntity callElevatorToFloorWithDirection(
-        @PathVariable("floor") @Min(0) int floor,
-        @PathVariable("userDirectionRequest") UserDirectionRequest userDirectionRequest) {
-
-        ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(floor,
-            userDirectionRequest);
+    /**
+     * Call elevator to floor with  nodirection suggestion (to be used by UI) and optimization algorithm (to be implemented)
+     * */
+    @PostMapping("/call/{floor}")
+    public ResponseEntity callElevatorToFloor(
+        @PathVariable("floor") @Min(0) int floor) {
+        ElevatorCallRequestNoDirection elevatorCallRequestNoDirection = new ElevatorCallRequestNoDirection(floor
+            );
         try {
-            elevatorRequestValidator.validateElevatorCallRequest(elevatorCallRequest);
-            elevatorController.executeElevatorCallRequest(elevatorCallRequest);
+            elevatorRequestValidator.validateCallRequestNoDirection(elevatorCallRequestNoDirection);
+            elevatorController.executeElevatorCallRequestWithNoDirection(elevatorCallRequestNoDirection);
         } catch (ElevatorRequestException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(elevatorCallRequest);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                e.getMessage());
         }
 
         return ResponseEntity.status(HttpStatus.OK).body("Request accepted. Wait for execution");
     }
 
+    /**
+     * Call elevator to floor with direction suggestion (to be used by UI) and optimization algorithm (to be implemented)
+     * */
+    @PostMapping("/call/{floor}/{userDirectionRequest}")
+    public ResponseEntity callElevatorToFloorWithDirection(
+        @PathVariable("floor") @Min(0) int floor,
+        @PathVariable("userDirectionRequest") UserDirectionRequest userDirectionRequest) {
+        ElevatorCallRequestWithDirection elevatorCallRequestWithDirection = new ElevatorCallRequestWithDirection(floor,
+            userDirectionRequest);
+        try {
+            elevatorRequestValidator.validateCallRequestWithDirection(elevatorCallRequestWithDirection);
+            elevatorController.executeElevatorCallRequestWithDirection(elevatorCallRequestWithDirection);
+        } catch (ElevatorRequestException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                e.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body("Request accepted. Wait for execution");
+    }
+
+    /**
+     *  Send order to  elevator after user gets on the board. For further development
+     * */
     @PostMapping("/move/{currentFloor}/{targetFloor}")
     public ResponseEntity requestElevatorToFloor(
         @PathVariable("currentFloor") @Min(0) int currentFloor,
         @PathVariable("targetFloor") @Min(0) int targetFloor
     ) {
-        return ResponseEntity.status(HttpStatus.OK).body("Request accepted. Wait for execution");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("For further development.Not implemented");
     }
 
 

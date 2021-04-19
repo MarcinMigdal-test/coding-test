@@ -11,5 +11,4 @@ abstract class AbstractRequest {
     public int getTargetFloor() {
         return targetFloor;
     }
-
 }
