@@ -36,19 +36,19 @@ public class ElevatorControllerEndPointsTest {
 
     @Test
     public void callElevatorToFloor_3(){
-        ResponseEntity response = endPoints.callElevatorToFloor(FloorsElevatorsConfig.FLOOR_3, UserDirectionRequest.UP);
+        ResponseEntity response = endPoints.callElevatorToFloorWithDirection(FloorsElevatorsConfig.FLOOR_3, UserDirectionRequest.UP);
         Assertions.assertEquals(HttpStatus.OK,response.getStatusCode());
     }
 
     @Test
     public void callElevatorToFloor_10whichNotExists(){
-        ResponseEntity response = endPoints.callElevatorToFloor(FloorsElevatorsConfig.FLOOR_10, UserDirectionRequest.UP);
+        ResponseEntity response = endPoints.callElevatorToFloorWithDirection(FloorsElevatorsConfig.FLOOR_10, UserDirectionRequest.UP);
         Assertions.assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
     }
 
     @Test
     public void callElevatorToFloor_minus1whichNotExists(){
-        ResponseEntity response = endPoints.callElevatorToFloor(FloorsElevatorsConfig.FLOOR_MINUS_1, UserDirectionRequest.UP);
+        ResponseEntity response = endPoints.callElevatorToFloorWithDirection(FloorsElevatorsConfig.FLOOR_MINUS_1, UserDirectionRequest.UP);
         Assertions.assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
     }
 }

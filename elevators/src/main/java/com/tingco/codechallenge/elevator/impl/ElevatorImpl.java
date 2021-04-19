@@ -153,7 +153,7 @@ public class ElevatorImpl implements Elevator {
     private void executeCycleStopNaPietrzePoDrodze(int floor, String floorDescription) {
         try {
             Thread.sleep(STOP_AT_FLOOR_TIME);
-            LOG.warn(String.format("Elevator %d has cycle STOP at floor %d which is %s", this.elevatorId,
+            LOG.info(String.format("Elevator %d has cycle STOP at floor %d which is %s", this.elevatorId,
                 floor,floorDescription));
         } catch (InterruptedException e) {
             LOG.warn(String

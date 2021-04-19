@@ -65,7 +65,7 @@ public final class ElevatorControllerEndPoints {
 
 
     @PostMapping("/call/{floor}/{userDirectionRequest}")
-    public ResponseEntity callElevatorToFloor(
+    public ResponseEntity callElevatorToFloorWithDirection(
         @PathVariable("floor") @Min(0) int floor,
         @PathVariable("userDirectionRequest") UserDirectionRequest userDirectionRequest) {
 
