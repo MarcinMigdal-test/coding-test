@@ -26,81 +26,90 @@ public class ElevatorRequestValidatorTest {
 
     @Mock
     private ElevatorConfiguration elevatorConfiguration;
-    private ElevatorRequestValidator testedObject;
+    private ElevatorRequestValidator elevatorRequestValidator;
 
     @BeforeEach
-    public void setup() {
+    public void setupFloorsAmountAsSix() {
         Mockito.when(elevatorConfiguration.getFloorsNumber()).thenReturn(FLOORS_AMOUNT_EQUAL_6);
-        testedObject = new ElevatorRequestValidator(elevatorConfiguration);
+        elevatorRequestValidator = new ElevatorRequestValidator(elevatorConfiguration);
     }
 
     @Test
-    void validateCallRequestNoDirection_proper_targetFloor_3_whereFloors_6()
+    void acceptProperRequest_targetFloor_3_whereFloors_6()
         throws ElevatorRequestException {
         ElevatorCallRequestNoDirection elevatorCallRequestNoDirection = new ElevatorCallRequestNoDirection(
             FLOOR_1);
-        testedObject.validateCallRequestNoDirection(elevatorCallRequestNoDirection);
+        elevatorRequestValidator.validateCallRequestNoDirection(elevatorCallRequestNoDirection);
     }
 
     @Test
-    void validateCallRequestNoDirection_improper_targetFloor_10_whereFloors_6() {
+    void canRejectImproperRequest_targetFloor_10_whereFloors_6() {
         ElevatorCallRequestNoDirection elevatorCallRequestNoDirection = new ElevatorCallRequestNoDirection(
             FLOOR_10);
+
         assertThrows(ElevatorRequestException.class,
-            () -> testedObject.validateCallRequestNoDirection(elevatorCallRequestNoDirection));
+            () -> elevatorRequestValidator
+                .validateCallRequestNoDirection(elevatorCallRequestNoDirection));
     }
 
     @Test
-    void validateCallRequestNoDirection_improper_targetFloor_minus_1_whereFloors_6() {
+    void canRejectImproperRequest_targetFloor_minus_1_whereFloors_6() {
         ElevatorCallRequestNoDirection elevatorCallRequestNoDirection = new ElevatorCallRequestNoDirection(
             FLOOR_MINUS_1);
+
         assertThrows(ElevatorRequestException.class,
-            () -> testedObject.validateCallRequestNoDirection(elevatorCallRequestNoDirection));
+            () -> elevatorRequestValidator
+                .validateCallRequestNoDirection(elevatorCallRequestNoDirection));
     }
 
     @Test
-    void validateCallRequestWithDirection_proper_targetFloor_1_whereFloors_6()
+    void acceptProperRequest_targetFloor_1_whereFloors_6()
         throws ElevatorRequestException {
         ElevatorCallRequestWithDirection elevatorCallRequestWithDirection = new ElevatorCallRequestWithDirection(
             FLOOR_1,
             UserDirectionRequest.UP
         );
-        testedObject.validateCallRequestWithDirection(elevatorCallRequestWithDirection);
+        elevatorRequestValidator.validateCallRequestWithDirection(elevatorCallRequestWithDirection);
     }
 
     @Test
-    void validateCallRequestWithDirection_improper_currentFloor_minus_1_UP_whereFloors6() {
+    void canRejectImproperRequest_improper_currentFloor_minus_1_UP_whereFloors6() {
         ElevatorCallRequestWithDirection elevatorCallRequestWithDirection = new ElevatorCallRequestWithDirection(
             FLOOR_MINUS_1,
             UserDirectionRequest.UP);
+
         assertThrows(ElevatorRequestException.class,
-            () -> testedObject.validateCallRequestWithDirection(elevatorCallRequestWithDirection));
+            () -> elevatorRequestValidator
+                .validateCallRequestWithDirection(elevatorCallRequestWithDirection));
     }
 
     @Test
-    void validateCallRequestWithDirection_improper_targetFloor_10_UP_whereFloors_6() {
+    void canRejectImproperRequest_targetFloor_10_UP_whereFloors_6() {
         ElevatorCallRequestWithDirection elevatorCallRequestWithDirection = new ElevatorCallRequestWithDirection(
             FLOOR_10,
             UserDirectionRequest.UP);
+
         assertThrows(ElevatorRequestException.class,
-            () -> testedObject.validateCallRequestWithDirection(elevatorCallRequestWithDirection));
+            () -> elevatorRequestValidator
+                .validateCallRequestWithDirection(elevatorCallRequestWithDirection));
     }
 
-
     @Test
-    void validateMoveBetweenFloorsRequest_from_3_to_5_whereFloors_6()
+    void canAcceptProperRequest_from_3_to_5_whereFloors_6()
         throws ElevatorRequestException {
         ElevatorMoveBetweenFloorsRequest elevatorMoveBetweenFloorsRequest = new ElevatorMoveBetweenFloorsRequest(
             FLOOR_3, FLOOR_5);
-        testedObject.validateMoveBetweenFloorsRequest(elevatorMoveBetweenFloorsRequest);
+        elevatorRequestValidator.validateMoveBetweenFloorsRequest(elevatorMoveBetweenFloorsRequest);
     }
 
     @Test
-    void validateMoveBetweenFloorsRequest_from_minus_1_to_5_whereFloors_6() {
+    void canRejectImproperRequest_from_minus_1_to_5_whereFloors_6() {
         ElevatorMoveBetweenFloorsRequest elevatorMoveBetweenFloorsRequest = new ElevatorMoveBetweenFloorsRequest(
             FLOOR_MINUS_1, FLOOR_5);
+
         assertThrows(ElevatorRequestException.class,
-            () -> testedObject.validateMoveBetweenFloorsRequest(elevatorMoveBetweenFloorsRequest));
+            () -> elevatorRequestValidator
+                .validateMoveBetweenFloorsRequest(elevatorMoveBetweenFloorsRequest));
     }
 
 }

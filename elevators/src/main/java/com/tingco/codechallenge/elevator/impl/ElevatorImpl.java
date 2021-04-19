@@ -4,6 +4,7 @@ import com.tingco.codechallenge.elevator.api.Elevator;
 import java.util.NavigableSet;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,11 +73,12 @@ public class ElevatorImpl implements Elevator {
 
     @Override
     public void run() {
-        while (shouldExecuteMovement()) {
+        while (isMovementRequired()) {
             LOG.info(String.format("Elevator %d is moving", elevatorId));
             if (isDirectionChosen()) {
                 executeCycleMove();
                 if (isDestinationFloorAchieved()) {
+                    //TODO extract
                     floorsToVisitRequests.remove(this.currentFloor);
                     direction = Direction.NONE;
                     executeCycleStopAtFloor(this.destinationFloor,"Destination floor");
@@ -96,7 +98,7 @@ public class ElevatorImpl implements Elevator {
                     LOG.info(String.format("Elevator %d one has many floors to visit. It's current position is: %s ",elevatorId,currentFloor));
                     int bottomFloorNumber = floorsToVisitRequests.first();
                     LOG.info(String.format("Elevator %d is calculating route ",elevatorId));
-                    destinationFloor = findNearestTargetFloor(topFloorNumber, bottomFloorNumber);
+                    destinationFloor = getNearestTargetFloorNumber(topFloorNumber, bottomFloorNumber);
                     LOG.info(String.format("Elevator %d has chosen destination floor %d",elevatorId,destinationFloor));
                 }
                 calculateDirection();
@@ -114,7 +116,7 @@ public class ElevatorImpl implements Elevator {
         LOG.info(String.format("Elevator %d has chosen direction %s",elevatorId, direction));
     }
 
-    private boolean shouldExecuteMovement() {
+    private boolean isMovementRequired() {
         return !floorsToVisitRequests.isEmpty();
     }
 
@@ -126,7 +128,7 @@ public class ElevatorImpl implements Elevator {
         return destinationFloor == currentFloor;
     }
 
-    private int findNearestTargetFloor(int topFloorNumber, int bottomFloorNumber) {
+    private int getNearestTargetFloorNumber(int topFloorNumber, int bottomFloorNumber) {
         int topFloorDistance = Math.abs(Math.subtractExact(currentFloor, topFloorNumber));
         int bottomFloorDistance = Math.abs(Math.subtractExact(currentFloor, bottomFloorNumber));
         return topFloorDistance<bottomFloorDistance?topFloorNumber:bottomFloorNumber;
@@ -143,7 +145,7 @@ public class ElevatorImpl implements Elevator {
             }
         }
         try {
-            Thread.sleep(MOVEMENT_TIME);
+            TimeUnit.MILLISECONDS.sleep(MOVEMENT_TIME);
         } catch (InterruptedException e) {
             LOG.warn(String.format("Elevator %d cannot wait for requests", this.elevatorId));
         }
@@ -154,7 +156,7 @@ public class ElevatorImpl implements Elevator {
 
     private void executeCycleStopAtFloor(int floor, String floorDescription) {
         try {
-            Thread.sleep(STOP_AT_FLOOR_TIME);
+            TimeUnit.MILLISECONDS.sleep(STOP_AT_FLOOR_TIME);
             LOG.info(String.format("Elevator %d has cycle STOP at floor %d which is %s", this.elevatorId,
                 floor,floorDescription));
         } catch (InterruptedException e) {
@@ -167,7 +169,7 @@ public class ElevatorImpl implements Elevator {
     private void executeCycleNop() {
         direction = Direction.NONE;
         try {
-            Thread.sleep(NOP_TIME);
+            TimeUnit.MILLISECONDS.sleep(NOP_TIME);
             LOG.warn(String.format("Elevator %d has cycle NOP", this.elevatorId));
         } catch (InterruptedException e) {
             LOG.warn(String.format("Elevator %d execute cycle NOP due to: %s", this.elevatorId,

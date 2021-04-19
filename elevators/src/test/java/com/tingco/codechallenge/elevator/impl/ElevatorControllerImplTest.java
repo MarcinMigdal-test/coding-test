@@ -21,31 +21,27 @@ public class ElevatorControllerImplTest {
 
     @Mock
     private ElevatorConfiguration elevatorConfiguration;
-    private ElevatorController testedObject;
+    private ElevatorController elevatorController;
 
     @BeforeEach
-    void setUp() {
+    void setUpElevatorController() {
         Mockito.when(elevatorConfiguration.getElevatorsNumber())
             .thenReturn(TestConfig.ELEVATORS_AMOUNT_2);
-        testedObject = new ElevatorControllerImpl(elevatorConfiguration);
+        elevatorController = new ElevatorControllerImpl(elevatorConfiguration);
     }
 
     @Test
-    void getElevators() {
-        assertEquals(TestConfig.ELEVATORS_AMOUNT_2, testedObject.getElevators().size());
+    void canInitTwoElevators() {
+        assertEquals(TestConfig.ELEVATORS_AMOUNT_2, elevatorController.getElevators().size());
     }
 
     @Test
-    void releaseElevator() {
-    }
-
-    @Test
-    void executeElevatorCallRequest() {
+    void canExecuteElevatorCallRequestToFloor4AndDirectionUp() {
         ElevatorCallRequestWithDirection elevatorCallRequestWithDirection = new ElevatorCallRequestWithDirection(
             TestConfig.FLOOR_4, UserDirectionRequest.UP);
-        testedObject.executeElevatorCallRequestWithDirection(elevatorCallRequestWithDirection);
+        elevatorController.executeElevatorCallRequestWithDirection(elevatorCallRequestWithDirection);
         Awaitility.await().atMost(5, TimeUnit.SECONDS);
-        Assertions.assertFalse(testedObject.getElevators().get(1).isBusy());
-        Assertions.assertTrue(testedObject.getElevators().get(0).isBusy());
+        Assertions.assertFalse(elevatorController.getElevators().get(1).isBusy());
+        Assertions.assertTrue(elevatorController.getElevators().get(0).isBusy());
     }
 }

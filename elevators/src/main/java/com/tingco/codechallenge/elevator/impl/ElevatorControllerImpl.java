@@ -94,6 +94,8 @@ public class ElevatorControllerImpl implements ElevatorController {
             Collectors.toList());
         if(elevatorsInMove.isEmpty())
         {
+            //elevators stoppped -> find the one nearest to call floor
+
             Optional<Elevator> firstFoundStoppedElevator = elevatorList.stream()
                 .filter(elevator -> !elevator.isBusy()).findFirst();
             if (firstFoundStoppedElevator.isPresent()) {
