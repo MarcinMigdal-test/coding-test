@@ -8,14 +8,12 @@ import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestNoDirec
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDirection;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveBetweenFloorsRequest;
 import com.tingco.codechallenge.elevator.util.DistanceUtils;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
