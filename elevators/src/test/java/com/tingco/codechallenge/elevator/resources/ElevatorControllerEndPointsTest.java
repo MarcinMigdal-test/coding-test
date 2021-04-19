@@ -1,18 +1,18 @@
 package com.tingco.codechallenge.elevator.resources;
 
-import com.tingco.codechallenge.elevator.ElevatorApplication;
-import com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig;
+import com.tingco.codechallenge.elevator.config.ElevatorConfiguration;
 import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
+import com.tingco.codechallenge.elevator.impl.exception.ElevatorRequestException;
+import com.tingco.codechallenge.elevator.impl.validator.ElevatorRequestValidator;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import org.springframework.http.HttpStatus;
+import static com.tingco.codechallenge.elevator.config.TestConfig.*;
 
 /**
  * Boiler plate test class to get up and running with a test faster.
@@ -20,35 +20,46 @@ import org.springframework.http.HttpStatus;
  * @author Sven Wesley
  */
 
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = {ElevatorApplication.class})
-@WebAppConfiguration
+@ExtendWith(MockitoExtension.class)
 public class ElevatorControllerEndPointsTest {
 
+    private final int STATUS_CODE_VALUE_200 = 200;
 
-    @Autowired
-    private ElevatorControllerEndPoints endPoints;
+    @Mock
+    private ElevatorConfiguration elevatorConfiguration;
+    @Mock
+    private ElevatorRequestValidator elevatorRequestValidator;
 
-    @Test
-    public void ping() {
-        Assertions.assertEquals("pong", endPoints.ping());
+    private ElevatorControllerEndPoints testedObject;
+
+    @BeforeEach
+    void setUp(){
+        Mockito.when(elevatorConfiguration.getFloorsNumber()).thenReturn(FLOORS_AMOUNT_EQUAL_6);
+        Mockito.when(elevatorConfiguration.getElevatorsNumber()).thenReturn(ELEVATORS_AMOUNT_2);
+        testedObject = new ElevatorControllerEndPoints(elevatorConfiguration,elevatorRequestValidator);
     }
 
     @Test
-    public void callElevatorToFloor_3(){
-        ResponseEntity response = endPoints.callElevatorToFloorWithDirection(FloorsElevatorsConfig.FLOOR_3, UserDirectionRequest.UP);
-        Assertions.assertEquals(HttpStatus.OK,response.getStatusCode());
+    void getStatus(){
+        Assertions.assertEquals(STATUS_CODE_VALUE_200, testedObject.getStatus().getStatusCodeValue());
+        Assertions.assertTrue(testedObject.getStatus().hasBody());
     }
 
     @Test
-    public void callElevatorToFloor_10whichNotExists(){
-        ResponseEntity response = endPoints.callElevatorToFloorWithDirection(FloorsElevatorsConfig.FLOOR_10, UserDirectionRequest.UP);
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    void callElevatorToFloor() throws ElevatorRequestException {
+        testedObject.callElevatorToFloor(FLOOR_3);
+        Mockito.verify(elevatorRequestValidator,Mockito.atMostOnce()).validateCallRequestNoDirection(Mockito.any());
     }
 
     @Test
-    public void callElevatorToFloor_minus1whichNotExists(){
-        ResponseEntity response = endPoints.callElevatorToFloorWithDirection(FloorsElevatorsConfig.FLOOR_MINUS_1, UserDirectionRequest.UP);
-        Assertions.assertEquals(HttpStatus.BAD_REQUEST,response.getStatusCode());
+    void callElevatorToFloorWithDirection() throws ElevatorRequestException {
+        testedObject.callElevatorToFloorWithDirection(FLOOR_3, UserDirectionRequest.DOWN);
+        Mockito.verify(elevatorRequestValidator, Mockito.atMostOnce()).validateCallRequestWithDirection(Mockito.any());
+    }
+
+    @Test
+    void requestElevatorToFloor() throws ElevatorRequestException {
+        testedObject.requestElevatorToFloor(FLOOR_2,FLOOR_3);
+        Mockito.verify(elevatorRequestValidator,Mockito.never()).validateMoveBetweenFloorsRequest(Mockito.any());
     }
 }

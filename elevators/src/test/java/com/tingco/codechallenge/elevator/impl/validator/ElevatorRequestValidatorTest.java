@@ -1,13 +1,14 @@
 package com.tingco.codechallenge.elevator.impl.validator;
 
-import static com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig.FLOORS_AMOUNT_EQUAL_6;
-import static com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig.FLOOR_1;
-import static com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig.FLOOR_10;
-import static com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig.FLOOR_3;
-import static com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig.FLOOR_5;
-import static com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig.FLOOR_MINUS_1;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOORS_AMOUNT_EQUAL_6;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_1;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_10;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_3;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_5;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_MINUS_1;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.tingco.codechallenge.elevator.config.ElevatorConfiguration;
 import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
 import com.tingco.codechallenge.elevator.impl.exception.ElevatorRequestException;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestNoDirection;
@@ -15,14 +16,22 @@ import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDir
 import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveBetweenFloorsRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class ElevatorRequestValidatorTest {
 
+    @Mock
+    private ElevatorConfiguration elevatorConfiguration;
     private ElevatorRequestValidator testedObject;
 
     @BeforeEach
     public void setup() {
-        testedObject = new ElevatorRequestValidator(FLOORS_AMOUNT_EQUAL_6);
+        Mockito.when(elevatorConfiguration.getFloorsNumber()).thenReturn(FLOORS_AMOUNT_EQUAL_6);
+        testedObject = new ElevatorRequestValidator(elevatorConfiguration);
     }
 
     @Test

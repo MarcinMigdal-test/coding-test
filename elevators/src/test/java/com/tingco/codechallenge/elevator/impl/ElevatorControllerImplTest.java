@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.jayway.awaitility.Awaitility;
 import com.tingco.codechallenge.elevator.api.ElevatorController;
-import com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig;
+import com.tingco.codechallenge.elevator.config.TestConfig;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDirection;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Assertions;
@@ -17,13 +17,13 @@ public class ElevatorControllerImplTest {
 
   @BeforeEach
   void setUp() {
-    elevatorController = new ElevatorControllerImpl(ElevatorFactory.getElevators(FloorsElevatorsConfig.ELEVATORS_AMOUNT_2),
-        FloorsElevatorsConfig.FLOORS_AMOUNT_EQUAL_6);
+    elevatorController = new ElevatorControllerImpl(ElevatorFactory.getElevators(TestConfig.ELEVATORS_AMOUNT_2),
+        TestConfig.FLOORS_AMOUNT_EQUAL_6);
   }
 
   @Test
   void getElevators() {
-    assertEquals(FloorsElevatorsConfig.ELEVATORS_AMOUNT_2, elevatorController.getElevators().size());
+    assertEquals(TestConfig.ELEVATORS_AMOUNT_2, elevatorController.getElevators().size());
   }
 
   @Test
@@ -32,7 +32,8 @@ public class ElevatorControllerImplTest {
 
   @Test
   void executeElevatorCallRequest() {
-    ElevatorCallRequestWithDirection elevatorCallRequestWithDirection = new ElevatorCallRequestWithDirection(FloorsElevatorsConfig.FLOOR_4,UserDirectionRequest.UP);
+    ElevatorCallRequestWithDirection elevatorCallRequestWithDirection = new ElevatorCallRequestWithDirection(
+        TestConfig.FLOOR_4,UserDirectionRequest.UP);
     elevatorController.executeElevatorCallRequestWithDirection(elevatorCallRequestWithDirection);
     Awaitility.await().atMost(5, TimeUnit.SECONDS);
     Assertions.assertFalse(elevatorController.getElevators().get(1).isBusy());

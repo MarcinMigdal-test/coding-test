@@ -1,8 +1,8 @@
 package com.tingco.codechallenge.elevator.config;
 
-public final class FloorsElevatorsConfig {
+public final class TestConfig {
 
-  private FloorsElevatorsConfig() {
+  private TestConfig() {
   }
 
   public final static int ELEVATORS_AMOUNT_1 = 1;

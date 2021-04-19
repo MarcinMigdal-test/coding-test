@@ -32,14 +32,14 @@ import org.springframework.web.bind.annotation.RestController;
 public final class ElevatorControllerEndPoints {
 
     private ElevatorConfiguration elevatorConfiguration;
-    private ElevatorController elevatorController;
     private ElevatorRequestValidator elevatorRequestValidator;
 
+    private ElevatorController elevatorController;
+
     @Autowired
-    public ElevatorControllerEndPoints(ElevatorConfiguration elevatorConfiguration) {
+    public ElevatorControllerEndPoints(ElevatorConfiguration elevatorConfiguration, ElevatorRequestValidator elevatorRequestValidator) {
         this.elevatorConfiguration = elevatorConfiguration;
-        elevatorRequestValidator = new ElevatorRequestValidator(
-            elevatorConfiguration.getFloorsNumber());
+        this.elevatorRequestValidator = elevatorRequestValidator;
         elevatorController = new ElevatorControllerImpl(
             ElevatorFactory.getElevators(elevatorConfiguration.getElevatorsNumber()),
             elevatorConfiguration.getFloorsNumber());
@@ -50,12 +50,11 @@ public final class ElevatorControllerEndPoints {
      *
      * @return String pong
      */
-    @Deprecated(forRemoval = true, since = "Now")
+    @Deprecated(forRemoval = false,since = "Returning simple String does not look nicely")
     @RequestMapping(value = "/ping", method = RequestMethod.GET)
     public String ping() {
         return "pong";
     }
-
 
     /**
      * Endpoint returning application status - number of elevators and floors
