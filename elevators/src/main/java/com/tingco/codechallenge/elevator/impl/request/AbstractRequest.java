@@ -2,14 +2,14 @@ package com.tingco.codechallenge.elevator.impl.request;
 
 abstract class AbstractRequest {
 
-    private final int currentFloor;
+    private final int targetFloor;
 
-    public AbstractRequest(int currentFloor) {
-        this.currentFloor = currentFloor;
+    public AbstractRequest(int targetFloor) {
+        this.targetFloor = targetFloor;
     }
 
-    public int getCurrentFloor() {
-        return currentFloor;
+    public int getTargetFloor() {
+        return targetFloor;
     }
 
 }

@@ -45,18 +45,18 @@ public class ElevatorControllerImpl implements ElevatorController {
 
     @Override
     public void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest) {
-        int elevatorCallRequestFloor = elevatorCallRequest.getCurrentFloor();
+        int elevatorCallTargetFloor = elevatorCallRequest.getTargetFloor();
         final Elevator candidateFree;
         Optional<Elevator> freeElevator = elevatorList.stream()
             .filter(elevator -> !elevator.isBusy()).findFirst();
         if (freeElevator.isPresent()) {
             candidateFree = freeElevator.get();
-            candidateFree.requestElevatorMovement(elevatorCallRequestFloor);
+            candidateFree.requestElevatorMovement(elevatorCallTargetFloor);
             executor.execute(candidateFree::run);
         } else {
             // for now check alway 1
             Elevator busyElevator = elevatorList.get(0);
-            busyElevator.requestElevatorMovement(elevatorCallRequestFloor);
+            busyElevator.requestElevatorMovement(elevatorCallTargetFloor);
         }
     }
 }

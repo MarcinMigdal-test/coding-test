@@ -11,7 +11,7 @@ import com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig;
 import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
 import com.tingco.codechallenge.elevator.impl.exception.ElevatorRequestException;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequest;
-import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveToFloorRequest;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveFromFloorToFloorRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -50,24 +50,24 @@ public class ElevatorRequestValidatorTest {
 
     @Test
     void validateMoveBetweenFloorsRequest_from_1_to_4() throws ElevatorRequestException {
-        ElevatorMoveToFloorRequest elevatorMoveToFloorRequest = new ElevatorMoveToFloorRequest(
+        ElevatorMoveFromFloorToFloorRequest elevatorMoveFromFloorToFloorRequest = new ElevatorMoveFromFloorToFloorRequest(
             FLOOR_3, FLOOR_5);
-        testedObject.validateMoveBetweenFloorsRequest(elevatorMoveToFloorRequest);
+        testedObject.validateMoveBetweenFloorsRequest(elevatorMoveFromFloorToFloorRequest);
     }
 
     @Test
     void validateMoveBetweenFloorsRequest_from_minus_1_to_4() {
-        ElevatorMoveToFloorRequest elevatorMoveToFloorRequest = new ElevatorMoveToFloorRequest(
+        ElevatorMoveFromFloorToFloorRequest elevatorMoveFromFloorToFloorRequest = new ElevatorMoveFromFloorToFloorRequest(
             FLOOR_MINUS_1, FLOOR_5);
         assertThrows(ElevatorRequestException.class,
-            () -> testedObject.validateMoveBetweenFloorsRequest(elevatorMoveToFloorRequest));
+            () -> testedObject.validateMoveBetweenFloorsRequest(elevatorMoveFromFloorToFloorRequest));
     }
 
   @Test
   void validateMoveBetweenFloorsRequest_from_6_to_10() {
-    ElevatorMoveToFloorRequest elevatorMoveToFloorRequest = new ElevatorMoveToFloorRequest(
+    ElevatorMoveFromFloorToFloorRequest elevatorMoveFromFloorToFloorRequest = new ElevatorMoveFromFloorToFloorRequest(
         FLOOR_MINUS_1, FLOOR_5);
     assertThrows(ElevatorRequestException.class,
-        () -> testedObject.validateMoveBetweenFloorsRequest(elevatorMoveToFloorRequest));
+        () -> testedObject.validateMoveBetweenFloorsRequest(elevatorMoveFromFloorToFloorRequest));
   }
 }
