@@ -2,7 +2,9 @@ package com.tingco.codechallenge.elevator.impl;
 
 import com.tingco.codechallenge.elevator.api.Elevator;
 import java.util.NavigableSet;
+import java.util.Objects;
 import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.atomic.AtomicInteger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,6 +19,7 @@ public class ElevatorImpl implements Elevator {
     private final int elevatorId;
     private Direction direction = Direction.NONE;
     private int currentFloor;
+    private AtomicInteger currentFlooratomic = new AtomicInteger();
     private int destinationFloor;
     private final NavigableSet<Integer> floorsToVisitRequests = new ConcurrentSkipListSet<>();
 
@@ -170,5 +173,23 @@ public class ElevatorImpl implements Elevator {
             LOG.warn(String.format("Elevator %d execute cycle NOP due to: %s", this.elevatorId,
                 e.getMessage()));
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(this);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        ElevatorImpl that = (ElevatorImpl) obj;
+        return this.getIdentifier().equals(that.getIdentifier()) ;
+    }
+
+    @Override
+    public Integer getIdentifier(){
+        return Integer.valueOf(this.elevatorId);
     }
 }

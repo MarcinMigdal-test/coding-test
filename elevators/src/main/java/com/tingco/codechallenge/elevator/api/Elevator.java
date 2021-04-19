@@ -63,4 +63,5 @@ public interface Elevator {
     NavigableSet<Integer> getFloorsToBeVisited();
     void requestElevatorMovement(int toFloor);
     void run();
+    Integer getIdentifier();
 }
