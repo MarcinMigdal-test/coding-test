@@ -72,7 +72,6 @@ public class ElevatorImpl implements Elevator {
         while (shouldExecuteMovement()) {
             LOG.info(String.format("Elevator %d is moving", elevatorId));
             if (isDirectionChosen()) {
-                //zmien pietro
                 executeCycleMove();
                 if (isDestinationFloorAchieved()) {
                     floorsToVisitRequests.remove(this.currentFloor);
@@ -81,7 +80,6 @@ public class ElevatorImpl implements Elevator {
                 }
                 if (floorsToVisitRequests.contains(this.currentFloor)) {
                     floorsToVisitRequests.remove(this.currentFloor);
-                    //if direction
                     executeCycleStopAtFloor(this.currentFloor,"Interim floor");
                 }
             } else {

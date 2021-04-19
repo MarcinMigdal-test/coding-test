@@ -34,6 +34,7 @@ public interface ElevatorController {
      *
      * @param elevator the elevator that shall be released.
      */
+    @Deprecated
     void releaseElevator(Elevator elevator);
 
     //================================================================================================

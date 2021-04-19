@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadLocalRandom;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,11 @@ public class ElevatorControllerImpl implements ElevatorController {
     public void releaseElevator(Elevator elevator) {
     }
 
+    //TODO
     @Override
     public void executeElevatorCallRequestWithDirection(
         ElevatorCallRequestWithDirection elevatorCallRequestWithDirection) {
+        /*
         int elevatorCallTargetFloor = elevatorCallRequestWithDirection.getTargetFloor();
         final Elevator candidateFree;
         Optional<Elevator> freeElevator = elevatorList.stream()
@@ -56,17 +59,28 @@ public class ElevatorControllerImpl implements ElevatorController {
             candidateFree.requestElevatorMovement(elevatorCallTargetFloor);
             executor.execute(candidateFree::run);
         } else {
-            // for now check always 1st elevator
-            //TODO select random elevator
-            Elevator busyElevator = elevatorList.get(0);
+            Elevator busyElevator = elevatorList.get( ThreadLocalRandom.current().nextInt(elevatorList.size()-1 ));
             busyElevator.requestElevatorMovement(elevatorCallTargetFloor);
         }
+        */
+
     }
 
     @Override
     public void executeElevatorCallRequestWithNoDirection(
         ElevatorCallRequestNoDirection elevatorCallRequest) {
-
+        int elevatorCallTargetFloor = elevatorCallRequest.getTargetFloor();
+        final Elevator candidateFree;
+        Optional<Elevator> freeElevator = elevatorList.stream()
+            .filter(elevator -> !elevator.isBusy()).findFirst();
+        if (freeElevator.isPresent()) {
+            candidateFree = freeElevator.get();
+            candidateFree.requestElevatorMovement(elevatorCallTargetFloor);
+            executor.execute(candidateFree::run);
+        } else {
+            Elevator busyElevator = elevatorList.get( ThreadLocalRandom.current().nextInt(elevatorList.size()-1 ));
+            busyElevator.requestElevatorMovement(elevatorCallTargetFloor);
+        }
     }
 
     @Override
