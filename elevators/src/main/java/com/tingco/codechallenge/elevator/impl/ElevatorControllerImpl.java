@@ -12,21 +12,21 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpServerErrorException.NotImplemented;
 
+@Service
 public class ElevatorControllerImpl implements ElevatorController {
 
     private final Logger LOG = LoggerFactory
         .getLogger(ElevatorControllerImpl.class.getCanonicalName());
     private final int floorsNumber;
     private final Executor executor;
-    private final ElevatorRequestValidator elevatorRequestValidator;
     private final List<Elevator> elevatorList;
 
     public ElevatorControllerImpl(List<Elevator> elevatorList, int floorsNumber) {
         this.elevatorList = elevatorList;
         this.floorsNumber = floorsNumber;
-        elevatorRequestValidator = new ElevatorRequestValidator(floorsNumber);
         executor = Executors.newFixedThreadPool(elevatorList.size());
     }
 
