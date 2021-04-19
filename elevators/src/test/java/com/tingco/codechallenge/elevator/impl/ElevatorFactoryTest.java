@@ -8,9 +8,9 @@ import org.junit.jupiter.api.Test;
 
 public class ElevatorFactoryTest {
 
-  @Test
-  void create(){
-    List<Elevator> elevatorList =  ElevatorFactory.getElevators(TestConfig.ELEVATORS_AMOUNT_1);
-    Assertions.assertEquals(TestConfig.ELEVATORS_AMOUNT_1,elevatorList.size());
-  }
+    @Test
+    void create() {
+        List<Elevator> elevatorList = ElevatorFactory.getElevators(TestConfig.ELEVATORS_AMOUNT_1);
+        Assertions.assertEquals(TestConfig.ELEVATORS_AMOUNT_1, elevatorList.size());
+    }
 }

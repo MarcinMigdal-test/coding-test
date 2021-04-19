@@ -6,7 +6,6 @@ import java.util.concurrent.ConcurrentSkipListSet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 public class ElevatorImpl implements Elevator {
 
     private final int MOVEMENT_TIME = 100;
@@ -49,7 +48,7 @@ public class ElevatorImpl implements Elevator {
 
     @Override
     public boolean isBusy() {
-        return !direction.equals(Direction.NONE);
+        return (!direction.equals(Direction.NONE) && !floorsToVisitRequests.isEmpty());
     }
 
     @Override
@@ -57,11 +56,9 @@ public class ElevatorImpl implements Elevator {
         return currentFloor;
     }
 
-
-
     //=====================================================================
     @Override
-    public NavigableSet<Integer> floorsCheck() {
+    public NavigableSet<Integer> getFloorsToBeVisited() {
         return floorsToVisitRequests;
     }
 
@@ -80,12 +77,12 @@ public class ElevatorImpl implements Elevator {
                 if (isDestinationFloorAchieved()) {
                     floorsToVisitRequests.remove(this.currentFloor);
                     direction = Direction.NONE;
-                    executeCycleStopNaPietrzePoDrodze(this.destinationFloor,"Destination floor");
+                    executeCycleStopAtFloor(this.destinationFloor,"Destination floor");
                 }
                 if (floorsToVisitRequests.contains(this.currentFloor)) {
                     floorsToVisitRequests.remove(this.currentFloor);
                     //if direction
-                    executeCycleStopNaPietrzePoDrodze(this.currentFloor,"Interim floor");
+                    executeCycleStopAtFloor(this.currentFloor,"Interim floor");
                 }
             } else {
                 LOG.info(String.format("Elevator %d has no direction set",elevatorId));
@@ -101,15 +98,19 @@ public class ElevatorImpl implements Elevator {
                     destinationFloor = findNearestTargetFloor(topFloorNumber, bottomFloorNumber);
                     LOG.info(String.format("Elevator %d has chosen destination floor %d",elevatorId,destinationFloor));
                 }
-                LOG.info(String.format("Elevator %d is calculating direction...",elevatorId));
-                if (currentFloor < destinationFloor) {
-                    direction = Direction.UP;
-                } else if (currentFloor > destinationFloor) {
-                    direction = Direction.DOWN;
-                }
-                LOG.info(String.format("Elevator %d has chosen direction %s",elevatorId, direction));
+                calculateDirection();
             }
         }
+    }
+
+    private void calculateDirection() {
+        LOG.info(String.format("Elevator %d is calculating direction...",elevatorId));
+        if (currentFloor < destinationFloor) {
+            direction = Direction.UP;
+        } else if (currentFloor > destinationFloor) {
+            direction = Direction.DOWN;
+        }
+        LOG.info(String.format("Elevator %d has chosen direction %s",elevatorId, direction));
     }
 
     private boolean shouldExecuteMovement() {
@@ -150,7 +151,7 @@ public class ElevatorImpl implements Elevator {
                 destinationFloor));
     }
 
-    private void executeCycleStopNaPietrzePoDrodze(int floor, String floorDescription) {
+    private void executeCycleStopAtFloor(int floor, String floorDescription) {
         try {
             Thread.sleep(STOP_AT_FLOOR_TIME);
             LOG.info(String.format("Elevator %d has cycle STOP at floor %d which is %s", this.elevatorId,

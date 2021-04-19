@@ -2,8 +2,6 @@ package com.tingco.codechallenge.elevator.resources;
 
 import com.tingco.codechallenge.elevator.api.ElevatorController;
 import com.tingco.codechallenge.elevator.config.ElevatorConfiguration;
-import com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl;
-import com.tingco.codechallenge.elevator.impl.ElevatorFactory;
 import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
 import com.tingco.codechallenge.elevator.impl.exception.ElevatorRequestException;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestNoDirection;
@@ -33,16 +31,14 @@ public final class ElevatorControllerEndPoints {
 
     private ElevatorConfiguration elevatorConfiguration;
     private ElevatorRequestValidator elevatorRequestValidator;
-
     private ElevatorController elevatorController;
 
     @Autowired
-    public ElevatorControllerEndPoints(ElevatorConfiguration elevatorConfiguration, ElevatorRequestValidator elevatorRequestValidator) {
+    public ElevatorControllerEndPoints(ElevatorConfiguration elevatorConfiguration, ElevatorRequestValidator elevatorRequestValidator,
+        ElevatorController elevatorController) {
         this.elevatorConfiguration = elevatorConfiguration;
         this.elevatorRequestValidator = elevatorRequestValidator;
-        elevatorController = new ElevatorControllerImpl(
-            ElevatorFactory.getElevators(elevatorConfiguration.getElevatorsNumber()),
-            elevatorConfiguration.getFloorsNumber());
+        this.elevatorController = elevatorController;
     }
 
     /**

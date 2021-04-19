@@ -1,8 +1,8 @@
 package com.tingco.codechallenge.elevator.impl;
 
-import com.tingco.codechallenge.elevator.api.Elevator;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import com.tingco.codechallenge.elevator.api.Elevator;
 import com.tingco.codechallenge.elevator.config.TestConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,12 +12,12 @@ public class ElevatorImplTest {
     private Elevator testedObject;
 
     @BeforeEach
-    void create(){
+    void create() {
         testedObject = new ElevatorImpl(1);
     }
 
     @Test
-    void requestElevatorMovement_one_by_one(){
+    void requestElevatorMovement_one_by_one() {
         assertEquals(TestConfig.FLOOR_0, testedObject.currentFloor());
         testedObject.requestElevatorMovement(TestConfig.FLOOR_5);
         testedObject.run();
@@ -37,7 +37,7 @@ public class ElevatorImplTest {
     }
 
     @Test
-    void requestElevatorMovement_parallel_requests(){
+    void requestElevatorMovement_moveWithInterimFloors() {
         assertEquals(TestConfig.FLOOR_0, testedObject.currentFloor());
         testedObject.requestElevatorMovement(TestConfig.FLOOR_5);
         testedObject.run();
@@ -53,7 +53,7 @@ public class ElevatorImplTest {
         testedObject.requestElevatorMovement(TestConfig.FLOOR_1);
         testedObject.run();
         assertEquals(TestConfig.FLOOR_9, testedObject.currentFloor());
-        assertEquals(0, testedObject.floorsCheck().size());
+        assertEquals(0, testedObject.getFloorsToBeVisited().size());
 
         testedObject.requestElevatorMovement(TestConfig.FLOOR_7);
         testedObject.run();
@@ -64,6 +64,6 @@ public class ElevatorImplTest {
         testedObject.requestElevatorMovement(TestConfig.FLOOR_2);
         testedObject.run();
         assertEquals(TestConfig.FLOOR_2, testedObject.currentFloor());
-        assertEquals(0, testedObject.floorsCheck().size());
+        assertEquals(0, testedObject.getFloorsToBeVisited().size());
     }
 }
