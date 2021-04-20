@@ -1,5 +1,5 @@
 # coding-test 
-## Changes
+## Changes comparing to initial commit
 ```
 Infrastructure
 1 Upgraded libraries: Spring, Guava
@@ -8,14 +8,15 @@ Infrastructure
 4 Let awaitility version as it was (highest version). Newest one is moved to other GroupId and ArtifactId
 ----------------------------------------------------------------------------------------------------------------------------
 Code:
-Added package impl 
+Added own packages and renamed existing ones to be proper ones. 
 In api package marked all interfaces as public. By desing API must be public (in JAVA modules [Java 9 feature] API classes may be hidden in mutli-module project).
 Here we have one module project - due to this fact not executed transition to Gradle.
-Added additional classes 
+Added additional classes and logic.
 ```
-
 ### Testing
 ```
+Example simulation is included in IntegrattionTest.
+
 pass to CMD
 
 java -jar JAR_NAME=  -Dcom.tingco.elevator.elevatorsNumber=20 -Dcom.tingco.elevator.floorsNumber=90
@@ -36,15 +37,11 @@ http://localhost:8080/rest/v1/call/21
 http://localhost:8080/rest/v1/call/54
 
 ```
-
 ### Verification
 ```
 You can observe elevators behavior in console in logs. 
 Example entries attached in log.log file.
-
 ```
-
-
 #### For further development/suggestions
 ```
 Put elevator into maintenance mode -> move to floor 0 and ignore all requests
