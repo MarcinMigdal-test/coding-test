@@ -15,7 +15,7 @@
         <appender-ref ref="Console" />
     </root>
 
-    <!-- LOG "com.nokia*" at TRACE level  ERROR, WARN, INFO, DEBUG, or TRACE. -->
+    <!-- LOG "com.tingco.codechallenge.elevator" at TRACE level  ERROR, WARN, INFO, DEBUG, or TRACE. -->
     <logger name="com.tingco.codechallenge.elevator.*" level="info" additivity="false">
         <appender-ref ref="Console" />
     </logger>
