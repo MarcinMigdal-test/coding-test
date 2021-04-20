@@ -36,6 +36,15 @@ http://localhost:8080/rest/v1/call/21
 http://localhost:8080/rest/v1/call/54
 
 ```
+
+### Verification
+```
+You can observe elevators behavior in console in logs. 
+Example entries attached in log.log file.
+
+```
+
+
 #### For further development/suggestions
 ```
 Put elevator into maintenance mode -> move to floor 0 and ignore all requests

@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,16 +20,16 @@ public class ElevatorControllerImpl implements ElevatorController {
 
     private final Logger LOG = LoggerFactory
         .getLogger(ElevatorControllerImpl.class.getCanonicalName());
-    private final Executor executor;
     private final List<Elevator> elevatorList;
+    private final Executor executor;
 
     @Autowired
-    public ElevatorControllerImpl(ElevatorConfiguration elevatorConfiguration) {
+    public ElevatorControllerImpl(ElevatorConfiguration elevatorConfiguration,Executor executor) {
         this.elevatorList = ElevatorFactory
             .getElevatorsAsList(elevatorConfiguration.getElevatorsNumber(),
                 elevatorConfiguration.getElevatorMovemenentInterval(),
                 elevatorConfiguration.getElevatorStopInterval());
-        executor = Executors.newFixedThreadPool(elevatorList.size());
+        this.executor = executor;
     }
 
     @Deprecated(forRemoval = true)
