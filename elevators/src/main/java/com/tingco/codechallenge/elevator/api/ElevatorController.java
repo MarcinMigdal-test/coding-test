@@ -37,15 +37,19 @@ public interface ElevatorController {
     @Deprecated
     void releaseElevator(Elevator elevator);
 
-    //================================================================================================
-
-    //Added by Marcin Migdal
+    /**
+     * Method invokes request to call elevator with direction
+     *
+     * @param elevatorCallRequest elevator call request including direction
+     */
     void executeElevatorCallRequestWithDirection(
         ElevatorCallRequestWithDirection elevatorCallRequest);
 
+    /**
+     * Method invokes request to call elevator without direction
+     *
+     * @param elevatorCallRequest elevator call request without direction
+     */
     void executeElevatorCallRequestWithNoDirection(
         ElevatorCallRequestNoDirection elevatorCallRequest);
-
-    void executeElevatorCallRequestBetweenFloors(
-        ElevatorMoveBetweenFloorsRequest elevatorCallRequest);
 }

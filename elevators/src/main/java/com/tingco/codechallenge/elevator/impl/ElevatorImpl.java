@@ -34,9 +34,10 @@ public class ElevatorImpl implements Elevator {
         return direction;
     }
 
+    @Deprecated(forRemoval = true)
     @Override
     public int getAddressedFloor() {
-        return 0;
+        throw new  UnsupportedOperationException();
     }
 
     @Override
@@ -44,9 +45,10 @@ public class ElevatorImpl implements Elevator {
         return elevatorId;
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     @Override
     public void moveElevator(int toFloor) {
+        throw new  UnsupportedOperationException();
     }
 
     @Override
@@ -59,15 +61,19 @@ public class ElevatorImpl implements Elevator {
         return currentFloor;
     }
 
-    //=====================================================================
-    @Override
-    public NavigableSet<Integer> getFloorsToBeVisited() {
-        return floorsToVisit;
-    }
-
     @Override
     public void requestElevatorMovement(int toFloor) {
         floorsToVisit.add(toFloor);
+    }
+
+    @Override
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    @Override
+    public void setCurrentFloor(int floor) {
+        this.currentFloor = floor;
     }
 
     @Override
@@ -78,13 +84,13 @@ public class ElevatorImpl implements Elevator {
                 moveElevator();
                 if (isDestinationFloorAchieved()) {
                     direction = Direction.NONE;
-                    stopElevatorAtFloor(this.destinationFloor,"destination floor");
+                    stopElevatorAtFloor(this.destinationFloor, "destination floor");
                 }
                 if (floorsToVisit.contains(this.currentFloor)) {
-                    stopElevatorAtFloor(this.currentFloor,"interim floor");
+                    stopElevatorAtFloor(this.currentFloor, "interim floor");
                 }
             } else {
-                LOG.trace(String.format("Elevator %d has no direction set",elevatorId));
+                LOG.trace(String.format("Elevator %d has no direction set", elevatorId));
                 int topFloorNumber = floorsToVisit.last();
                 calculateDestinationFloor(topFloorNumber);
                 setElevatorDirectionMovement();
@@ -94,24 +100,27 @@ public class ElevatorImpl implements Elevator {
 
     private void calculateDestinationFloor(int topFloorNumber) {
         if (floorsToVisit.size() == 1) {
-            LOG.trace(String.format("Elevator %d has only one destination floor selected %d",elevatorId,destinationFloor));
-            if (destinationFloor == topFloorNumber)
-            { floorsToVisit.remove(destinationFloor);
+            LOG.trace(String
+                .format("Elevator %d has only one destination floor selected %d", elevatorId,
+                    destinationFloor));
+            if (destinationFloor == topFloorNumber) {
+                floorsToVisit.remove(destinationFloor);
             }
-
             destinationFloor = topFloorNumber;
-        }
-        else{
-            LOG.info(String.format("Elevator %d one has many floors to visit. It's current position is: %s ",elevatorId,currentFloor));
+        } else {
+            LOG.info(String
+                .format("Elevator %d one has many floors to visit. It's current position is: %s ",
+                    elevatorId, currentFloor));
             int bottomFloorNumber = floorsToVisit.first();
-            LOG.trace(String.format("Elevator %d is calculating route ",elevatorId));
+            LOG.trace(String.format("Elevator %d is calculating route ", elevatorId));
             destinationFloor = getNearestTargetFloorNumber(topFloorNumber, bottomFloorNumber);
-            LOG.info(String.format("Elevator %d has chosen destination floor %d",elevatorId,destinationFloor));
+            LOG.info(String.format("Elevator %d has chosen destination floor %d", elevatorId,
+                destinationFloor));
         }
     }
 
     private void setElevatorDirectionMovement() {
-        LOG.info(String.format("Elevator %d is calculating direction...",elevatorId));
+        LOG.info(String.format("Elevator %d is calculating direction...", elevatorId));
         if (currentFloor < destinationFloor) {
             direction = Direction.UP;
         } else if (currentFloor > destinationFloor) {
@@ -119,7 +128,7 @@ public class ElevatorImpl implements Elevator {
         } else {
             direction = Direction.NONE;
         }
-        LOG.info(String.format("Elevator %d has chosen direction %s",elevatorId, direction));
+        LOG.info(String.format("Elevator %d has chosen direction %s", elevatorId, direction));
     }
 
     private boolean isMovementRequired() {
@@ -137,7 +146,7 @@ public class ElevatorImpl implements Elevator {
     private int getNearestTargetFloorNumber(int topFloorNumber, int bottomFloorNumber) {
         int topFloorDistance = Math.abs(Math.subtractExact(currentFloor, topFloorNumber));
         int bottomFloorDistance = Math.abs(Math.subtractExact(currentFloor, bottomFloorNumber));
-        return topFloorDistance<bottomFloorDistance?topFloorNumber:bottomFloorNumber;
+        return topFloorDistance < bottomFloorDistance ? topFloorNumber : bottomFloorNumber;
     }
 
     private void moveElevator() {
@@ -165,27 +174,11 @@ public class ElevatorImpl implements Elevator {
         try {
             TimeUnit.MILLISECONDS.sleep(stopInterval);
             LOG.info(String.format("Elevator %d stops at floor %d which is %s", this.elevatorId,
-                floor,floorDescription));
+                floor, floorDescription));
         } catch (InterruptedException e) {
             LOG.warn(String
                 .format("Elevator %d cannot execute STOP at floor %d due to %s", this.elevatorId,
                     floor, e.getMessage()));
         }
-    }
-
-    @Override
-    public Integer getIdentifier(){
-        return this.elevatorId;
-    }
-
-    //test scope
-    @Override
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
-    @Override
-    public void setCurrentFloor(int floor){
-        this.currentFloor  = floor;
     }
 }

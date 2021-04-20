@@ -28,6 +28,7 @@ public interface Elevator {
      *
      * @return primitive integer number of floor
      */
+    @Deprecated
     int getAddressedFloor();
 
     /**
@@ -59,13 +60,29 @@ public interface Elevator {
      */
     int currentFloor();
 
-    //added by mmigdal
-    NavigableSet<Integer> getFloorsToBeVisited();
+    /**
+     * Request elevator to move to floor
+     *
+     * @param toFloor
+     * */
     void requestElevatorMovement(int toFloor);
+    /**
+     * Starts elevator movement
+     *
+     * */
     void run();
-    Integer getIdentifier();
 
-    //tests scope
+    /**
+     * Sets movement direction for elevator
+     *
+     * @param  direction
+     * */
     void setDirection(Direction direction);
+
+    /**
+     * Set elevetors current floor (position)
+     *
+     * @param floor
+     */
     void setCurrentFloor(int floor);
 }
