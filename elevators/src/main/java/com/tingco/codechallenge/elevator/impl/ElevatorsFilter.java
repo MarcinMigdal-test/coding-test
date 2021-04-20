@@ -2,7 +2,11 @@ package com.tingco.codechallenge.elevator.impl;
 
 import com.tingco.codechallenge.elevator.api.Elevator;
 import com.tingco.codechallenge.elevator.api.Elevator.Direction;
+import com.tingco.codechallenge.elevator.util.DistanceUtils;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -18,6 +22,28 @@ public class ElevatorsFilter {
         return elevators.parallelStream().filter(elevator -> !elevator.isBusy())
             .collect(Collectors.toList());
     }
+
+    /**
+     * This is support for a case when all elevetors are in maintenance mode
+     * not implemented such sitaation yet
+     * */
+    public Optional<Elevator> getNearestElevatorToRequestedFloor(List<Elevator> elevators, int floor) {
+        Map<Integer, Elevator> elevatorIdAndElevator = new HashMap<>();
+        Map<Integer, Integer> distanceAndElevatorId = new HashMap<>();
+        elevators.forEach(elevator -> {
+            distanceAndElevatorId
+                .put(Math.abs(elevator.currentFloor() - floor),
+                    elevator.getIdentifier());
+        });
+        elevators.forEach(elevator -> {
+            elevatorIdAndElevator.put(elevator.getId(), elevator);
+        });
+
+        Integer elevatorIdWithShortestDistance = DistanceUtils
+            .findElevatorIdWithShortestDistance(distanceAndElevatorId);
+        return Optional.of(elevatorIdAndElevator.get(elevatorIdWithShortestDistance));
+    }
+
 
     private Predicate<Elevator> getPredicate(Direction direction, int floor) {
         Predicate<Elevator> predicate;

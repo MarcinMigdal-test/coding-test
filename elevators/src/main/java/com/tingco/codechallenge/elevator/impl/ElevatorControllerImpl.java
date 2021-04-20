@@ -7,12 +7,9 @@ import com.tingco.codechallenge.elevator.config.ElevatorConfiguration;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestNoDirection;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDirection;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveBetweenFloorsRequest;
-import com.tingco.codechallenge.elevator.util.DistanceUtils;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import org.slf4j.Logger;
@@ -27,12 +24,11 @@ public class ElevatorControllerImpl implements ElevatorController {
         .getLogger(ElevatorControllerImpl.class.getCanonicalName());
     private final Executor executor;
     private final List<Elevator> elevatorList;
-    private final Map<Integer,Elevator> elevatorMap;
 
     @Autowired
     public ElevatorControllerImpl(ElevatorConfiguration elevatorConfiguration) {
-        this.elevatorList = ElevatorFactory.getElevatorsAsList(elevatorConfiguration.getElevatorsNumber());
-        this.elevatorMap = ElevatorFactory.getElevatorsAsMap(elevatorConfiguration.getElevatorsNumber());
+        this.elevatorList = ElevatorFactory
+            .getElevatorsAsList(elevatorConfiguration.getElevatorsNumber());
         executor = Executors.newFixedThreadPool(elevatorList.size());
     }
 
@@ -51,52 +47,58 @@ public class ElevatorControllerImpl implements ElevatorController {
     public void releaseElevator(Elevator elevator) {
     }
 
-    //TODO
     @Override
     public void executeElevatorCallRequestWithDirection(
         ElevatorCallRequestWithDirection elevatorCallRequestWithDirection) {
-        this.executeElevatorCallRequestWithNoDirection(new ElevatorCallRequestNoDirection(elevatorCallRequestWithDirection.getTargetFloor()));
+        this.executeElevatorCallRequestWithNoDirection(
+            new ElevatorCallRequestNoDirection(elevatorCallRequestWithDirection.getTargetFloor()));
     }
 
     @Override
     public void executeElevatorCallRequestWithNoDirection(
         ElevatorCallRequestNoDirection elevatorCallRequest) {
-        int elevatorCallTargetFloor = elevatorCallRequest.getTargetFloor();
+        int requestedFloor = elevatorCallRequest.getTargetFloor();
+        LOG.info("Received request to move elevator to floor {}",requestedFloor);
         ElevatorsFilter filter = new ElevatorsFilter();
-        List<Elevator> elevatorsMovingTowardsRequestedFlooor = new ArrayList<>();
-        elevatorsMovingTowardsRequestedFlooor.addAll(filter.getElevatorsGoingWithDirectionTowardsFloor(elevatorList,Direction.DOWN,elevatorCallTargetFloor));
-        elevatorsMovingTowardsRequestedFlooor.addAll(filter.getElevatorsGoingWithDirectionTowardsFloor(elevatorList,Direction.UP,elevatorCallTargetFloor));
-
-
-        if(elevatorsMovingTowardsRequestedFlooor.isEmpty())
-        {
-            //elevators stoppped -> find the one nearest to call floor
-            Optional<Elevator> firstFoundStoppedElevator = filter.getStoppedElevators(elevatorList).stream().findFirst();
-
-            if (firstFoundStoppedElevator.isPresent()) {
-                Elevator candidateFree = firstFoundStoppedElevator.get();
-                candidateFree.requestElevatorMovement(elevatorCallTargetFloor);
-                executor.execute(candidateFree::run);
+        List<Elevator> elevatorsMovingTowardsRequestedFloor = new ArrayList<>();
+        elevatorsMovingTowardsRequestedFloor.addAll(filter
+            .getElevatorsGoingWithDirectionTowardsFloor(elevatorList, Direction.DOWN,
+                requestedFloor));
+        elevatorsMovingTowardsRequestedFloor.addAll(filter
+            .getElevatorsGoingWithDirectionTowardsFloor(elevatorList, Direction.UP,
+                requestedFloor));
+        if (elevatorsMovingTowardsRequestedFloor.isEmpty()) {
+            assignRequestToStoppedElevator(requestedFloor, filter);
+        } else {
+            assignRequestToElevatorInMotion(requestedFloor, filter, elevatorsMovingTowardsRequestedFloor);
         }
-        else {
-            Map<Integer, Integer> distanceByElevatorId = new ConcurrentHashMap<>();
-                elevatorsMovingTowardsRequestedFlooor.forEach(elevator -> {
-                    distanceByElevatorId
-                        .put(Math.abs(elevator.currentFloor() - elevatorCallTargetFloor),
-                            elevator.getIdentifier());
-                }
-            );
-            Integer elevatorIdentifierWithShortestDistance = DistanceUtils
-                .findElevatorIdWithShortestDistance(distanceByElevatorId);
-            Elevator inMove = elevatorMap.get(elevatorIdentifierWithShortestDistance);
-            inMove.requestElevatorMovement(elevatorCallTargetFloor);
-        }
-       }
+    }
+
+    private void assignRequestToStoppedElevator(int requestedFloor, ElevatorsFilter filter) {
+        LOG.info("Received request to stopped elevator",requestedFloor);
+        List<Elevator> stoppedElevators = filter.getStoppedElevators(elevatorList);
+        Optional<Elevator> elevator = filter
+            .getNearestElevatorToRequestedFloor(stoppedElevators, requestedFloor);
+        elevator.ifPresent(elevatorToRun -> {
+            elevatorToRun.requestElevatorMovement(requestedFloor);
+            LOG.info(String.format(String.format("Sent request to stopped elevator %d to move to floor", elevatorToRun.getId(), requestedFloor)));
+            executor.execute(elevatorToRun::run);
+        });
+    }
+
+    private void assignRequestToElevatorInMotion(int requestedFloor, ElevatorsFilter filter,
+        List<Elevator> elevatorsMovingTowardsRequestedFloor) {
+        Optional<Elevator> optionalElevator = filter
+            .getNearestElevatorToRequestedFloor(elevatorsMovingTowardsRequestedFloor,
+                requestedFloor);
+        optionalElevator.ifPresent(elevator -> {
+            elevator.requestElevatorMovement(requestedFloor);
+        });
     }
 
     @Override
     public void executeElevatorCallRequestBetweenFloors(
         ElevatorMoveBetweenFloorsRequest elevatorCallRequest) {
-           throw new IllegalArgumentException("Method not supported when user gets on elevator board");
+        throw new IllegalArgumentException("Method not supported when user gets on elevator board");
     }
 }

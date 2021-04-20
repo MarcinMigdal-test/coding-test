@@ -10,23 +10,19 @@ public class DistanceUtilsTest {
 
     private static Map<Integer,Integer> distanceByID = new HashMap<>();
 
-    private DistanceUtils testedObject;
-
     @BeforeEach
     void setUp(){
         distanceByID.clear();
-        testedObject = new DistanceUtils();
     }
 
     @Test
-    void findSmallestDistance2(){
+    void findSmallestDistance2() {
         distanceByID.put(5,1);
-        distanceByID.put(2,2);
+        distanceByID.put(2,9);
         distanceByID.put(9,3);
         distanceByID.put(7,4);
-        Assertions.assertEquals(2, testedObject.findElevatorIdWithShortestDistance(distanceByID));
+        Assertions.assertEquals(9, DistanceUtils.findElevatorIdWithShortestDistance(distanceByID));
     }
-
 
     @Test
     void findSmallestDistance3(){
@@ -34,7 +30,7 @@ public class DistanceUtilsTest {
         distanceByID.put(4,2);
         distanceByID.put(7,3);
         distanceByID.put(3,4);
-        Assertions.assertEquals(3, testedObject.findElevatorIdWithShortestDistance(distanceByID));
+        Assertions.assertEquals(4, DistanceUtils.findElevatorIdWithShortestDistance(distanceByID));
     }
 
 }
