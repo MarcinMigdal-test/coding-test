@@ -37,11 +37,18 @@ public class ElevatorControllerImplTest {
 
     @Test
     void canExecuteElevatorCallRequestToFloor4AndDirectionUp() {
+        //given
         ElevatorCallRequestWithDirection elevatorCallRequestWithDirection = new ElevatorCallRequestWithDirection(
             TestConfig.FLOOR_4, UserDirectionRequest.UP);
+        //when
         elevatorController.executeElevatorCallRequestWithDirection(elevatorCallRequestWithDirection);
+        //then
         Awaitility.await().atMost(5, TimeUnit.SECONDS);
         Assertions.assertFalse(elevatorController.getElevators().get(1).isBusy());
         Assertions.assertTrue(elevatorController.getElevators().get(0).isBusy());
     }
+
+
+
+
 }

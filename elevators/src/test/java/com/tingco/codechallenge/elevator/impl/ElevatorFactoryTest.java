@@ -10,7 +10,9 @@ public class ElevatorFactoryTest {
 
     @Test
     void create() {
+        //when
         List<Elevator> elevatorList = ElevatorFactory.getElevatorsAsList(TestConfig.ELEVATORS_AMOUNT_1);
+        //then
         Assertions.assertEquals(TestConfig.ELEVATORS_AMOUNT_1, elevatorList.size());
     }
 }
