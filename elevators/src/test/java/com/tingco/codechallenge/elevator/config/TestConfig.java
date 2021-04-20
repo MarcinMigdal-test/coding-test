@@ -9,7 +9,6 @@ public final class TestConfig {
     public final static int ELEVATORS_AMOUNT_2 = 2;
     public final static int FLOORS_AMOUNT_EQUAL_6 = 6;
     public final static int FLOOR_MINUS_1 = -1;
-    public final static int FLOOR_0 = 0;
     public final static int FLOOR_1 = 1;
     public final static int FLOOR_2 = 2;
     public final static int FLOOR_3 = 3;
@@ -20,7 +19,6 @@ public final class TestConfig {
     public final static int FLOOR_8 = 8;
     public final static int FLOOR_9 = 9;
     public final static int FLOOR_10 = 10;
-    public final static int ELEVATOR_MOVEMEMENT_INTERVAL =1000;
-    public final static int ELEVATOR_STOP_INTERVAL =2000;
-
+    public final static int ELEVATOR_MOVEMENT_INTERVAL = 1000;
+    public final static int ELEVATOR_STOP_INTERVAL = 2000;
 }

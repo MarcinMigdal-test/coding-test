@@ -1,6 +1,6 @@
 package com.tingco.codechallenge.elevator.impl.request;
 
-public class ElevatorMoveBetweenFloorsRequest extends AbstractRequest {
+public class ElevatorMoveBetweenFloorsRequest extends Request {
 
     private final int currentFloor;
 

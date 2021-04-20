@@ -4,12 +4,12 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class DistanceUtils {
+public final class DistanceCalculator {
 
     private final static Logger LOG = LoggerFactory
-        .getLogger(DistanceUtils.class.getCanonicalName());
+        .getLogger(DistanceCalculator.class.getCanonicalName());
 
-    private DistanceUtils() {
+    private DistanceCalculator() {
     }
 
     public static Integer findElevatorIdWithShortestDistance(Map<Integer, Integer> distanceById) {
