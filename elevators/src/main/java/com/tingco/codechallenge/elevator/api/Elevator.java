@@ -59,13 +59,14 @@ public interface Elevator {
      */
     int currentFloor();
 
-    //added by mmigdal
-    NavigableSet<Integer> getFloorsToBeVisited();
+    /** reuest elevator to move to floor
+     * @param toFloor
+     * */
     void requestElevatorMovement(int toFloor);
+    /**method ececuted elevator movement
+     * */
     void run();
-    Integer getIdentifier();
 
-    //tests scope
     void setDirection(Direction direction);
     void setCurrentFloor(int floor);
 }

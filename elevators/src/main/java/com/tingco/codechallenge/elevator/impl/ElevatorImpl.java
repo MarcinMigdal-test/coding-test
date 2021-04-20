@@ -59,15 +59,19 @@ public class ElevatorImpl implements Elevator {
         return currentFloor;
     }
 
-    //=====================================================================
-    @Override
-    public NavigableSet<Integer> getFloorsToBeVisited() {
-        return floorsToVisit;
-    }
-
     @Override
     public void requestElevatorMovement(int toFloor) {
         floorsToVisit.add(toFloor);
+    }
+
+    @Override
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    @Override
+    public void setCurrentFloor(int floor){
+        this.currentFloor  = floor;
     }
 
     @Override
@@ -171,21 +175,5 @@ public class ElevatorImpl implements Elevator {
                 .format("Elevator %d cannot execute STOP at floor %d due to %s", this.elevatorId,
                     floor, e.getMessage()));
         }
-    }
-
-    @Override
-    public Integer getIdentifier(){
-        return this.elevatorId;
-    }
-
-    //test scope
-    @Override
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
-
-    @Override
-    public void setCurrentFloor(int floor){
-        this.currentFloor  = floor;
     }
 }

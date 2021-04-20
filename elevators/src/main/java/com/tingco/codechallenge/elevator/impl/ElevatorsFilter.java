@@ -38,7 +38,7 @@ public class ElevatorsFilter {
         elevators.forEach(elevator -> {
             distanceAndElevatorId
                 .put(Math.abs(elevator.currentFloor() - floor),
-                    elevator.getIdentifier());
+                    elevator.getId());
         });
         elevators.forEach(elevator -> {
             elevatorIdAndElevator.put(elevator.getId(), elevator);
