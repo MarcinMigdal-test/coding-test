@@ -24,20 +24,19 @@ GET
 http://localhost:8080/rest/v1/status
 
 POST
-http://localhost:8080/rest/v1/call/3/UP
-http://localhost:8080/rest/v1/call/5/UP
-http://localhost:8080/rest/v1/call/5/UP
+http://localhost:8080/rest/v1/call/3/
+http://localhost:8080/rest/v1/call/5/
+http://localhost:8080/rest/v1/call/10
 ```
 #### For furhter development/suggestions
 ```
 put elevator into maintenance mode -> move to floor 0 and ignore all requests
 when elevator stopped at a particular floor, request from that floor movement towards a chosen floor
-add shutdown hook action wit proper message
 I have implmented the easiest case: request is being sent to get an elevators at a particular floor
 Use Lombok to get rid of Getters/Setters
 Add integration tests
 Add Spring profiles
 Rename ElevatorControllerEndPoints (original one) to ElevatorControllerEndpoint
 Introduce state machine to Elevator
-use eventBus to send notifications about elevators state to controller
+use eventBus to send notifications about elevators state to controller/WEBUI via websocket
 ````
