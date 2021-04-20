@@ -6,7 +6,6 @@ import com.tingco.codechallenge.elevator.api.ElevatorController;
 import com.tingco.codechallenge.elevator.config.ElevatorConfiguration;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestNoDirection;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDirection;
-import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveBetweenFloorsRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +27,9 @@ public class ElevatorControllerImpl implements ElevatorController {
     @Autowired
     public ElevatorControllerImpl(ElevatorConfiguration elevatorConfiguration) {
         this.elevatorList = ElevatorFactory
-            .getElevatorsAsList(elevatorConfiguration.getElevatorsNumber(),elevatorConfiguration.getElevatorMovemenentInterval(),elevatorConfiguration.getElevatorStopInterval());
+            .getElevatorsAsList(elevatorConfiguration.getElevatorsNumber(),
+                elevatorConfiguration.getElevatorMovemenentInterval(),
+                elevatorConfiguration.getElevatorStopInterval());
         executor = Executors.newFixedThreadPool(elevatorList.size());
     }
 
@@ -58,7 +59,7 @@ public class ElevatorControllerImpl implements ElevatorController {
     public void executeElevatorCallRequestWithNoDirection(
         ElevatorCallRequestNoDirection elevatorCallRequest) {
         int requestedFloor = elevatorCallRequest.getTargetFloor();
-        LOG.info("Received request to move elevator to floor {}",requestedFloor);
+        LOG.info("Received request to move elevator to floor {}", requestedFloor);
         ElevatorsFilter filter = new ElevatorsFilter();
         List<Elevator> elevatorsMovingTowardsRequestedFloor = new ArrayList<>();
         elevatorsMovingTowardsRequestedFloor.addAll(filter
@@ -70,18 +71,21 @@ public class ElevatorControllerImpl implements ElevatorController {
         if (elevatorsMovingTowardsRequestedFloor.isEmpty()) {
             assignRequestToStoppedElevator(requestedFloor, filter);
         } else {
-            assignRequestToElevatorInMotion(requestedFloor, filter, elevatorsMovingTowardsRequestedFloor);
+            assignRequestToElevatorInMotion(requestedFloor, filter,
+                elevatorsMovingTowardsRequestedFloor);
         }
     }
 
     private void assignRequestToStoppedElevator(int requestedFloor, ElevatorsFilter filter) {
-        LOG.info(String.format("Assign request to send stopped elevator to floor %d ",requestedFloor));
+        LOG.info(
+            String.format("Assign request to send stopped elevator to floor %d ", requestedFloor));
         List<Elevator> stoppedElevators = filter.getStoppedElevators(elevatorList);
         Optional<Elevator> elevator = filter
             .getNearestElevatorToRequestedFloor(stoppedElevators, requestedFloor);
         elevator.ifPresent(elevatorToRun -> {
             elevatorToRun.requestElevatorMovement(requestedFloor);
-            LOG.info(String.format("Sent request to stopped elevator %d to move to floor %d", elevatorToRun.getId(), requestedFloor));
+            LOG.info(String.format("Sent request to stopped elevator %d to move to floor %d",
+                elevatorToRun.getId(), requestedFloor));
             executor.execute(elevatorToRun::run);
         });
     }
@@ -94,9 +98,4 @@ public class ElevatorControllerImpl implements ElevatorController {
         optionalElevator.ifPresent(elevator -> elevator.requestElevatorMovement(requestedFloor));
     }
 
-    @Override
-    public void executeElevatorCallRequestBetweenFloors(
-        ElevatorMoveBetweenFloorsRequest elevatorCallRequest) {
-        throw new IllegalArgumentException("Method not supported when user gets on elevator board");
-    }
 }

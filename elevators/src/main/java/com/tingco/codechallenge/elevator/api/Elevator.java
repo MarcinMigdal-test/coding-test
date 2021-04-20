@@ -59,14 +59,29 @@ public interface Elevator {
      */
     int currentFloor();
 
-    /** reuest elevator to move to floor
+    /**
+     * Request elevator to move to floor
+     *
      * @param toFloor
      * */
     void requestElevatorMovement(int toFloor);
-    /**method ececuted elevator movement
+    /**
+     * Starts elevator movement
+     *
      * */
     void run();
 
+    /**
+     * Sets movement direction for elevator
+     *
+     * @param  direction
+     * */
     void setDirection(Direction direction);
+
+    /**
+     * Set elevetors current floor (position)
+     *
+     * @param floor
+     */
     void setCurrentFloor(int floor);
 }

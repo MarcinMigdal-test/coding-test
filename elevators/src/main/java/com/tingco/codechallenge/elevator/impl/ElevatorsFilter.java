@@ -28,11 +28,8 @@ public class ElevatorsFilter {
             .collect(Collectors.toList());
     }
 
-    /**
-     * This is support for a case when all elevetors are in maintenance mode
-     * not implemented such situation yet
-     * */
-    public Optional<Elevator> getNearestElevatorToRequestedFloor(List<Elevator> elevators, int floor) {
+    public Optional<Elevator> getNearestElevatorToRequestedFloor(List<Elevator> elevators,
+        int floor) {
         Map<Integer, Elevator> elevatorIdAndElevator = new HashMap<>();
         Map<Integer, Integer> distanceAndElevatorId = new HashMap<>();
         assignDistanceToElevator(elevators, floor, distanceAndElevatorId);
