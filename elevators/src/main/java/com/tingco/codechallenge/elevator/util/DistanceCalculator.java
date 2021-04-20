@@ -14,11 +14,11 @@ public final class DistanceCalculator {
 
     public static Integer findElevatorIdWithShortestDistance(Map<Integer, Integer> distanceById) {
         if (distanceById.size() == 1) {
-            LOG.info("There is only one elevator with mapping: {} ", distanceById);
+            LOG.trace("There is only one elevator with mapping distance by id: {} ", distanceById);
             return distanceById.values().stream().findFirst().get();
         }
         Integer shortestDistance = distanceById.keySet().stream().reduce(
-            (integer, integer2) -> integer.intValue() < integer2.intValue() ? integer : integer2)
+            (distance1, distance2) -> distance1 < distance2 ? distance1 : distance2)
             .get();
         return distanceById.get(shortestDistance);
     }
