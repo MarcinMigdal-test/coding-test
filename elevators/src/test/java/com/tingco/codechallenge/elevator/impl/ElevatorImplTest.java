@@ -118,6 +118,19 @@ public class ElevatorImplTest {
     }
 
     @Test
+    void canElevatorMoveFromFloor1toFloor5AndThenToFloor5() {
+        //given
+        elevator.setCurrentFloor(FLOOR_1);
+        elevator.requestElevatorMovement(FLOOR_5);
+        elevator.run();
+        //when
+        elevator.requestElevatorMovement(FLOOR_5);
+        elevator.run();
+        //then
+        assertEquals(FLOOR_5, elevator.currentFloor());
+    }
+
+    @Test
     void canElevatorMoveFromFloor6toFloor3AndThenToFloor9() {
         //given
         elevator.setCurrentFloor(FLOOR_6);

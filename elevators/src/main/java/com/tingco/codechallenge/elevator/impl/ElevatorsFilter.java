@@ -30,7 +30,7 @@ public class ElevatorsFilter {
 
     /**
      * This is support for a case when all elevetors are in maintenance mode
-     * not implemented such sitaation yet
+     * not implemented such situation yet
      * */
     public Optional<Elevator> getNearestElevatorToRequestedFloor(List<Elevator> elevators, int floor) {
         Map<Integer, Elevator> elevatorIdAndElevator = new HashMap<>();

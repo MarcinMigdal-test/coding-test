@@ -95,6 +95,10 @@ public class ElevatorImpl implements Elevator {
     private void calculateDestinationFloor(int topFloorNumber) {
         if (floorsToVisit.size() == 1) {
             LOG.trace(String.format("Elevator %d has only one destination floor selected %d",elevatorId,destinationFloor));
+            if (destinationFloor == topFloorNumber)
+            { floorsToVisit.remove(destinationFloor);
+            }
+
             destinationFloor = topFloorNumber;
         }
         else{
