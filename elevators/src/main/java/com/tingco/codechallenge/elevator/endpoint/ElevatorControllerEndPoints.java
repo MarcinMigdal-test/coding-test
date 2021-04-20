@@ -1,4 +1,4 @@
-package com.tingco.codechallenge.elevator.resources;
+package com.tingco.codechallenge.elevator.endpoint;
 
 import com.tingco.codechallenge.elevator.api.ElevatorController;
 import com.tingco.codechallenge.elevator.config.ElevatorConfiguration;

@@ -1,4 +1,4 @@
-package com.tingco.codechallenge.elevator.resources;
+package com.tingco.codechallenge.elevator.endpoint;
 
 import static com.tingco.codechallenge.elevator.config.TestConfig.ELEVATORS_AMOUNT_2;
 import static com.tingco.codechallenge.elevator.config.TestConfig.FLOORS_AMOUNT_EQUAL_6;

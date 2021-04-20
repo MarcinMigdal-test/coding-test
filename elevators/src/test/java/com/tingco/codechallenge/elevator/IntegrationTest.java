@@ -1,6 +1,6 @@
 package com.tingco.codechallenge.elevator;
 
-import com.tingco.codechallenge.elevator.resources.ElevatorControllerEndPoints;
+import com.tingco.codechallenge.elevator.endpoint.ElevatorControllerEndPoints;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ProxySelector;
