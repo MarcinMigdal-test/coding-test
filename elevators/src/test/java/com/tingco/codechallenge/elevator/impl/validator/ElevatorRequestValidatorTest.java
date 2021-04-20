@@ -39,6 +39,7 @@ public class ElevatorRequestValidatorTest {
         throws ElevatorRequestException {
         ElevatorCallRequestNoDirection elevatorCallRequestNoDirection = new ElevatorCallRequestNoDirection(
             FLOOR_1);
+
         elevatorRequestValidator.validateCallRequestNoDirection(elevatorCallRequestNoDirection);
     }
 
@@ -69,6 +70,7 @@ public class ElevatorRequestValidatorTest {
             FLOOR_1,
             UserDirectionRequest.UP
         );
+
         elevatorRequestValidator.validateCallRequestWithDirection(elevatorCallRequestWithDirection);
     }
 
@@ -99,6 +101,7 @@ public class ElevatorRequestValidatorTest {
         throws ElevatorRequestException {
         ElevatorMoveBetweenFloorsRequest elevatorMoveBetweenFloorsRequest = new ElevatorMoveBetweenFloorsRequest(
             FLOOR_3, FLOOR_5);
+
         elevatorRequestValidator.validateMoveBetweenFloorsRequest(elevatorMoveBetweenFloorsRequest);
     }
 
@@ -111,5 +114,4 @@ public class ElevatorRequestValidatorTest {
             () -> elevatorRequestValidator
                 .validateMoveBetweenFloorsRequest(elevatorMoveBetweenFloorsRequest));
     }
-
 }
