@@ -85,7 +85,7 @@ public class ElevatorImpl implements Elevator {
                     direction = Direction.NONE;
                     stopElevatorAtFloor(this.destinationFloor.get(), "destination floor");
                 }
-                if (floorsToVisit.contains(this.currentFloor.get())) {
+                if (isInterimFloorAchieved()) {
                     stopElevatorAtFloor(this.currentFloor.get(), "interim floor");
                 }
             } else {
@@ -128,6 +128,7 @@ public class ElevatorImpl implements Elevator {
             direction = Direction.NONE;
         }
         LOG.info(String.format("Elevator %d has chosen direction %s", elevatorId, direction));
+        LOG.info(String.format("Elevator %d has currentFloor %d and targetFloor %d", this.elevatorId,currentFloor.get(), destinationFloor.get()));
     }
 
     private boolean isMovementRequired() {
@@ -140,6 +141,13 @@ public class ElevatorImpl implements Elevator {
 
     private boolean isDestinationFloorAchieved() {
         return destinationFloor.get() == currentFloor.get();
+    }
+    private boolean isInterimFloorAchieved() {
+        int currentFloor = this.currentFloor.get();
+        boolean interimFloorAchieved = floorsToVisit.contains(currentFloor);
+        LOG.info(String.format(String.format("Elevator %d has interim floors to visit %s",this.getId(),floorsToVisit.toString())));
+        LOG.info("Current floor {}",currentFloor);
+        return interimFloorAchieved;
     }
 
     private int getNearestTargetFloorNumber(int topFloorNumber, int bottomFloorNumber) {
