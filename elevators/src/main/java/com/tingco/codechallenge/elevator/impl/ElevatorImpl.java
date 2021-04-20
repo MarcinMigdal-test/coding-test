@@ -34,10 +34,10 @@ public class ElevatorImpl implements Elevator {
         return direction;
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     @Override
     public int getAddressedFloor() {
-        return 0;
+        throw new  UnsupportedOperationException();
     }
 
     @Override
@@ -45,9 +45,10 @@ public class ElevatorImpl implements Elevator {
         return elevatorId;
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     @Override
     public void moveElevator(int toFloor) {
+        throw new  UnsupportedOperationException();
     }
 
     @Override

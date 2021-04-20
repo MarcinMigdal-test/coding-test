@@ -33,10 +33,10 @@ public class ElevatorControllerImpl implements ElevatorController {
         executor = Executors.newFixedThreadPool(elevatorList.size());
     }
 
-    @Deprecated
+    @Deprecated(forRemoval = true)
     @Override
     public Elevator requestElevator(int toFloor) {
-        return elevatorList.get(0);
+        throw new  UnsupportedOperationException();
     }
 
     @Override
@@ -44,8 +44,10 @@ public class ElevatorControllerImpl implements ElevatorController {
         return elevatorList;
     }
 
+    @Deprecated(forRemoval = true)
     @Override
     public void releaseElevator(Elevator elevator) {
+        throw new  UnsupportedOperationException();
     }
 
     @Override
