@@ -2,7 +2,10 @@ package com.tingco.codechallenge.elevator.impl;
 
 import com.tingco.codechallenge.elevator.api.Elevator;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.IntStream;
 
 public final class ElevatorFactory {
@@ -12,10 +15,15 @@ public final class ElevatorFactory {
     private ElevatorFactory() {
     }
 
-    public static List<Elevator> getElevators(int elevatorsNumber) {
+    public static List<Elevator> getElevatorsAsList(int elevatorsNumber,int movementInterval, int stopInterval) {
         List<Elevator> elevatorList = new ArrayList<>();
         IntStream.rangeClosed(ELEVATOR_FIRST_INDEX, elevatorsNumber)
-            .forEach(value -> elevatorList.add(new ElevatorImpl(value)));
+            .forEach(value -> elevatorList.add(getElevator(value,movementInterval,stopInterval)));
         return elevatorList;
     }
+
+    public static Elevator getElevator(int elevatorId,int movementInterval, int stopInterval){
+        return new ElevatorImpl(elevatorId,movementInterval,stopInterval);
+    }
+
 }

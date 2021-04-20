@@ -5,6 +5,7 @@ import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
+import javax.validation.constraints.Min;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
@@ -17,20 +18,38 @@ import org.springframework.context.annotation.PropertySources;
 @PropertySources({@PropertySource("classpath:application.properties")})
 public class ElevatorConfiguration {
 
-
-    @Value("${com.tingco.elevator.numberofelevators}")
+    @Min(1)
+    @Value("${com.tingco.elevator.elevatorsNumber}")
     private int elevatorsNumber;
 
     public int getElevatorsNumber() {
         return elevatorsNumber;
     }
 
-    @Value("${com.tingco.elevator.numberoffloors}")
+    @Min(1)
+    @Value("${com.tingco.elevator.floorsNumber}")
     private int floorsNumber;
 
     public int getFloorsNumber() {
         return floorsNumber;
     }
+
+    @Min(1)
+    @Value("${com.tingco.elevator.movementInterval}")
+    private int movementInterval;
+
+    public int getElevatorMovemenentInterval() {
+        return movementInterval;
+    }
+
+    @Min(1)
+    @Value("${com.tingco.elevator.stopInterval}")
+    private int stopInterval;
+
+    public int getElevatorStopInterval() {
+        return stopInterval;
+    }
+
 
     /**
      * Create a default thread pool for your convenience.

@@ -4,37 +4,52 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.jayway.awaitility.Awaitility;
 import com.tingco.codechallenge.elevator.api.ElevatorController;
-import com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig;
+import com.tingco.codechallenge.elevator.config.ElevatorConfiguration;
+import com.tingco.codechallenge.elevator.config.TestConfig;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDirection;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class ElevatorControllerImplTest {
 
-  private ElevatorController elevatorController;
+    @Mock
+    private ElevatorConfiguration elevatorConfiguration;
+    private ElevatorController elevatorController;
 
-  @BeforeEach
-  public void setUp() {
-    elevatorController = new ElevatorControllerImpl(ElevatorFactory.getElevators(FloorsElevatorsConfig.ELEVATORS_AMOUNT_2),
-        FloorsElevatorsConfig.FLOORS_AMOUNT);
-  }
+    @BeforeEach
+    void setUpElevatorController() {
+        Mockito.when(elevatorConfiguration.getElevatorsNumber())
+            .thenReturn(TestConfig.ELEVATORS_AMOUNT_2);
+        elevatorController = new ElevatorControllerImpl(elevatorConfiguration);
+    }
 
-  @Test
-  public void getElevators() {
-    assertEquals(FloorsElevatorsConfig.ELEVATORS_AMOUNT_2, elevatorController.getElevators().size());
-  }
+    @Test
+    void canInitTwoElevators() {
+        assertEquals(TestConfig.ELEVATORS_AMOUNT_2, elevatorController.getElevators().size());
+    }
 
-  @Test
-  public void releaseElevator() {
-  }
+    //TODO - concurrent invocations problems
+    @Test
+    void canExecuteElevatorCallRequestToFloor4AndDirectionUp() {
+        //given
+        ElevatorCallRequestWithDirection elevatorCallRequestWithDirection = new ElevatorCallRequestWithDirection(
+            TestConfig.FLOOR_4, UserDirectionRequest.UP);
+        //when
+        elevatorController.executeElevatorCallRequestWithDirection(elevatorCallRequestWithDirection);
+        //then
+        Awaitility.await().atMost(5, TimeUnit.SECONDS);
+        Assertions.assertTrue(elevatorController.getElevators().get(1).isBusy());
+        Assertions.assertFalse(elevatorController.getElevators().get(0).isBusy());
+    }
 
-  @Test
-  void executeElevatorCallRequest() {
-    ElevatorCallRequest elevatorCallRequest = new ElevatorCallRequest(FloorsElevatorsConfig.FLOOR_4,UserDirectionRequest.UP);
-    elevatorController.executeElevatorCallRequest(elevatorCallRequest);
-    Awaitility.await().atMost(5, TimeUnit.SECONDS);
-    Assertions.assertFalse(elevatorController.getElevators().get(1).isBusy());
-    Assertions.assertTrue(elevatorController.getElevators().get(0).isBusy());
-  }
+
+
+
 }

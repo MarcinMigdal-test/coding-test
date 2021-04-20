@@ -23,7 +23,9 @@
         <awaitility.version>1.7.0</awaitility.version>
         <guava.version>30.1.1-jre</guava.version>
         <junit.jupiter.version>5.7.1</junit.jupiter.version>
-        <org.springframework.spring-test>5.3.6</org.springframework.spring-test>
+        <org.springframework.spring-test.version>5.3.6</org.springframework.spring-test.version>
+        <org.hibernate.validator.version>6.0.10.Final</org.hibernate.validator.version>
+        <mockito.version>3.9.0</mockito.version>
     </properties>
 
     <prerequisites>
@@ -59,7 +61,6 @@
             <artifactId>guava</artifactId>
             <version>${guava.version}</version>
         </dependency>
-
         <!-- provides validation at REST controller for Min(1) -->
         <dependency>
             <groupId>javax.validation</groupId>
@@ -74,15 +75,13 @@
             <scope>test</scope>
             <version>${junit.jupiter.version}</version>
         </dependency>
-
+        <!-- JUNIT5 stuff this is needed or IntelliJ gives junit.jar or junit-platform-launcher:1.7.x not found errors -->
         <dependency>
-            <!-- this is needed or IntelliJ gives junit.jar or junit-platform-launcher:1.7.x not found errors -->
             <groupId>org.junit.platform</groupId>
             <artifactId>junit-platform-launcher</artifactId>
             <version>1.7.1</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -92,7 +91,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>${org.springframework.spring-test}</version>
+            <version>${org.springframework.spring-test.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -101,14 +100,18 @@
             <version>${awaitility.version}</version>
             <scope>test</scope>
         </dependency>
-
         <dependency>
             <groupId>org.hibernate.validator</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>6.0.10.Final</version>
+            <version>${org.hibernate.validator.version}</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>

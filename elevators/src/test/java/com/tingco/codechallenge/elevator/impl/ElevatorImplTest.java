@@ -1,69 +1,144 @@
 package com.tingco.codechallenge.elevator.impl;
 
-import com.tingco.codechallenge.elevator.api.Elevator;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_1;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_10;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_2;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_3;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_5;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_6;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_7;
+import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_9;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.tingco.codechallenge.elevator.config.FloorsElevatorsConfig;
+import com.tingco.codechallenge.elevator.api.Elevator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class ElevatorImplTest {
 
-    private Elevator testedObject;
+    private final int elevatorMovementInterval = 1;
+    private final int elevatorStopInterval = 1;
+    private final int elevatorId = 1;
+    private Elevator elevator;
 
     @BeforeEach
-    public void create(){
-        testedObject = new ElevatorImpl(1);
+    void create() {
+        elevator = new ElevatorImpl(elevatorId,elevatorMovementInterval,elevatorStopInterval);
     }
 
     @Test
-    public void requestElevatorMovement_one_by_one(){
-        assertEquals(FloorsElevatorsConfig.FLOOR_0, testedObject.currentFloor());
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_5);
-        testedObject.run();
-        assertEquals(FloorsElevatorsConfig.FLOOR_5, testedObject.currentFloor());
-
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_3);
-        testedObject.run();
-        assertEquals(FloorsElevatorsConfig.FLOOR_3, testedObject.currentFloor());
-
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_9);
-        testedObject.run();
-        assertEquals(FloorsElevatorsConfig.FLOOR_9, testedObject.currentFloor());
-
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_0);
-        testedObject.run();
-        assertEquals(FloorsElevatorsConfig.FLOOR_0, testedObject.currentFloor());
+    void canElevatorMoveFromFloor0toFloor2() {
+        //given
+        elevator.requestElevatorMovement(FLOOR_2);
+        //when
+        elevator.run();
+        //then
+        assertEquals(FLOOR_2, elevator.currentFloor());
     }
 
     @Test
-    public void requestElevatorMovement_parallel_requests(){
-        assertEquals(FloorsElevatorsConfig.FLOOR_0, testedObject.currentFloor());
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_5);
-        testedObject.run();
-        assertEquals(FloorsElevatorsConfig.FLOOR_5, testedObject.currentFloor());
+    void canElevatorMoveFromFloor0toFloor5() {
+        //given
+        elevator.requestElevatorMovement(FLOOR_5);
+        //when
+        elevator.run();
+        //then
+        assertEquals(FLOOR_5, elevator.currentFloor());
+    }
 
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_3);
-        testedObject.run();
-        assertEquals(FloorsElevatorsConfig.FLOOR_3, testedObject.currentFloor());
+    @Test
+    void canElevatorMoveFormFloo3toFllor7() {
+        //given
+        elevator.setCurrentFloor(FLOOR_3);
+        elevator.requestElevatorMovement(FLOOR_7);
+        //when
+        elevator.run();
+        //then
+        assertEquals(FLOOR_7, elevator.currentFloor());
+    }
 
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_9);
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_5);
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_2);
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_1);
-        testedObject.run();
-        assertEquals(FloorsElevatorsConfig.FLOOR_9, testedObject.currentFloor());
-        assertEquals(0, testedObject.floorsCheck().size());
+    @Test
+    void canElevatorMoveFormFloor7toFllor3() {
+        //given
+        elevator.setCurrentFloor(FLOOR_7);
+        elevator.requestElevatorMovement(FLOOR_3);
+        //when
+        elevator.run();
+        //then
+        assertEquals(FLOOR_3, elevator.currentFloor());
+    }
 
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_7);
-        testedObject.run();
-        assertEquals(FloorsElevatorsConfig.FLOOR_7, testedObject.currentFloor());
+    @Test
+    void canElevatorMoveWithInterimFloors() {
+        //given
+        elevator.setCurrentFloor(FLOOR_7);
+        elevator.requestElevatorMovement(FLOOR_5);
+        elevator.requestElevatorMovement(FLOOR_3);
+        elevator.requestElevatorMovement(FLOOR_1);
+        //when
+        elevator.run();
+        //then
+        assertEquals(FLOOR_1, elevator.currentFloor());
+    }
 
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_8);
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_4);
-        testedObject.requestElevatorMovement(FloorsElevatorsConfig.FLOOR_2);
-        testedObject.run();
-        assertEquals(FloorsElevatorsConfig.FLOOR_2, testedObject.currentFloor());
-        assertEquals(0, testedObject.floorsCheck().size());
+    @Test
+    void canElevatorMoveFromFloor5toFloor3AndThenToFloor10() {
+        //given
+        elevator.setCurrentFloor(FLOOR_5);
+        elevator.requestElevatorMovement(FLOOR_3);
+        elevator.requestElevatorMovement(FLOOR_10);
+        //when
+        elevator.run();
+        //then
+        assertEquals(FLOOR_10, elevator.currentFloor());
+    }
+
+    @Test
+    void canElevatorMoveFromFloor7toFloor10AndThenToFloor5() {
+        //given
+        elevator.setCurrentFloor(FLOOR_7);
+        elevator.requestElevatorMovement(FLOOR_10);
+        elevator.requestElevatorMovement(FLOOR_5);
+        //when
+        elevator.run();
+        //then
+        assertEquals(FLOOR_10, elevator.currentFloor());
+    }
+
+    @Test
+    void canElevatorMoveFromFloor7toFloor5AndThenToFloor9() {
+        //given
+        elevator.setCurrentFloor(FLOOR_7);
+        elevator.requestElevatorMovement(FLOOR_9);
+        elevator.requestElevatorMovement(FLOOR_5);
+        //when
+        elevator.run();
+        //then
+        assertEquals(FLOOR_9, elevator.currentFloor());
+    }
+
+    @Test
+    void canElevatorMoveFromFloor1toFloor5AndThenToFloor5() {
+        //given
+        elevator.setCurrentFloor(FLOOR_1);
+        elevator.requestElevatorMovement(FLOOR_5);
+        elevator.run();
+        //when
+        elevator.requestElevatorMovement(FLOOR_5);
+        elevator.run();
+        //then
+        assertEquals(FLOOR_5, elevator.currentFloor());
+    }
+
+    @Test
+    void canElevatorMoveFromFloor6toFloor3AndThenToFloor9() {
+        //given
+        elevator.setCurrentFloor(FLOOR_6);
+        elevator.requestElevatorMovement(FLOOR_9);
+        elevator.requestElevatorMovement(FLOOR_3);
+        //when
+        elevator.run();
+        //then
+        assertEquals(FLOOR_9, elevator.currentFloor());
     }
 }

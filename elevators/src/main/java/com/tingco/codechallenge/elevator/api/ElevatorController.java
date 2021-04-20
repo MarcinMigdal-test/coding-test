@@ -1,6 +1,8 @@
 package com.tingco.codechallenge.elevator.api;
 
-import com.tingco.codechallenge.elevator.impl.ElevatorCallRequest;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestNoDirection;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDirection;
+import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveBetweenFloorsRequest;
 import java.util.List;
 
 
@@ -32,12 +34,18 @@ public interface ElevatorController {
      *
      * @param elevator the elevator that shall be released.
      */
+    @Deprecated
     void releaseElevator(Elevator elevator);
 
     //================================================================================================
 
     //Added by Marcin Migdal
-    void executeElevatorCallRequest(ElevatorCallRequest elevatorCallRequest);
+    void executeElevatorCallRequestWithDirection(
+        ElevatorCallRequestWithDirection elevatorCallRequest);
 
+    void executeElevatorCallRequestWithNoDirection(
+        ElevatorCallRequestNoDirection elevatorCallRequest);
 
+    void executeElevatorCallRequestBetweenFloors(
+        ElevatorMoveBetweenFloorsRequest elevatorCallRequest);
 }

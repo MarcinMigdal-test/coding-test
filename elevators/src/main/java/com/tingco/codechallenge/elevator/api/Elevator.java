@@ -60,7 +60,12 @@ public interface Elevator {
     int currentFloor();
 
     //added by mmigdal
-    NavigableSet<Integer> floorsCheck();
+    NavigableSet<Integer> getFloorsToBeVisited();
     void requestElevatorMovement(int toFloor);
     void run();
+    Integer getIdentifier();
+
+    //tests scope
+    void setDirection(Direction direction);
+    void setCurrentFloor(int floor);
 }
