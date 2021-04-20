@@ -28,6 +28,7 @@ public interface Elevator {
      *
      * @return primitive integer number of floor
      */
+    @Deprecated
     int getAddressedFloor();
 
     /**

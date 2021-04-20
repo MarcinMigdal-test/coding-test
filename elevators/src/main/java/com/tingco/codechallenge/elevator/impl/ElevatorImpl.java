@@ -34,6 +34,7 @@ public class ElevatorImpl implements Elevator {
         return direction;
     }
 
+    @Deprecated
     @Override
     public int getAddressedFloor() {
         return 0;
