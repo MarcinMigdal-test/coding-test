@@ -16,8 +16,7 @@ public class ElevatorImpl implements Elevator {
     private final int stopInterval;
     private final int elevatorId;
     private Direction direction = Direction.NONE;
-    private int currentFloor;
-    private AtomicInteger currentFlooratomic = new AtomicInteger();
+    private AtomicInteger currentFloor;
     private int destinationFloor;
     private final NavigableSet<Integer> floorsToVisit = new ConcurrentSkipListSet<>();
 
@@ -25,7 +24,7 @@ public class ElevatorImpl implements Elevator {
         this.elevatorId = elevatorId;
         this.movementInterval = movementInterval;
         this.stopInterval = stopInterval;
-        currentFloor = 0;
+        currentFloor = new AtomicInteger();
         destinationFloor = 0;
     }
 
@@ -58,7 +57,7 @@ public class ElevatorImpl implements Elevator {
 
     @Override
     public int currentFloor() {
-        return currentFloor;
+        return currentFloor.get();
     }
 
     @Override
@@ -73,7 +72,7 @@ public class ElevatorImpl implements Elevator {
 
     @Override
     public void setCurrentFloor(int floor) {
-        this.currentFloor = floor;
+        this.currentFloor.set(floor);
     }
 
     @Override
@@ -86,8 +85,8 @@ public class ElevatorImpl implements Elevator {
                     direction = Direction.NONE;
                     stopElevatorAtFloor(this.destinationFloor, "destination floor");
                 }
-                if (floorsToVisit.contains(this.currentFloor)) {
-                    stopElevatorAtFloor(this.currentFloor, "interim floor");
+                if (floorsToVisit.contains(this.currentFloor.get())) {
+                    stopElevatorAtFloor(this.currentFloor.get(), "interim floor");
                 }
             } else {
                 LOG.trace(String.format("Elevator %d has no direction set", elevatorId));
@@ -121,9 +120,9 @@ public class ElevatorImpl implements Elevator {
 
     private void setElevatorDirectionMovement() {
         LOG.info(String.format("Elevator %d is calculating direction...", elevatorId));
-        if (currentFloor < destinationFloor) {
+        if (currentFloor.get() < destinationFloor) {
             direction = Direction.UP;
-        } else if (currentFloor > destinationFloor) {
+        } else if (currentFloor.get() > destinationFloor) {
             direction = Direction.DOWN;
         } else {
             direction = Direction.NONE;
@@ -140,22 +139,22 @@ public class ElevatorImpl implements Elevator {
     }
 
     private boolean isDestinationFloorAchieved() {
-        return destinationFloor == currentFloor;
+        return destinationFloor == currentFloor.get();
     }
 
     private int getNearestTargetFloorNumber(int topFloorNumber, int bottomFloorNumber) {
-        int topFloorDistance = Math.abs(Math.subtractExact(currentFloor, topFloorNumber));
-        int bottomFloorDistance = Math.abs(Math.subtractExact(currentFloor, bottomFloorNumber));
+        int topFloorDistance = Math.abs(Math.subtractExact(currentFloor.get(), topFloorNumber));
+        int bottomFloorDistance = Math.abs(Math.subtractExact(currentFloor.get(), bottomFloorNumber));
         return topFloorDistance < bottomFloorDistance ? topFloorNumber : bottomFloorNumber;
     }
 
     private void moveElevator() {
         LOG.info(String
-            .format("Elevator %d moves from floor %d towards floor %d", elevatorId, currentFloor,
+            .format("Elevator %d moves from floor %d towards floor %d", elevatorId, currentFloor.get(),
                 destinationFloor));
         switch (direction) {
-            case UP -> currentFloor++;
-            case DOWN -> currentFloor--;
+            case UP -> currentFloor.incrementAndGet();
+            case DOWN -> currentFloor.decrementAndGet();
             default -> {
             }
         }
@@ -164,9 +163,9 @@ public class ElevatorImpl implements Elevator {
         } catch (InterruptedException e) {
             LOG.warn(String.format("Elevator %d cannot wait for requests", this.elevatorId));
         }
-        floorsToVisit.remove(this.currentFloor);
+        floorsToVisit.remove(this.currentFloor.get());
         LOG.trace(String
-            .format("Elevator id %d moved from floor %d towards floor %d", elevatorId, currentFloor,
+            .format("Elevator id %d moved from floor %d towards floor %d", elevatorId, currentFloor.get(),
                 destinationFloor));
     }
 
