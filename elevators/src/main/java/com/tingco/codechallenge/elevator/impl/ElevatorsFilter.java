@@ -2,7 +2,7 @@ package com.tingco.codechallenge.elevator.impl;
 
 import com.tingco.codechallenge.elevator.api.Elevator;
 import com.tingco.codechallenge.elevator.api.Elevator.Direction;
-import com.tingco.codechallenge.elevator.util.DistanceUtils;
+import com.tingco.codechallenge.elevator.util.DistanceCalculator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class ElevatorsFilter {
         elevators.forEach(elevator -> {
             elevatorIdAndElevator.put(elevator.getId(), elevator);
         });
-        Integer elevatorIdWithShortestDistance = DistanceUtils
+        Integer elevatorIdWithShortestDistance = DistanceCalculator
             .findElevatorIdWithShortestDistance(distanceAndElevatorId);
         return Optional.ofNullable(elevatorIdAndElevator.get(elevatorIdWithShortestDistance));
     }

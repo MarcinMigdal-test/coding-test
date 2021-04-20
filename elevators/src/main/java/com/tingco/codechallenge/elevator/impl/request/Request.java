@@ -1,10 +1,10 @@
 package com.tingco.codechallenge.elevator.impl.request;
 
-abstract class AbstractRequest {
+abstract class Request {
 
     private final int targetFloor;
 
-    public AbstractRequest(int targetFloor) {
+    public Request(int targetFloor) {
         this.targetFloor = targetFloor;
     }
 

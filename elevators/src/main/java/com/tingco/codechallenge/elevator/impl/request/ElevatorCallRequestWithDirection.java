@@ -2,7 +2,7 @@ package com.tingco.codechallenge.elevator.impl.request;
 
 import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
 
-public class ElevatorCallRequestWithDirection extends AbstractRequest {
+public class ElevatorCallRequestWithDirection extends Request {
 
     private final UserDirectionRequest userDirectionRequest;
 

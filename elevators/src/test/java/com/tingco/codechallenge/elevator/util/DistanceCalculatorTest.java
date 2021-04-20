@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class DistanceUtilsTest {
+public class DistanceCalculatorTest {
 
     private static Map<Integer,Integer> distanceByID = new HashMap<>();
 
@@ -21,7 +21,7 @@ public class DistanceUtilsTest {
         distanceByID.put(2,9);
         distanceByID.put(9,3);
         distanceByID.put(7,4);
-        Assertions.assertEquals(9, DistanceUtils.findElevatorIdWithShortestDistance(distanceByID));
+        Assertions.assertEquals(9, DistanceCalculator.findElevatorIdWithShortestDistance(distanceByID));
     }
 
     @Test
@@ -30,7 +30,7 @@ public class DistanceUtilsTest {
         distanceByID.put(4,2);
         distanceByID.put(7,3);
         distanceByID.put(3,4);
-        Assertions.assertEquals(4, DistanceUtils.findElevatorIdWithShortestDistance(distanceByID));
+        Assertions.assertEquals(4, DistanceCalculator.findElevatorIdWithShortestDistance(distanceByID));
     }
 
 }
