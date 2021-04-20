@@ -35,6 +35,7 @@ public class ElevatorControllerImplTest {
         assertEquals(TestConfig.ELEVATORS_AMOUNT_2, elevatorController.getElevators().size());
     }
 
+    //TODO - concurrent invocations problems
     @Test
     void canExecuteElevatorCallRequestToFloor4AndDirectionUp() {
         //given

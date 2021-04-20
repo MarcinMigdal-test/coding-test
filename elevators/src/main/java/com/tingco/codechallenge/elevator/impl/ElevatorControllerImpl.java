@@ -8,14 +8,13 @@ import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestNoDirec
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDirection;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveBetweenFloorsRequest;
 import com.tingco.codechallenge.elevator.util.DistanceUtils;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,55 +55,32 @@ public class ElevatorControllerImpl implements ElevatorController {
     @Override
     public void executeElevatorCallRequestWithDirection(
         ElevatorCallRequestWithDirection elevatorCallRequestWithDirection) {
-
         this.executeElevatorCallRequestWithNoDirection(new ElevatorCallRequestNoDirection(elevatorCallRequestWithDirection.getTargetFloor()));
-
-        /*
-        int elevatorCallTargetFloor = elevatorCallRequestWithDirection.getTargetFloor();
-        final Elevator candidateFree;
-        Optional<Elevator> freeElevator = elevatorList.stream()
-            .filter(elevator -> !elevator.isBusy()).findFirst();
-        if (freeElevator.isPresent()) {
-            candidateFree = freeElevator.get();
-            candidateFree.requestElevatorMovement(elevatorCallTargetFloor);
-            executor.execute(candidateFree::run);
-        } else {
-            Elevator busyElevator = elevatorList.get( ThreadLocalRandom.current().nextInt(elevatorList.size()-1 ));
-            busyElevator.requestElevatorMovement(elevatorCallTargetFloor);
-        }
-        */
-
     }
 
     @Override
     public void executeElevatorCallRequestWithNoDirection(
         ElevatorCallRequestNoDirection elevatorCallRequest) {
         int elevatorCallTargetFloor = elevatorCallRequest.getTargetFloor();
-        //znajdz windy ktore zmierzaja do pietra, ktore jest requestowane
-        //wydzielic do funkcji
-        Predicate<Elevator> predElevatorGoingDown = (elevator) -> elevator.currentFloor() > elevatorCallTargetFloor && elevator
-            .getDirection().equals(
-                Direction.DOWN);
-        Predicate<Elevator> preElevatorGoingUp = (elevator) -> elevator.currentFloor() < elevatorCallTargetFloor && elevator
-            .getDirection().equals(
-                Direction.UP);
-        List<Elevator> elevatorsInMove = elevatorList.parallelStream().filter(predElevatorGoingDown).filter(preElevatorGoingUp).collect(
-            Collectors.toList());
-        if(elevatorsInMove.isEmpty())
+        ElevatorsFilter filter = new ElevatorsFilter();
+        List<Elevator> elevatorsMovingTowardsRequestedFlooor = new ArrayList<>();
+        elevatorsMovingTowardsRequestedFlooor.addAll(filter.getElevatorsGoingWithDirectionTowardsFloor(elevatorList,Direction.DOWN,elevatorCallTargetFloor));
+        elevatorsMovingTowardsRequestedFlooor.addAll(filter.getElevatorsGoingWithDirectionTowardsFloor(elevatorList,Direction.UP,elevatorCallTargetFloor));
+
+
+        if(elevatorsMovingTowardsRequestedFlooor.isEmpty())
         {
             //elevators stoppped -> find the one nearest to call floor
+            Optional<Elevator> firstFoundStoppedElevator = filter.getStoppedElevators(elevatorList).stream().findFirst();
 
-            Optional<Elevator> firstFoundStoppedElevator = elevatorList.stream()
-                .filter(elevator -> !elevator.isBusy()).findFirst();
             if (firstFoundStoppedElevator.isPresent()) {
                 Elevator candidateFree = firstFoundStoppedElevator.get();
                 candidateFree.requestElevatorMovement(elevatorCallTargetFloor);
                 executor.execute(candidateFree::run);
-
         }
         else {
             Map<Integer, Integer> distanceByElevatorId = new ConcurrentHashMap<>();
-            elevatorsInMove.forEach(elevator -> {
+                elevatorsMovingTowardsRequestedFlooor.forEach(elevator -> {
                     distanceByElevatorId
                         .put(Math.abs(elevator.currentFloor() - elevatorCallTargetFloor),
                             elevator.getIdentifier());
@@ -123,7 +99,4 @@ public class ElevatorControllerImpl implements ElevatorController {
         ElevatorMoveBetweenFloorsRequest elevatorCallRequest) {
            throw new IllegalArgumentException("Method not supported when user gets on elevator board");
     }
-
-
-
 }

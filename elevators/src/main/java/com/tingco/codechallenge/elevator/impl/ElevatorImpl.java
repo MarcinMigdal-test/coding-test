@@ -71,6 +71,8 @@ public class ElevatorImpl implements Elevator {
         floorsToVisit.add(toFloor);
     }
 
+
+
     @Override
     public void run() {
         while (isMovementRequired()) {
@@ -136,7 +138,6 @@ public class ElevatorImpl implements Elevator {
     }
 
     private void moveElevator() {
-        floorsToVisit.remove(this.currentFloor);
         LOG.info(String
             .format("Elevator id %d moves from floor %d towards floor %d", elevatorId, currentFloor,
                 destinationFloor));
@@ -151,6 +152,7 @@ public class ElevatorImpl implements Elevator {
         } catch (InterruptedException e) {
             LOG.warn(String.format("Elevator %d cannot wait for requests", this.elevatorId));
         }
+        floorsToVisit.remove(this.currentFloor);
         LOG.info(String
             .format("Elevator id %d moved from floor %d towards floor %d", elevatorId, currentFloor,
                 destinationFloor));
@@ -194,6 +196,19 @@ public class ElevatorImpl implements Elevator {
 
     @Override
     public Integer getIdentifier(){
-        return Integer.valueOf(this.elevatorId);
+        return this.elevatorId;
+    }
+
+
+    //test scope
+    //
+    @Override
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    @Override
+    public void setCurrentFloor(int floor){
+        this.currentFloor  = floor;
     }
 }

@@ -64,4 +64,8 @@ public interface Elevator {
     void requestElevatorMovement(int toFloor);
     void run();
     Integer getIdentifier();
+
+    //tests scope
+    void setDirection(Direction direction);
+    void setCurrentFloor(int floor);
 }

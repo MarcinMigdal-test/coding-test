@@ -8,19 +8,27 @@ import java.util.stream.Collectors;
 
 public class ElevatorsFilter {
 
-    public List<Elevator> getElevatorsGoingWithDirectionTowardsFloor(List<Elevator> elevators, Direction direction, int floor){
-        //List<Elevator> elevatorsInMove = elevators.parallelStream().filter(predElevatorGoingDown).filter(preElevatorGoingUp).collect(Collectors.toList());
-       return  elevators.parallelStream().filter(getPredicate(direction,floor)).collect(Collectors.toList());
+    public List<Elevator> getElevatorsGoingWithDirectionTowardsFloor(List<Elevator> elevators,
+        Direction direction, int floor) {
+        return elevators.parallelStream().filter(getPredicate(direction, floor))
+            .collect(Collectors.toList());
     }
 
-    private Predicate<Elevator> getPredicate(Direction direction, int floor){
-        Predicate<Elevator> predicate = null;
+    public List<Elevator> getStoppedElevators(List<Elevator> elevators) {
+        return elevators.parallelStream().filter(elevator -> !elevator.isBusy())
+            .collect(Collectors.toList());
+    }
+
+    private Predicate<Elevator> getPredicate(Direction direction, int floor) {
+        Predicate<Elevator> predicate;
         switch (direction) {
-            case UP -> predicate = (elevator) -> elevator.currentFloor() < floor && elevator.getDirection().equals(direction);
-            case DOWN -> predicate = (elevator) -> elevator.currentFloor() > floor && elevator.getDirection().equals(direction);
-            case NONE -> predicate = (elevator) -> elevator.getDirection().equals(direction);
-            default -> { throw new IllegalArgumentException("Direction not selected for elevator predicate.");}
-            }
-            return predicate;
+            case UP -> predicate = (elevator) -> elevator.currentFloor() < floor && elevator
+                .getDirection().equals(direction);
+            case DOWN -> predicate = (elevator) -> elevator.currentFloor() > floor && elevator
+                .getDirection().equals(direction);
+            default -> throw new IllegalArgumentException(
+                "Direction not selected for elevator predicate.");
+        }
+        return predicate;
     }
 }
