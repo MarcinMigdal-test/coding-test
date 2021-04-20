@@ -33,7 +33,7 @@ public class ElevatorControllerImpl implements ElevatorController {
         executor = Executors.newFixedThreadPool(elevatorList.size());
     }
 
-    @Deprecated(forRemoval = true)
+    @Deprecated
     @Override
     public Elevator requestElevator(int toFloor) {
         return elevatorList.get(0);
