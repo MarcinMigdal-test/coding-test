@@ -17,7 +17,7 @@ public class ElevatorImpl implements Elevator {
     private final int elevatorId;
     private Direction direction = Direction.NONE;
     private AtomicInteger currentFloor;
-    private int destinationFloor;
+    private AtomicInteger destinationFloor;
     private final NavigableSet<Integer> floorsToVisit = new ConcurrentSkipListSet<>();
 
     public ElevatorImpl(int elevatorId, int movementInterval, int stopInterval) {
@@ -25,7 +25,7 @@ public class ElevatorImpl implements Elevator {
         this.movementInterval = movementInterval;
         this.stopInterval = stopInterval;
         currentFloor = new AtomicInteger();
-        destinationFloor = 0;
+        destinationFloor = new AtomicInteger();
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ElevatorImpl implements Elevator {
                 moveElevator();
                 if (isDestinationFloorAchieved()) {
                     direction = Direction.NONE;
-                    stopElevatorAtFloor(this.destinationFloor, "destination floor");
+                    stopElevatorAtFloor(this.destinationFloor.get(), "destination floor");
                 }
                 if (floorsToVisit.contains(this.currentFloor.get())) {
                     stopElevatorAtFloor(this.currentFloor.get(), "interim floor");
@@ -101,28 +101,28 @@ public class ElevatorImpl implements Elevator {
         if (floorsToVisit.size() == 1) {
             LOG.trace(String
                 .format("Elevator %d has only one destination floor selected %d", elevatorId,
-                    destinationFloor));
-            if (destinationFloor == topFloorNumber) {
-                floorsToVisit.remove(destinationFloor);
+                    destinationFloor.get()));
+            if (destinationFloor.get() == topFloorNumber) {
+                floorsToVisit.remove(destinationFloor.get());
             }
-            destinationFloor = topFloorNumber;
+            destinationFloor.set(topFloorNumber);
         } else {
             LOG.info(String
                 .format("Elevator %d one has many floors to visit. It's current position is: %s ",
                     elevatorId, currentFloor));
             int bottomFloorNumber = floorsToVisit.first();
             LOG.trace(String.format("Elevator %d is calculating route ", elevatorId));
-            destinationFloor = getNearestTargetFloorNumber(topFloorNumber, bottomFloorNumber);
+            destinationFloor.set(getNearestTargetFloorNumber(topFloorNumber, bottomFloorNumber));
             LOG.info(String.format("Elevator %d has chosen destination floor %d", elevatorId,
-                destinationFloor));
+                destinationFloor.get()));
         }
     }
 
     private void setElevatorDirectionMovement() {
         LOG.info(String.format("Elevator %d is calculating direction...", elevatorId));
-        if (currentFloor.get() < destinationFloor) {
+        if (currentFloor.get() < destinationFloor.get()) {
             direction = Direction.UP;
-        } else if (currentFloor.get() > destinationFloor) {
+        } else if (currentFloor.get() > destinationFloor.get()) {
             direction = Direction.DOWN;
         } else {
             direction = Direction.NONE;
@@ -139,7 +139,7 @@ public class ElevatorImpl implements Elevator {
     }
 
     private boolean isDestinationFloorAchieved() {
-        return destinationFloor == currentFloor.get();
+        return destinationFloor.get() == currentFloor.get();
     }
 
     private int getNearestTargetFloorNumber(int topFloorNumber, int bottomFloorNumber) {
@@ -151,7 +151,7 @@ public class ElevatorImpl implements Elevator {
     private void moveElevator() {
         LOG.info(String
             .format("Elevator %d moves from floor %d towards floor %d", elevatorId, currentFloor.get(),
-                destinationFloor));
+                destinationFloor.get()));
         switch (direction) {
             case UP -> currentFloor.getAndIncrement();
             case DOWN -> currentFloor.getAndDecrement();
@@ -166,7 +166,7 @@ public class ElevatorImpl implements Elevator {
         floorsToVisit.remove(this.currentFloor.get());
         LOG.trace(String
             .format("Elevator id %d moved from floor %d towards floor %d", elevatorId, currentFloor.get(),
-                destinationFloor));
+                destinationFloor.get()));
     }
 
     private void stopElevatorAtFloor(int floor, String floorDescription) {
