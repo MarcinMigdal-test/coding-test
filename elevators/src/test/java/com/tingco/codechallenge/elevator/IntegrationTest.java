@@ -3,17 +3,13 @@ package com.tingco.codechallenge.elevator;
 import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_1;
 import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_10;
 import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_2;
-import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_3;
 import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_4;
-import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_8;
 
-import com.jayway.awaitility.Awaitility;
 import com.tingco.codechallenge.elevator.endpoint.ElevatorControllerEndPoints;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 
 
 /**
