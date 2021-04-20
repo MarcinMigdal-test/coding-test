@@ -1,8 +1,5 @@
 package com.tingco.codechallenge.elevator;
 
-import com.jayway.awaitility.Awaitility;
-import com.tingco.codechallenge.elevator.config.TestConfig;
-import com.tingco.codechallenge.elevator.impl.UserDirectionRequest;
 import com.tingco.codechallenge.elevator.resources.ElevatorControllerEndPoints;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -17,18 +14,8 @@ import java.net.http.HttpResponse.BodyHandlers;
 import java.nio.ByteBuffer;
 import java.time.Duration;
 import java.util.concurrent.Flow.Subscriber;
-import java.util.concurrent.TimeUnit;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.web.WebAppConfiguration;
 
 /**
  * Boiler plate test class to get up and running with a test faster.
