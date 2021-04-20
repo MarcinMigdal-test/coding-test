@@ -153,8 +153,8 @@ public class ElevatorImpl implements Elevator {
             .format("Elevator %d moves from floor %d towards floor %d", elevatorId, currentFloor.get(),
                 destinationFloor));
         switch (direction) {
-            case UP -> currentFloor.incrementAndGet();
-            case DOWN -> currentFloor.decrementAndGet();
+            case UP -> currentFloor.getAndIncrement();
+            case DOWN -> currentFloor.getAndDecrement();
             default -> {
             }
         }
