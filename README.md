@@ -30,8 +30,14 @@ http://localhost:8080/rest/v1/call/5/UP
 ```
 #### For furhter development/suggestions
 ```
-1) put elevator into maintenance mode -> move to floor 0 and ignore all requests
-2) when elevator stopped at a particular floor, request from that floor movement towards a chosen floor
-3) add shutdown hook action wit proper message
-4) I have implmented the easiest case: request is being sent to get an elevators at a particular floor
-```
+put elevator into maintenance mode -> move to floor 0 and ignore all requests
+when elevator stopped at a particular floor, request from that floor movement towards a chosen floor
+add shutdown hook action wit proper message
+I have implmented the easiest case: request is being sent to get an elevators at a particular floor
+Use Lombok to get rid of Getters/Setters
+Add integration tests
+Add Spring profiles
+Rename ElevatorControllerEndPoints (original one) to ElevatorControllerEndpoint
+Introduce state machine to Elevator
+use eventBus to send notifications about elevators state to controller
+````
