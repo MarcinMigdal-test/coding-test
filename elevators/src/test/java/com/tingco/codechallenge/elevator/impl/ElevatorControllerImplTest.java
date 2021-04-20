@@ -45,8 +45,8 @@ public class ElevatorControllerImplTest {
         elevatorController.executeElevatorCallRequestWithDirection(elevatorCallRequestWithDirection);
         //then
         Awaitility.await().atMost(5, TimeUnit.SECONDS);
-        Assertions.assertFalse(elevatorController.getElevators().get(1).isBusy());
-        Assertions.assertTrue(elevatorController.getElevators().get(0).isBusy());
+        Assertions.assertTrue(elevatorController.getElevators().get(1).isBusy());
+        Assertions.assertFalse(elevatorController.getElevators().get(0).isBusy());
     }
 
 

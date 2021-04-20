@@ -76,40 +76,40 @@ public class ElevatorImpl implements Elevator {
     @Override
     public void run() {
         while (isMovementRequired()) {
-            LOG.info(String.format("Elevator %d is moving", elevatorId));
+            LOG.trace(String.format("Elevator %d is moving", elevatorId));
             if (isElevatorDirectionChosen()) {
                 moveElevator();
                 if (isDestinationFloorAchieved()) {
                     direction = Direction.NONE;
-                    stopElevatorAtFloor(this.destinationFloor,"Destination floor");
+                    stopElevatorAtFloor(this.destinationFloor,"destination floor");
                 }
                 if (floorsToVisit.contains(this.currentFloor)) {
-                    stopElevatorAtFloor(this.currentFloor,"Interim floor");
+                    stopElevatorAtFloor(this.currentFloor,"interim floor");
                 }
             } else {
-                LOG.info(String.format("Elevator %d has no direction set",elevatorId));
+                LOG.trace(String.format("Elevator %d has no direction set",elevatorId));
                 int topFloorNumber = floorsToVisit.last();
                 calculateDestinationFloor(topFloorNumber);
-                setElavatorDirectionMovement();
+                setElevatorDirectionMovement();
             }
         }
     }
 
     private void calculateDestinationFloor(int topFloorNumber) {
         if (floorsToVisit.size() == 1) {
-            LOG.info(String.format("Elevator %d has only one destination floor selected %d",elevatorId,destinationFloor));
+            LOG.trace(String.format("Elevator %d has only one destination floor selected %d",elevatorId,destinationFloor));
             destinationFloor = topFloorNumber;
         }
         else{
             LOG.info(String.format("Elevator %d one has many floors to visit. It's current position is: %s ",elevatorId,currentFloor));
             int bottomFloorNumber = floorsToVisit.first();
-            LOG.info(String.format("Elevator %d is calculating route ",elevatorId));
+            LOG.trace(String.format("Elevator %d is calculating route ",elevatorId));
             destinationFloor = getNearestTargetFloorNumber(topFloorNumber, bottomFloorNumber);
             LOG.info(String.format("Elevator %d has chosen destination floor %d",elevatorId,destinationFloor));
         }
     }
 
-    private void setElavatorDirectionMovement() {
+    private void setElevatorDirectionMovement() {
         LOG.info(String.format("Elevator %d is calculating direction...",elevatorId));
         if (currentFloor < destinationFloor) {
             direction = Direction.UP;
@@ -139,7 +139,7 @@ public class ElevatorImpl implements Elevator {
 
     private void moveElevator() {
         LOG.info(String
-            .format("Elevator id %d moves from floor %d towards floor %d", elevatorId, currentFloor,
+            .format("Elevator %d moves from floor %d towards floor %d", elevatorId, currentFloor,
                 destinationFloor));
         switch (direction) {
             case UP -> currentFloor++;
@@ -153,7 +153,7 @@ public class ElevatorImpl implements Elevator {
             LOG.warn(String.format("Elevator %d cannot wait for requests", this.elevatorId));
         }
         floorsToVisit.remove(this.currentFloor);
-        LOG.info(String
+        LOG.trace(String
             .format("Elevator id %d moved from floor %d towards floor %d", elevatorId, currentFloor,
                 destinationFloor));
     }
@@ -161,7 +161,7 @@ public class ElevatorImpl implements Elevator {
     private void stopElevatorAtFloor(int floor, String floorDescription) {
         try {
             TimeUnit.MILLISECONDS.sleep(STOP_AT_FLOOR_TIME);
-            LOG.info(String.format("Elevator %d has cycle STOP at floor %d which is %s", this.elevatorId,
+            LOG.info(String.format("Elevator %d stops at floor %d which is %s", this.elevatorId,
                 floor,floorDescription));
         } catch (InterruptedException e) {
             LOG.warn(String
@@ -198,7 +198,6 @@ public class ElevatorImpl implements Elevator {
     public Integer getIdentifier(){
         return this.elevatorId;
     }
-
 
     //test scope
     //
