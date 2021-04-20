@@ -15,22 +15,15 @@ public final class ElevatorFactory {
     private ElevatorFactory() {
     }
 
-    public static List<Elevator> getElevatorsAsList(int elevatorsNumber) {
+    public static List<Elevator> getElevatorsAsList(int elevatorsNumber,int movementInterval, int stopInterval) {
         List<Elevator> elevatorList = new ArrayList<>();
         IntStream.rangeClosed(ELEVATOR_FIRST_INDEX, elevatorsNumber)
-            .forEach(value -> elevatorList.add(getElevator(value)));
+            .forEach(value -> elevatorList.add(getElevator(value,movementInterval,stopInterval)));
         return elevatorList;
     }
 
-    public static Elevator getElevator(int elevatorId){
-        return new ElevatorImpl(elevatorId);
-    }
-
-    public static Map<Integer,Elevator> getElevatorsAsMap(int elevatorsNumber) {
-        Map<Integer,Elevator> elevatorSet = new HashMap<>();
-        IntStream.rangeClosed(ELEVATOR_FIRST_INDEX, elevatorsNumber)
-            .forEach(value -> elevatorSet.putIfAbsent(value,  new ElevatorImpl(value)));
-        return elevatorSet;
+    public static Elevator getElevator(int elevatorId,int movementInterval, int stopInterval){
+        return new ElevatorImpl(elevatorId,movementInterval,stopInterval);
     }
 
 }

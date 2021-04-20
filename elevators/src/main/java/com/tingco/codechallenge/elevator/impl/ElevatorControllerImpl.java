@@ -28,7 +28,7 @@ public class ElevatorControllerImpl implements ElevatorController {
     @Autowired
     public ElevatorControllerImpl(ElevatorConfiguration elevatorConfiguration) {
         this.elevatorList = ElevatorFactory
-            .getElevatorsAsList(elevatorConfiguration.getElevatorsNumber());
+            .getElevatorsAsList(elevatorConfiguration.getElevatorsNumber(),elevatorConfiguration.getElevatorMovemenentInterval(),elevatorConfiguration.getElevatorStopInterval());
         executor = Executors.newFixedThreadPool(elevatorList.size());
     }
 
@@ -75,13 +75,13 @@ public class ElevatorControllerImpl implements ElevatorController {
     }
 
     private void assignRequestToStoppedElevator(int requestedFloor, ElevatorsFilter filter) {
-        LOG.info("Received request to stopped elevator",requestedFloor);
+        LOG.info(String.format("Assign request to send stopped elevator to floor %d ",requestedFloor));
         List<Elevator> stoppedElevators = filter.getStoppedElevators(elevatorList);
         Optional<Elevator> elevator = filter
             .getNearestElevatorToRequestedFloor(stoppedElevators, requestedFloor);
         elevator.ifPresent(elevatorToRun -> {
             elevatorToRun.requestElevatorMovement(requestedFloor);
-            LOG.info(String.format(String.format("Sent request to stopped elevator %d to move to floor", elevatorToRun.getId(), requestedFloor)));
+            LOG.info(String.format("Sent request to stopped elevator %d to move to floor %d", elevatorToRun.getId(), requestedFloor));
             executor.execute(elevatorToRun::run);
         });
     }
@@ -91,9 +91,7 @@ public class ElevatorControllerImpl implements ElevatorController {
         Optional<Elevator> optionalElevator = filter
             .getNearestElevatorToRequestedFloor(elevatorsMovingTowardsRequestedFloor,
                 requestedFloor);
-        optionalElevator.ifPresent(elevator -> {
-            elevator.requestElevatorMovement(requestedFloor);
-        });
+        optionalElevator.ifPresent(elevator -> elevator.requestElevatorMovement(requestedFloor));
     }
 
     @Override

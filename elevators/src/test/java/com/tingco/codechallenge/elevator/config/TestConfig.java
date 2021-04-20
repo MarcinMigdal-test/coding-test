@@ -20,4 +20,7 @@ public final class TestConfig {
     public final static int FLOOR_8 = 8;
     public final static int FLOOR_9 = 9;
     public final static int FLOOR_10 = 10;
+    public final static int ELEVATOR_MOVEMEMENT_INTERVAL =1000;
+    public final static int ELEVATOR_STOP_INTERVAL =2000;
+
 }

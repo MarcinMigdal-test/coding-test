@@ -2,7 +2,6 @@ package com.tingco.codechallenge.elevator.impl;
 
 import com.tingco.codechallenge.elevator.api.Elevator;
 import java.util.NavigableSet;
-import java.util.Objects;
 import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,12 +10,10 @@ import org.slf4j.LoggerFactory;
 
 public class ElevatorImpl implements Elevator {
 
-    private final int MOVEMENT_TIME = 100;
-    private final int STOP_AT_FLOOR_TIME = 300;
-    private final int NOP_TIME = 100;
     private final Logger LOG = LoggerFactory
         .getLogger(ElevatorImpl.class.getCanonicalName());
-
+    private final int movementInterval;
+    private final int stopInterval;
     private final int elevatorId;
     private Direction direction = Direction.NONE;
     private int currentFloor;
@@ -24,8 +21,10 @@ public class ElevatorImpl implements Elevator {
     private int destinationFloor;
     private final NavigableSet<Integer> floorsToVisit = new ConcurrentSkipListSet<>();
 
-    public ElevatorImpl(int elevatorId) {
+    public ElevatorImpl(int elevatorId, int movementInterval, int stopInterval) {
         this.elevatorId = elevatorId;
+        this.movementInterval = movementInterval;
+        this.stopInterval = stopInterval;
         currentFloor = 0;
         destinationFloor = 0;
     }
@@ -113,12 +112,14 @@ public class ElevatorImpl implements Elevator {
             direction = Direction.UP;
         } else if (currentFloor > destinationFloor) {
             direction = Direction.DOWN;
+        } else {
+            direction = Direction.NONE;
         }
         LOG.info(String.format("Elevator %d has chosen direction %s",elevatorId, direction));
     }
 
     private boolean isMovementRequired() {
-        return !floorsToVisit.isEmpty();
+        return (!floorsToVisit.isEmpty());
     }
 
     private boolean isElevatorDirectionChosen() {
@@ -146,7 +147,7 @@ public class ElevatorImpl implements Elevator {
             }
         }
         try {
-            TimeUnit.MILLISECONDS.sleep(MOVEMENT_TIME);
+            TimeUnit.MILLISECONDS.sleep(movementInterval);
         } catch (InterruptedException e) {
             LOG.warn(String.format("Elevator %d cannot wait for requests", this.elevatorId));
         }
@@ -158,7 +159,7 @@ public class ElevatorImpl implements Elevator {
 
     private void stopElevatorAtFloor(int floor, String floorDescription) {
         try {
-            TimeUnit.MILLISECONDS.sleep(STOP_AT_FLOOR_TIME);
+            TimeUnit.MILLISECONDS.sleep(stopInterval);
             LOG.info(String.format("Elevator %d stops at floor %d which is %s", this.elevatorId,
                 floor,floorDescription));
         } catch (InterruptedException e) {

@@ -16,11 +16,14 @@ import org.junit.jupiter.api.Test;
 
 public class ElevatorImplTest {
 
+    private final int elevatorMovementInterval = 1;
+    private final int elevatorStopInterval = 1;
+    private final int elevatorId = 1;
     private Elevator elevator;
 
     @BeforeEach
     void create() {
-        elevator = new ElevatorImpl(1);
+        elevator = new ElevatorImpl(elevatorId,elevatorMovementInterval,elevatorStopInterval);
     }
 
     @Test

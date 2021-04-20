@@ -1,5 +1,7 @@
 package com.tingco.codechallenge.elevator.impl;
 
+import static com.tingco.codechallenge.elevator.config.TestConfig.ELEVATOR_MOVEMEMENT_INTERVAL;
+import static com.tingco.codechallenge.elevator.config.TestConfig.ELEVATOR_STOP_INTERVAL;
 import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_1;
 import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_10;
 import static com.tingco.codechallenge.elevator.config.TestConfig.FLOOR_2;
@@ -183,7 +185,7 @@ public class ElevatorsFilterTest {
 
     private Elevator getElevatorAtFloorAndGoingToFloor(int elevatorId, Direction direction,
         int elevatorFloor, int destinationFloor) {
-        Elevator elevator = ElevatorFactory.getElevator(elevatorId);
+        Elevator elevator = ElevatorFactory.getElevator(elevatorId,ELEVATOR_MOVEMEMENT_INTERVAL,ELEVATOR_STOP_INTERVAL);
         elevator.setCurrentFloor(elevatorFloor);
         if (!direction.equals(Direction.NONE)) {
             elevator.requestElevatorMovement(destinationFloor);

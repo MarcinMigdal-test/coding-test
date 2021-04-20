@@ -19,7 +19,7 @@ import org.springframework.context.annotation.PropertySources;
 public class ElevatorConfiguration {
 
     @Min(1)
-    @Value("${com.tingco.elevator.numberofelevators}")
+    @Value("${com.tingco.elevator.elevatorsNumber}")
     private int elevatorsNumber;
 
     public int getElevatorsNumber() {
@@ -27,12 +27,29 @@ public class ElevatorConfiguration {
     }
 
     @Min(1)
-    @Value("${com.tingco.elevator.numberoffloors}")
+    @Value("${com.tingco.elevator.floorsNumber}")
     private int floorsNumber;
 
     public int getFloorsNumber() {
         return floorsNumber;
     }
+
+    @Min(1)
+    @Value("${com.tingco.elevator.movementInterval}")
+    private int movementInterval;
+
+    public int getElevatorMovemenentInterval() {
+        return movementInterval;
+    }
+
+    @Min(1)
+    @Value("${com.tingco.elevator.stopInterval}")
+    private int stopInterval;
+
+    public int getElevatorStopInterval() {
+        return stopInterval;
+    }
+
 
     /**
      * Create a default thread pool for your convenience.
