@@ -131,11 +131,11 @@ public class ElevatorsFilterTest {
     @Test
     void findNearestElevatorGoingDownAtFloor7() {
         //given
-        List<Elevator> elevatorsTowardsFloor3Down = elevatorsFilter
+        List<Elevator> elevatorsTowardsFloor7Down = elevatorsFilter
             .getElevatorsGoingWithDirectionTowardsFloor(elevators, Direction.DOWN, FLOOR_7);
         //when
         Optional<Elevator> elevator = elevatorsFilter
-            .getNearestElevatorToRequestedFloor(elevatorsTowardsFloor3Down, FLOOR_7);
+            .getNearestElevatorToRequestedFloor(elevatorsTowardsFloor7Down, FLOOR_7);
         //then
         assertTrue(elevator.isPresent());
         assertEquals(elevator5.getId(), elevator.get().getId());
@@ -145,11 +145,11 @@ public class ElevatorsFilterTest {
     @Test
     void findNearestElevatorGoingDownAtFloor9() {
         //given
-        List<Elevator> elevatorsTowardsFloor3Down = elevatorsFilter
+        List<Elevator> elevatorsTowardsFloor9Down = elevatorsFilter
             .getElevatorsGoingWithDirectionTowardsFloor(elevators, Direction.DOWN, FLOOR_9);
         //when
         Optional<Elevator> elevator = elevatorsFilter
-            .getNearestElevatorToRequestedFloor(elevatorsTowardsFloor3Down, FLOOR_9);
+            .getNearestElevatorToRequestedFloor(elevatorsTowardsFloor9Down, FLOOR_9);
         //then
         assertTrue(elevator.isPresent());
         assertEquals(elevator4.getId(), elevator.get().getId());
@@ -158,11 +158,11 @@ public class ElevatorsFilterTest {
     @Test
     void findNearestElevatorGoingUpAtFloor9() {
         //given
-        List<Elevator> elevatorsTowardsFloor3Down = elevatorsFilter
+        List<Elevator> elevatorsTowardsFloor9Up = elevatorsFilter
             .getElevatorsGoingWithDirectionTowardsFloor(elevators, Direction.UP, FLOOR_9);
         //when
         Optional<Elevator> elevator = elevatorsFilter
-            .getNearestElevatorToRequestedFloor(elevatorsTowardsFloor3Down, FLOOR_9);
+            .getNearestElevatorToRequestedFloor(elevatorsTowardsFloor9Up, FLOOR_9);
         //then
         assertTrue(elevator.isPresent());
         assertEquals(elevator6.getId(), elevator.get().getId());
@@ -171,11 +171,11 @@ public class ElevatorsFilterTest {
     @Test
     void findNearestElevatorGoingUpAtFloor6() {
         //given
-        List<Elevator> elevatorsTowardsFloor3Down = elevatorsFilter
+        List<Elevator> elevatorsTowardsFloor6Up = elevatorsFilter
             .getElevatorsGoingWithDirectionTowardsFloor(elevators, Direction.UP, FLOOR_6);
         //when
         Optional<Elevator> elevator = elevatorsFilter
-            .getNearestElevatorToRequestedFloor(elevatorsTowardsFloor3Down, FLOOR_6);
+            .getNearestElevatorToRequestedFloor(elevatorsTowardsFloor6Up, FLOOR_6);
         //then
         assertTrue(elevator.isPresent());
         assertEquals(elevator1.getId(), elevator.get().getId());

@@ -9,8 +9,13 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ElevatorsFilter {
+
+    private final static Logger LOG = LoggerFactory
+        .getLogger(ElevatorsFilter.class.getCanonicalName());
 
     public List<Elevator> getElevatorsGoingWithDirectionTowardsFloor(List<Elevator> elevators,
         Direction direction, int floor) {
@@ -38,12 +43,10 @@ public class ElevatorsFilter {
         elevators.forEach(elevator -> {
             elevatorIdAndElevator.put(elevator.getId(), elevator);
         });
-
         Integer elevatorIdWithShortestDistance = DistanceUtils
             .findElevatorIdWithShortestDistance(distanceAndElevatorId);
-        return Optional.of(elevatorIdAndElevator.get(elevatorIdWithShortestDistance));
+        return Optional.ofNullable(elevatorIdAndElevator.get(elevatorIdWithShortestDistance));
     }
-
 
     private Predicate<Elevator> getPredicate(Direction direction, int floor) {
         Predicate<Elevator> predicate;
