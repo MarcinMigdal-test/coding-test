@@ -35,17 +35,22 @@ public class ElevatorsFilter {
     public Optional<Elevator> getNearestElevatorToRequestedFloor(List<Elevator> elevators, int floor) {
         Map<Integer, Elevator> elevatorIdAndElevator = new HashMap<>();
         Map<Integer, Integer> distanceAndElevatorId = new HashMap<>();
-        elevators.forEach(elevator -> {
-            distanceAndElevatorId
-                .put(Math.abs(elevator.currentFloor() - floor),
-                    elevator.getId());
-        });
+        assignDistanceToElevator(elevators, floor, distanceAndElevatorId);
         elevators.forEach(elevator -> {
             elevatorIdAndElevator.put(elevator.getId(), elevator);
         });
         Integer elevatorIdWithShortestDistance = DistanceCalculator
             .findElevatorIdWithShortestDistance(distanceAndElevatorId);
         return Optional.ofNullable(elevatorIdAndElevator.get(elevatorIdWithShortestDistance));
+    }
+
+    private void assignDistanceToElevator(List<Elevator> elevators, int floor,
+        Map<Integer, Integer> distanceAndElevatorId) {
+        elevators.forEach(elevator -> {
+            distanceAndElevatorId
+                .put(Math.abs(elevator.currentFloor() - floor),
+                    elevator.getId());
+        });
     }
 
     private Predicate<Elevator> getPredicate(Direction direction, int floor) {
