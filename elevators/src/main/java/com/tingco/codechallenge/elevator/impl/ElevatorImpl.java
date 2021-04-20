@@ -71,8 +71,6 @@ public class ElevatorImpl implements Elevator {
         floorsToVisit.add(toFloor);
     }
 
-
-
     @Override
     public void run() {
         while (isMovementRequired()) {
@@ -170,37 +168,12 @@ public class ElevatorImpl implements Elevator {
         }
     }
 
-    private void executeCycleNop() {
-        direction = Direction.NONE;
-        try {
-            TimeUnit.MILLISECONDS.sleep(NOP_TIME);
-            LOG.warn(String.format("Elevator %d has cycle NOP", this.elevatorId));
-        } catch (InterruptedException e) {
-            LOG.warn(String.format("Elevator %d execute cycle NOP due to: %s", this.elevatorId,
-                e.getMessage()));
-        }
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(this);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        ElevatorImpl that = (ElevatorImpl) obj;
-        return this.getIdentifier().equals(that.getIdentifier()) ;
-    }
-
     @Override
     public Integer getIdentifier(){
         return this.elevatorId;
     }
 
     //test scope
-    //
     @Override
     public void setDirection(Direction direction) {
         this.direction = direction;
