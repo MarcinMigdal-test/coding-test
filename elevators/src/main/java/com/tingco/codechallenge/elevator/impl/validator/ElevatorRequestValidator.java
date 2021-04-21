@@ -17,8 +17,6 @@ public class ElevatorRequestValidator {
     private final static String TARGET_FLOOR = "Target floor";
     final int floorsNumber;
 
-    //private ElevatorConfiguration elevatorConfiguration;
-
     @Deprecated
     public ElevatorRequestValidator(int floorsNumber) {
         this.floorsNumber = floorsNumber;
