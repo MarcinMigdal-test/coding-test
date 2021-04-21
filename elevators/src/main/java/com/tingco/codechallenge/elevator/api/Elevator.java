@@ -1,7 +1,5 @@
 package com.tingco.codechallenge.elevator.api;
 
-import java.util.NavigableSet;
-
 /**
  * Interface for an elevator object.
  *
@@ -75,14 +73,14 @@ public interface Elevator {
     /**
      * Sets movement direction for elevator
      *
-     * @param  direction
+     * @param  direction - direction setter
      * */
     void setDirection(Direction direction);
 
     /**
      * Set elevetors current floor (position)
      *
-     * @param floor
+     * @param floor currect flor setter
      */
     void setCurrentFloor(int floor);
 }

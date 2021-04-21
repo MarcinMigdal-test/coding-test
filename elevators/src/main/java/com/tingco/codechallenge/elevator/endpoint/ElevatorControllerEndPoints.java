@@ -34,7 +34,8 @@ public final class ElevatorControllerEndPoints {
     private ElevatorController elevatorController;
 
     @Autowired
-    public ElevatorControllerEndPoints(ElevatorConfiguration elevatorConfiguration, ElevatorRequestValidator elevatorRequestValidator,
+    public ElevatorControllerEndPoints(ElevatorConfiguration elevatorConfiguration,
+        ElevatorRequestValidator elevatorRequestValidator,
         ElevatorController elevatorController) {
         this.elevatorConfiguration = elevatorConfiguration;
         this.elevatorRequestValidator = elevatorRequestValidator;
@@ -46,7 +47,7 @@ public final class ElevatorControllerEndPoints {
      *
      * @return String pong
      */
-    @Deprecated(forRemoval = false,since = "Returning simple String does not look nicely")
+    @Deprecated(forRemoval = false, since = "Returning simple String does not look nicely")
     @RequestMapping(value = "/ping", method = RequestMethod.GET)
     public String ping() {
         return "pong";
@@ -54,8 +55,7 @@ public final class ElevatorControllerEndPoints {
 
     /**
      * Endpoint returning application status - number of elevators and floors
-     *
-     * */
+     */
     @GetMapping("/status")
     public ResponseEntity getStatus() {
         return ResponseEntity.status(HttpStatus.OK).body(String
@@ -65,16 +65,19 @@ public final class ElevatorControllerEndPoints {
     }
 
     /**
-     * Call elevator to floor with  nodirection suggestion (to be used by UI) and optimization algorithm (to be implemented)
-     * */
+     * Call elevator to floor with  nodirection suggestion (to be used by UI) and optimization
+     * algorithm (to be implemented)
+     */
     @PostMapping("/call/{floor}")
     public ResponseEntity callElevatorToFloor(
         @PathVariable("floor") @Min(0) int floor) {
-        ElevatorCallRequestNoDirection elevatorCallRequestNoDirection = new ElevatorCallRequestNoDirection(floor
-            );
+        ElevatorCallRequestNoDirection elevatorCallRequestNoDirection = new ElevatorCallRequestNoDirection(
+            floor
+        );
         try {
             elevatorRequestValidator.validateCallRequestNoDirection(elevatorCallRequestNoDirection);
-            elevatorController.executeElevatorCallRequestWithNoDirection(elevatorCallRequestNoDirection);
+            elevatorController
+                .executeElevatorCallRequestWithNoDirection(elevatorCallRequestNoDirection);
         } catch (ElevatorRequestException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 e.getMessage());
@@ -84,17 +87,21 @@ public final class ElevatorControllerEndPoints {
     }
 
     /**
-     * Call elevator to floor with direction suggestion (to be used by UI) and optimization algorithm (to be implemented)
-     * */
+     * Call elevator to floor with direction suggestion (to be used by UI) and optimization
+     * algorithm (to be implemented)
+     */
     @PostMapping("/call/{floor}/{userDirectionRequest}")
     public ResponseEntity callElevatorToFloorWithDirection(
         @PathVariable("floor") @Min(0) int floor,
         @PathVariable("userDirectionRequest") UserDirectionRequest userDirectionRequest) {
-        ElevatorCallRequestWithDirection elevatorCallRequestWithDirection = new ElevatorCallRequestWithDirection(floor,
+        ElevatorCallRequestWithDirection elevatorCallRequestWithDirection = new ElevatorCallRequestWithDirection(
+            floor,
             userDirectionRequest);
         try {
-            elevatorRequestValidator.validateCallRequestWithDirection(elevatorCallRequestWithDirection);
-            elevatorController.executeElevatorCallRequestWithDirection(elevatorCallRequestWithDirection);
+            elevatorRequestValidator
+                .validateCallRequestWithDirection(elevatorCallRequestWithDirection);
+            elevatorController
+                .executeElevatorCallRequestWithDirection(elevatorCallRequestWithDirection);
         } catch (ElevatorRequestException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
                 e.getMessage());
@@ -104,14 +111,15 @@ public final class ElevatorControllerEndPoints {
     }
 
     /**
-     *  Send order to  elevator after user gets on the board. For further development
-     * */
+     * Send order to  elevator after user gets on the board. For further development
+     */
     @PostMapping("/move/{currentFloor}/{targetFloor}")
     public ResponseEntity requestElevatorToFloor(
         @PathVariable("currentFloor") @Min(0) int currentFloor,
         @PathVariable("targetFloor") @Min(0) int targetFloor
     ) {
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("For further development.Not implemented");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            .body("For further development.Not implemented");
     }
 
 

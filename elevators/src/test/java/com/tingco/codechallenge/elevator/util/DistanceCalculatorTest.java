@@ -8,29 +8,41 @@ import org.junit.jupiter.api.Test;
 
 public class DistanceCalculatorTest {
 
-    private static Map<Integer,Integer> distanceByID = new HashMap<>();
+    private static Map<Integer, Integer> distanceByElevatorId = new HashMap<>();
 
     @BeforeEach
-    void setUp(){
-        distanceByID.clear();
+    void init() {
+        distanceByElevatorId.clear();
     }
 
     @Test
-    void findSmallestDistance2() {
-        distanceByID.put(5,1);
-        distanceByID.put(2,9);
-        distanceByID.put(9,3);
-        distanceByID.put(7,4);
-        Assertions.assertEquals(9, DistanceCalculator.findElevatorIdWithShortestDistance(distanceByID));
+    void findElevatorIdWithLowestDistanceWhichIs2() {
+        //given
+        distanceByElevatorId.put(5, 1);
+        distanceByElevatorId.put(2, 9);
+        distanceByElevatorId.put(9, 3);
+        distanceByElevatorId.put(7, 4);
+        //when
+        int lowestDistance = DistanceCalculator.findElevatorIdWithShortestDistance(
+            distanceByElevatorId);
+        //then
+        Assertions
+            .assertEquals(9, lowestDistance);
     }
 
     @Test
-    void findSmallestDistance3(){
-        distanceByID.put(11,1);
-        distanceByID.put(4,2);
-        distanceByID.put(7,3);
-        distanceByID.put(3,4);
-        Assertions.assertEquals(4, DistanceCalculator.findElevatorIdWithShortestDistance(distanceByID));
+    void findElevatorIdWithLowestDistanceWhichIs3() {
+        //given
+        distanceByElevatorId.put(11, 1);
+        distanceByElevatorId.put(4, 2);
+        distanceByElevatorId.put(7, 3);
+        distanceByElevatorId.put(3, 123);
+        //when
+        int lowestDistance = DistanceCalculator.findElevatorIdWithShortestDistance(
+            distanceByElevatorId);
+        //then
+        Assertions
+            .assertEquals(lowestDistance, DistanceCalculator.findElevatorIdWithShortestDistance(
+                distanceByElevatorId));
     }
-
 }

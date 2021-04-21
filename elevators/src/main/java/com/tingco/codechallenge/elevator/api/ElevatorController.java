@@ -2,9 +2,7 @@ package com.tingco.codechallenge.elevator.api;
 
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestNoDirection;
 import com.tingco.codechallenge.elevator.impl.request.ElevatorCallRequestWithDirection;
-import com.tingco.codechallenge.elevator.impl.request.ElevatorMoveBetweenFloorsRequest;
 import java.util.List;
-
 
 /**
  * Interface for the Elevator Controller.
