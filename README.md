@@ -37,7 +37,6 @@ http://localhost:8080/rest/v1/call/4
 http://localhost:8080/rest/v1/call/45
 http://localhost:8080/rest/v1/call/21
 http://localhost:8080/rest/v1/call/54
-
 ```
 ### Verification
 ```
