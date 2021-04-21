@@ -15,7 +15,7 @@ Added additional classes and logic.
 ```
 ### Testing
 ```
-Example simulation is included in IntegrattionTest.
+Example simulation is included in IntegrationTest.
 
 Default run (with 5 elevators and 60 floors):
 java -jar elevator-1.0-SNAPSHOT.jar
