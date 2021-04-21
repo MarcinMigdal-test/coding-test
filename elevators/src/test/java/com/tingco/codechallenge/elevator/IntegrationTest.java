@@ -32,6 +32,6 @@ public class IntegrationTest {
         TimeUnit.SECONDS.sleep(4);
         elevatorControllerEndPoints.callElevatorToFloor(FLOOR_1);
         elevatorControllerEndPoints.callElevatorToFloor(FLOOR_4);
-        TimeUnit.SECONDS.sleep(10);
+        TimeUnit.SECONDS.sleep(12);
     }
 }
