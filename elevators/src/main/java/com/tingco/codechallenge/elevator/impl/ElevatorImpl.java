@@ -81,12 +81,12 @@ public class ElevatorImpl implements Elevator {
             LOG.trace(String.format("Elevator %d is moving", elevatorId));
             if (isElevatorDirectionChosen()) {
                 moveElevator();
-                if (isDestinationFloorAchieved()) {
-                    direction = Direction.NONE;
-                    stopElevatorAtFloor(this.destinationFloor.get(), "destination floor");
-                }
                 if (isInterimFloorAchieved()) {
                     stopElevatorAtFloor(this.currentFloor.get(), "interim floor");
+                }
+                if (isDestinationFloorAchieved()) {
+                    direction = Direction.NONE;
+                    stopElevatorAtFloor(this.destinationFloor.get(), "also destination floor");
                 }
             } else {
                 LOG.trace(String.format("Elevator %d has no direction set", elevatorId));
@@ -128,7 +128,7 @@ public class ElevatorImpl implements Elevator {
             direction = Direction.NONE;
         }
         LOG.info(String.format("Elevator %d has chosen direction %s", elevatorId, direction));
-        LOG.info(String.format("Elevator %d has currentFloor %d and targetFloor %d", this.elevatorId,currentFloor.get(), destinationFloor.get()));
+        LOG.trace(String.format("Elevator %d has currentFloor %d and targetFloor %d", this.elevatorId,currentFloor.get(), destinationFloor.get()));
     }
 
     private boolean isMovementRequired() {
@@ -143,10 +143,12 @@ public class ElevatorImpl implements Elevator {
         return destinationFloor.get() == currentFloor.get();
     }
     private boolean isInterimFloorAchieved() {
+        LOG.trace(String.format(String.format("Elevator %d has interim floors to visit %s",this.getId(),floorsToVisit.toString())));
         int currentFloor = this.currentFloor.get();
+        LOG.trace(String.format("Elevator %d current floor %d",this.getId(),currentFloor));
         boolean interimFloorAchieved = floorsToVisit.contains(currentFloor);
-        LOG.info(String.format(String.format("Elevator %d has interim floors to visit %s",this.getId(),floorsToVisit.toString())));
-        LOG.info("Current floor {}",currentFloor);
+        LOG.trace(String.format(String.format("Elevator %d has reached interim floor %b",this.getId(),interimFloorAchieved)));
+        floorsToVisit.remove(this.currentFloor.get());
         return interimFloorAchieved;
     }
 
@@ -171,7 +173,6 @@ public class ElevatorImpl implements Elevator {
         } catch (InterruptedException e) {
             LOG.warn(String.format("Elevator %d cannot wait for requests", this.elevatorId));
         }
-        floorsToVisit.remove(this.currentFloor.get());
         LOG.trace(String
             .format("Elevator id %d moved from floor %d towards floor %d", elevatorId, currentFloor.get(),
                 destinationFloor.get()));
