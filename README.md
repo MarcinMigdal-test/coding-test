@@ -17,13 +17,15 @@ Added additional classes and logic.
 ```
 Example simulation is included in IntegrattionTest.
 
-pass to CMD
+Default run (with 5 elevators and 60 floors):
+java -jar elevator-1.0-SNAPSHOT.jar
 
-java -jar JAR_NAME=  -Dcom.tingco.elevator.elevatorsNumber=20 -Dcom.tingco.elevator.floorsNumber=90
+Custom run (with defined number of elevators and floors)
+java -jar  -Dcom.tingco.elevator.elevatorsNumber=10 -Dcom.tingco.elevator.floorsNumber=3 elevator-1.0-SNAPSHOT.jar
 
 Mozilla FireFox postman
 
-GET
+GET - verification endpoint showing number of elevators and floors initaited in application 
 http://localhost:8080/rest/v1/status
 
 POST
