@@ -46,9 +46,8 @@ Example entries attached in log.log file.
 #### For further development/suggestions
 ```
 Put elevator into maintenance mode -> move to floor 0 and ignore all requests
-When elevator stopped at a particular floor, request from that floor movement towards a chosen floor (someone enters elevator i clicks floor at control panel)
+When elevator stopped at a particular floor, request from that floor movement towards a chosen floor (someone enters elevator and clicks floor at control panel)
 Use Lombok to get rid of Getters/Setters
-Add integration tests
 Add Spring profiles
 Rename ElevatorControllerEndPoints (original one) to ElevatorControllerEndpoint
 Introduce state machine to Elevator
