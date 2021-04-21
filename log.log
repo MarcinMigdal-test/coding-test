@@ -1,87 +1,56 @@
-/home/marcin/.sdkman/candidates/java/14.0.2-open/bin/java -javaagent:/home/marcin/apki/ideaIC-2019.3.3/idea-IC-193.6494.35/lib/idea_rt.jar=39985:/home/marcin/apki/ideaIC-2019.3.3/idea-IC-193.6494.35/bin -Dfile.encoding=UTF-8 -classpath /home/marcin/development/private/others/rozmowa-kwalifikacyjna/coding-test/elevators/target/classes:/home/marcin/.m2/repository/org/springframework/boot/spring-boot-starter-web/2.4.4/spring-boot-starter-web-2.4.4.jar:/home/marcin/.m2/repository/org/springframework/boot/spring-boot-starter/2.4.4/spring-boot-starter-2.4.4.jar:/home/marcin/.m2/repository/org/springframework/boot/spring-boot/2.4.4/spring-boot-2.4.4.jar:/home/marcin/.m2/repository/org/springframework/boot/spring-boot-autoconfigure/2.4.4/spring-boot-autoconfigure-2.4.4.jar:/home/marcin/.m2/repository/org/springframework/boot/spring-boot-starter-logging/2.4.4/spring-boot-starter-logging-2.4.4.jar:/home/marcin/.m2/repository/ch/qos/logback/logback-classic/1.2.3/logback-classic-1.2.3.jar:/home/marcin/.m2/repository/ch/qos/logback/logback-core/1.2.3/logback-core-1.2.3.jar:/home/marcin/.m2/repository/org/apache/logging/log4j/log4j-to-slf4j/2.13.3/log4j-to-slf4j-2.13.3.jar:/home/marcin/.m2/repository/org/apache/logging/log4j/log4j-api/2.13.3/log4j-api-2.13.3.jar:/home/marcin/.m2/repository/org/slf4j/jul-to-slf4j/1.7.30/jul-to-slf4j-1.7.30.jar:/home/marcin/.m2/repository/jakarta/annotation/jakarta.annotation-api/1.3.5/jakarta.annotation-api-1.3.5.jar:/home/marcin/.m2/repository/org/yaml/snakeyaml/1.27/snakeyaml-1.27.jar:/home/marcin/.m2/repository/org/springframework/boot/spring-boot-starter-json/2.4.4/spring-boot-starter-json-2.4.4.jar:/home/marcin/.m2/repository/com/fasterxml/jackson/core/jackson-databind/2.11.4/jackson-databind-2.11.4.jar:/home/marcin/.m2/repository/com/fasterxml/jackson/core/jackson-annotations/2.11.4/jackson-annotations-2.11.4.jar:/home/marcin/.m2/repository/com/fasterxml/jackson/core/jackson-core/2.11.4/jackson-core-2.11.4.jar:/home/marcin/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jdk8/2.11.4/jackson-datatype-jdk8-2.11.4.jar:/home/marcin/.m2/repository/com/fasterxml/jackson/datatype/jackson-datatype-jsr310/2.11.4/jackson-datatype-jsr310-2.11.4.jar:/home/marcin/.m2/repository/com/fasterxml/jackson/module/jackson-module-parameter-names/2.11.4/jackson-module-parameter-names-2.11.4.jar:/home/marcin/.m2/repository/org/springframework/boot/spring-boot-starter-tomcat/2.4.4/spring-boot-starter-tomcat-2.4.4.jar:/home/marcin/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/9.0.44/tomcat-embed-core-9.0.44.jar:/home/marcin/.m2/repository/org/glassfish/jakarta.el/3.0.3/jakarta.el-3.0.3.jar:/home/marcin/.m2/repository/org/apache/tomcat/embed/tomcat-embed-websocket/9.0.44/tomcat-embed-websocket-9.0.44.jar:/home/marcin/.m2/repository/org/springframework/spring-web/5.3.5/spring-web-5.3.5.jar:/home/marcin/.m2/repository/org/springframework/spring-beans/5.3.5/spring-beans-5.3.5.jar:/home/marcin/.m2/repository/org/springframework/spring-webmvc/5.3.5/spring-webmvc-5.3.5.jar:/home/marcin/.m2/repository/org/springframework/spring-aop/5.3.5/spring-aop-5.3.5.jar:/home/marcin/.m2/repository/org/springframework/spring-context/5.3.5/spring-context-5.3.5.jar:/home/marcin/.m2/repository/org/springframework/spring-expression/5.3.5/spring-expression-5.3.5.jar:/home/marcin/.m2/repository/com/google/guava/guava/30.1.1-jre/guava-30.1.1-jre.jar:/home/marcin/.m2/repository/com/google/guava/failureaccess/1.0.1/failureaccess-1.0.1.jar:/home/marcin/.m2/repository/com/google/guava/listenablefuture/9999.0-empty-to-avoid-conflict-with-guava/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar:/home/marcin/.m2/repository/com/google/code/findbugs/jsr305/3.0.2/jsr305-3.0.2.jar:/home/marcin/.m2/repository/org/checkerframework/checker-qual/3.8.0/checker-qual-3.8.0.jar:/home/marcin/.m2/repository/com/google/errorprone/error_prone_annotations/2.5.1/error_prone_annotations-2.5.1.jar:/home/marcin/.m2/repository/com/google/j2objc/j2objc-annotations/1.3/j2objc-annotations-1.3.jar:/home/marcin/.m2/repository/javax/validation/validation-api/2.0.1.Final/validation-api-2.0.1.Final.jar:/home/marcin/.m2/repository/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar:/home/marcin/.m2/repository/org/springframework/spring-core/5.3.5/spring-core-5.3.5.jar:/home/marcin/.m2/repository/org/springframework/spring-jcl/5.3.5/spring-jcl-5.3.5.jar com.tingco.codechallenge.elevator.ElevatorApplication
-
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::                (v2.4.4)
-
-2021-04-20 23:33:29,566 INFO  [main] org.springframework.boot.StartupInfoLogger: Starting ElevatorApplication using Java 14.0.2 on mandingo with PID 16644 (/home/marcin/development/private/others/rozmowa-kwalifikacyjna/coding-test/elevators/target/classes started by marcin in /home/marcin/development/private/others/rozmowa-kwalifikacyjna/coding-test/elevators)
-2021-04-20 23:33:29,574 INFO  [main] org.springframework.boot.SpringApplication: No active profile set, falling back to default profiles: default
-2021-04-20 23:33:31,050 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat initialized with port(s): 8080 (http)
-2021-04-20 23:33:31,065 INFO  [main] org.apache.juli.logging.DirectJDKLog: Initializing ProtocolHandler ["http-nio-8080"]
-2021-04-20 23:33:31,066 INFO  [main] org.apache.juli.logging.DirectJDKLog: Starting service [Tomcat]
-2021-04-20 23:33:31,066 INFO  [main] org.apache.juli.logging.DirectJDKLog: Starting Servlet engine: [Apache Tomcat/9.0.44]
-2021-04-20 23:33:31,150 INFO  [main] org.apache.juli.logging.DirectJDKLog: Initializing Spring embedded WebApplicationContext
-2021-04-20 23:33:31,151 INFO  [main] org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext: Root WebApplicationContext: initialization completed in 1413 ms
-2021-04-20 23:33:31,619 INFO  [main] org.apache.juli.logging.DirectJDKLog: Starting ProtocolHandler ["http-nio-8080"]
-2021-04-20 23:33:31,644 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat started on port(s): 8080 (http) with context path ''
-2021-04-20 23:33:31,658 INFO  [main] org.springframework.boot.StartupInfoLogger: Started ElevatorApplication in 2.954 seconds (JVM running for 3.695)
-2021-04-20 23:33:36,300 INFO  [http-nio-8080-exec-1] org.apache.juli.logging.DirectJDKLog: Initializing Spring DispatcherServlet 'dispatcherServlet'
-2021-04-20 23:33:36,301 INFO  [http-nio-8080-exec-1] org.springframework.web.servlet.FrameworkServlet: Initializing Servlet 'dispatcherServlet'
-2021-04-20 23:33:36,303 INFO  [http-nio-8080-exec-1] org.springframework.web.servlet.FrameworkServlet: Completed initialization in 2 ms
-2021-04-20 23:33:36,342 INFO  [http-nio-8080-exec-1] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Received request to move elevator to floor 3
-2021-04-20 23:33:36,356 INFO  [http-nio-8080-exec-1] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Assign request to send stopped elevator to floor 3 
-2021-04-20 23:33:36,360 INFO  [http-nio-8080-exec-1] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Sent request to stopped elevator 5 to move to floor 3
-2021-04-20 23:33:36,364 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 is calculating direction...
-2021-04-20 23:33:36,365 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 has chosen direction UP
-2021-04-20 23:33:36,368 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 0 towards floor 3
-2021-04-20 23:33:37,370 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 1 towards floor 3
-2021-04-20 23:33:38,372 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 2 towards floor 3
-2021-04-20 23:33:41,374 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 stops at floor 3 which is destination floor
-2021-04-20 23:33:46,034 WARN  [http-nio-8080-exec-2] com.tingco.codechallenge.elevator.impl.validator.ElevatorRequestValidator: Improper value for 99 for floor Target floor
-2021-04-20 23:33:58,424 INFO  [http-nio-8080-exec-4] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Received request to move elevator to floor 30
-2021-04-20 23:33:58,426 INFO  [http-nio-8080-exec-4] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Assign request to send stopped elevator to floor 30 
-2021-04-20 23:33:58,429 INFO  [http-nio-8080-exec-4] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Sent request to stopped elevator 5 to move to floor 30
-2021-04-20 23:33:58,433 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 is calculating direction...
-2021-04-20 23:33:58,434 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 has chosen direction UP
-2021-04-20 23:33:58,435 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 3 towards floor 30
-2021-04-20 23:33:59,438 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 4 towards floor 30
-2021-04-20 23:34:00,440 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 5 towards floor 30
-2021-04-20 23:34:01,442 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 6 towards floor 30
-2021-04-20 23:34:02,445 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 7 towards floor 30
-2021-04-20 23:34:03,451 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 8 towards floor 30
-2021-04-20 23:34:04,453 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 9 towards floor 30
-2021-04-20 23:34:05,454 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 10 towards floor 30
-2021-04-20 23:34:06,455 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 11 towards floor 30
-2021-04-20 23:34:07,457 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 12 towards floor 30
-2021-04-20 23:34:08,458 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 13 towards floor 30
-2021-04-20 23:34:09,460 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 14 towards floor 30
-2021-04-20 23:34:10,461 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 15 towards floor 30
-2021-04-20 23:34:11,463 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 16 towards floor 30
-2021-04-20 23:34:12,178 INFO  [http-nio-8080-exec-3] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Received request to move elevator to floor 6
-2021-04-20 23:34:12,180 INFO  [http-nio-8080-exec-3] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Assign request to send stopped elevator to floor 6 
-2021-04-20 23:34:12,181 INFO  [http-nio-8080-exec-3] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Sent request to stopped elevator 4 to move to floor 6
-2021-04-20 23:34:12,183 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 is calculating direction...
-2021-04-20 23:34:12,183 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 has chosen direction UP
-2021-04-20 23:34:12,184 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 0 towards floor 6
-2021-04-20 23:34:12,464 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 17 towards floor 30
-2021-04-20 23:34:13,185 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 1 towards floor 6
-2021-04-20 23:34:13,465 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 18 towards floor 30
-2021-04-20 23:34:14,186 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 2 towards floor 6
-2021-04-20 23:34:14,467 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 19 towards floor 30
-2021-04-20 23:34:15,188 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 3 towards floor 6
-2021-04-20 23:34:15,468 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 20 towards floor 30
-2021-04-20 23:34:16,189 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 4 towards floor 6
-2021-04-20 23:34:16,469 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 21 towards floor 30
-2021-04-20 23:34:17,191 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 5 towards floor 6
-2021-04-20 23:34:17,470 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 22 towards floor 30
-2021-04-20 23:34:17,609 INFO  [http-nio-8080-exec-5] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Received request to move elevator to floor 10
-2021-04-20 23:34:18,471 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 23 towards floor 30
-2021-04-20 23:34:19,472 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 24 towards floor 30
-2021-04-20 23:34:20,193 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 stops at floor 6 which is destination floor
-2021-04-20 23:34:20,195 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 is calculating direction...
-2021-04-20 23:34:20,196 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 has chosen direction UP
-2021-04-20 23:34:20,197 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 6 towards floor 10
-2021-04-20 23:34:20,474 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 25 towards floor 30
-2021-04-20 23:34:21,198 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 7 towards floor 10
-2021-04-20 23:34:21,476 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 26 towards floor 30
-2021-04-20 23:34:22,199 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 8 towards floor 10
-2021-04-20 23:34:22,477 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 27 towards floor 30
-2021-04-20 23:34:23,201 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 9 towards floor 10
-2021-04-20 23:34:23,478 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 28 towards floor 30
-2021-04-20 23:34:24,479 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 29 towards floor 30
-2021-04-20 23:34:26,203 INFO  [pool-1-thread-3] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 stops at floor 10 which is destination floor
-2021-04-20 23:34:27,481 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 stops at floor 30 which is destination floor
+2021-04-21 09:15:08,251 INFO  [main] org.apache.juli.logging.DirectJDKLog: Starting ProtocolHandler ["http-nio-8080"]
+2021-04-21 09:15:08,284 INFO  [main] org.springframework.boot.web.embedded.tomcat.TomcatWebServer: Tomcat started on port(s): 8080 (http) with context path ''
+2021-04-21 09:15:08,298 INFO  [main] org.springframework.boot.StartupInfoLogger: Started ElevatorApplication in 4.763 seconds (JVM running for 5.841)
+2021-04-21 09:15:21,732 INFO  [http-nio-8080-exec-1] org.apache.juli.logging.DirectJDKLog: Initializing Spring DispatcherServlet 'dispatcherServlet'
+2021-04-21 09:15:21,733 INFO  [http-nio-8080-exec-1] org.springframework.web.servlet.FrameworkServlet: Initializing Servlet 'dispatcherServlet'
+2021-04-21 09:15:21,734 INFO  [http-nio-8080-exec-1] org.springframework.web.servlet.FrameworkServlet: Completed initialization in 1 ms
+2021-04-21 09:15:21,785 INFO  [http-nio-8080-exec-1] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Received request to move elevator to floor 30
+2021-04-21 09:15:21,797 INFO  [http-nio-8080-exec-1] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Assign request to send stopped elevator to floor 30 
+2021-04-21 09:15:21,804 INFO  [http-nio-8080-exec-1] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Sent request to stopped elevator 5 to move to floor 30
+2021-04-21 09:15:21,821 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 is calculating direction...
+2021-04-21 09:15:21,823 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 has chosen direction UP
+2021-04-21 09:15:21,829 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 0 towards floor 30
+2021-04-21 09:15:22,831 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 1 towards floor 30
+2021-04-21 09:15:23,834 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 2 towards floor 30
+2021-04-21 09:15:24,835 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 3 towards floor 30
+2021-04-21 09:15:25,838 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 4 towards floor 30
+2021-04-21 09:15:26,841 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 5 towards floor 30
+2021-04-21 09:15:27,843 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 6 towards floor 30
+2021-04-21 09:15:28,844 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 7 towards floor 30
+2021-04-21 09:15:29,845 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 8 towards floor 30
+2021-04-21 09:15:30,846 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 9 towards floor 30
+2021-04-21 09:15:31,847 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 10 towards floor 30
+2021-04-21 09:15:32,848 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 11 towards floor 30
+2021-04-21 09:15:32,875 INFO  [http-nio-8080-exec-3] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Received request to move elevator to floor 15
+2021-04-21 09:15:33,849 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 12 towards floor 30
+2021-04-21 09:15:34,850 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 13 towards floor 30
+2021-04-21 09:15:35,851 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 14 towards floor 30
+2021-04-21 09:15:38,852 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 stops at floor 15 which is interim floor
+2021-04-21 09:15:38,852 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 15 towards floor 30
+2021-04-21 09:15:39,853 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 16 towards floor 30
+2021-04-21 09:15:40,854 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 17 towards floor 30
+2021-04-21 09:15:41,854 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 18 towards floor 30
+2021-04-21 09:15:42,855 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 19 towards floor 30
+2021-04-21 09:15:43,856 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 20 towards floor 30
+2021-04-21 09:15:44,856 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 21 towards floor 30
+2021-04-21 09:15:44,879 INFO  [http-nio-8080-exec-2] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Received request to move elevator to floor 4
+2021-04-21 09:15:44,880 INFO  [http-nio-8080-exec-2] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Assign request to send stopped elevator to floor 4 
+2021-04-21 09:15:44,881 INFO  [http-nio-8080-exec-2] com.tingco.codechallenge.elevator.impl.ElevatorControllerImpl: Sent request to stopped elevator 4 to move to floor 4
+2021-04-21 09:15:44,881 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 is calculating direction...
+2021-04-21 09:15:44,881 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 has chosen direction UP
+2021-04-21 09:15:44,882 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 0 towards floor 4
+2021-04-21 09:15:45,857 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 22 towards floor 30
+2021-04-21 09:15:45,882 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 1 towards floor 4
+2021-04-21 09:15:46,858 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 23 towards floor 30
+2021-04-21 09:15:46,883 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 2 towards floor 4
+2021-04-21 09:15:47,859 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 24 towards floor 30
+2021-04-21 09:15:47,884 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 moves from floor 3 towards floor 4
+2021-04-21 09:15:48,860 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 25 towards floor 30
+2021-04-21 09:15:49,861 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 26 towards floor 30
+2021-04-21 09:15:50,861 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 27 towards floor 30
+2021-04-21 09:15:50,887 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 stops at floor 4 which is interim floor
+2021-04-21 09:15:51,862 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 28 towards floor 30
+2021-04-21 09:15:52,863 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 moves from floor 29 towards floor 30
+2021-04-21 09:15:52,888 INFO  [pool-1-thread-2] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 4 stops at floor 4 which is also destination floor
+2021-04-21 09:15:55,864 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 stops at floor 30 which is interim floor
+2021-04-21 09:15:57,865 INFO  [pool-1-thread-1] com.tingco.codechallenge.elevator.impl.ElevatorImpl: Elevator 5 stops at floor 30 which is also destination floor
